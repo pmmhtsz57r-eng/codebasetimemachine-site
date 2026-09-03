@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence</title>
+<meta name="description" content="Turn a target company's Git history into ranked, confidence-scored key-person and ownership risk intelligence — before you close.">
+<meta property="og:title" content="Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence">
+<meta property="og:description" content="Turn a target company's Git history into ranked, confidence-scored key-person and ownership risk intelligence — before you close.">
+<meta property="og:image" content="https://codebasetimemachine.com/og-image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --panel:#111A2C;
+    --panel-2:#0E1626;
+    --line:#26314A;
+    --text:#E9ECF3;
+    --muted:#8B96AE;
+    --amber:#18C0D8;
+    --amber-soft:rgba(24,192,216,0.16);
+    --teal:#2DD4BF;
+    --paper:#F5F1E8;
+    --paper-line:#D9D2C2;
+    --ink-on-paper:#1C2333;
+    --muted-on-paper:#6B7280;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .serif{font-family:'Source Serif 4',serif;}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,18,32,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{font-family:'Source Serif 4',serif;font-weight:600;font-size:18px;letter-spacing:0.01em;}
+  .brand .dot{color:var(--amber);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;
+    padding:8px 16px;border:1px solid var(--amber);border-radius:2px;color:var(--amber);
+    text-decoration:none;transition:background .15s, color .15s;white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--amber);color:var(--ink);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 80px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--amber);display:inline-block;}
+  h1{
+    font-family:'Source Serif 4',serif;font-weight:600;font-size:44px;line-height:1.14;
+    letter-spacing:-0.01em;color:#fff;margin-bottom:22px;
+  }
+  h1 em{font-style:normal;color:var(--amber);}
+  .hero p.lede{font-size:17px;color:var(--muted);max-width:46ch;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--amber);color:#062026;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;
+    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--amber-soft);}
+  .btn-secondary{
+    border:1px solid var(--line);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:14px;
+    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;transition:border-color .15s;
+  }
+  .btn-secondary:hover{border-color:var(--muted);}
+
+  /* ---------- SIGNATURE: report card mockup ---------- */
+  .doc-stage{position:relative;display:flex;justify-content:center;padding:20px 0;}
+  .doc-card{
+    background:var(--paper);color:var(--ink-on-paper);border-radius:3px;
+    width:100%;max-width:420px;padding:26px 24px 22px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55), 0 0 0 1px var(--paper-line);
+    transform:rotate(2deg);
+    font-family:'IBM Plex Sans',sans-serif;
+    position:relative;
+  }
+  .doc-stamp{
+    position:absolute;top:18px;right:-10px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.12em;
+    color:#B3261E;border:1.5px solid #B3261E;padding:3px 8px;border-radius:2px;
+    transform:rotate(8deg);opacity:0.85;
+  }
+  .doc-card h3{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;margin-bottom:2px;color:var(--ink-on-paper);}
+  .doc-sub{font-size:11px;color:var(--muted-on-paper);margin-bottom:16px;font-family:'IBM Plex Mono',monospace;}
+  table.doc-table{width:100%;border-collapse:collapse;font-size:11px;}
+  table.doc-table th{
+    text-align:left;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:9.5px;
+    text-transform:uppercase;letter-spacing:0.04em;color:var(--muted-on-paper);
+    border-bottom:1.5px solid var(--paper-line);padding:6px 6px 6px 0;
+  }
+  table.doc-table td{padding:8px 6px 8px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+  .tier-critical{color:#B3261E;font-weight:600;}
+  .tier-watch{color:#9A6B00;font-weight:600;}
+  .doc-foot{margin-top:14px;font-size:9.5px;color:var(--muted-on-paper);font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- SECTION shared ---------- */
+  section{padding:76px 0;border-top:1px solid var(--line);}
+  .section-label{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:14px;
+  }
+  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:30px;color:#fff;margin-bottom:18px;max-width:24ch;}
+  .lead-text{color:var(--muted);font-size:16px;max-width:60ch;}
+
+  /* ---------- PROBLEM ---------- */
+  .problem-quote{
+    font-family:'Source Serif 4',serif;font-style:normal;font-size:22px;line-height:1.5;color:#fff;
+    max-width:62ch;border-left:2px solid var(--amber);padding-left:22px;margin-top:24px;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;position:relative;}
+  .steps::before{
+    content:'';position:absolute;top:17px;left:6%;right:6%;height:1px;
+    background:linear-gradient(90deg, var(--line), var(--amber), var(--line));
+    opacity:.55;
+  }
+  .step{position:relative;padding-right:20px;}
+  .step-num{
+    width:34px;height:34px;border-radius:50%;background:var(--panel-2);border:1px solid var(--amber);
+    display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;
+    font-size:13px;color:var(--amber);margin-bottom:18px;position:relative;z-index:2;
+  }
+  .step h4{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px;}
+  .step p{font-size:13.5px;color:var(--muted);}
+
+  /* ---------- REPORT CONTENTS (toc style) ---------- */
+  .toc{margin-top:40px;border-top:1px solid var(--line);}
+  .toc-row{
+    display:grid;grid-template-columns:44px 1fr auto;gap:20px;align-items:start;
+    padding:20px 0;border-bottom:1px solid var(--line);
+  }
+  .toc-num{font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:14px;padding-top:2px;}
+  .toc-row h4{font-size:16px;font-weight:600;color:#fff;margin-bottom:5px;}
+  .toc-row p{font-size:13.5px;color:var(--muted);max-width:58ch;}
+  .toc-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--teal);border:1px solid rgba(45,212,191,0.35);
+    padding:4px 9px;border-radius:2px;white-space:nowrap;height:fit-content;
+  }
+
+  /* ---------- PROOF ---------- */
+  .proof-box{
+    margin-top:36px;background:var(--panel);border:1px solid var(--line);border-radius:4px;
+    padding:28px 30px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  }
+  .proof-box .left p.mono{font-size:13px;color:var(--muted);margin-top:6px;}
+  .proof-box .left strong{color:#fff;font-weight:600;}
+
+  /* ---------- SECURITY ---------- */
+  .sec-list{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+  .sec-item{display:flex;gap:14px;}
+  .sec-check{color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
+  .sec-item p{font-size:14px;color:var(--muted);}
+  .sec-item strong{color:var(--text);}
+  .sec-note{
+    margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:60ch;
+    border-left:2px solid var(--line);padding-left:16px;
+  }
+
+  /* ---------- NAV LINKS ---------- */
+  .nav-links{display:flex;align-items:center;gap:22px;}
+  .nav-link{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;
+    transition:color .15s;
+  }
+  .nav-link:hover{color:var(--text);}
+
+  /* ---------- COMPARE TABLE ---------- */
+  .compare-table{width:100%;border-collapse:collapse;margin-top:36px;font-size:13.5px;}
+  .compare-table th, .compare-table td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  .compare-table th{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;
+    color:var(--muted);font-weight:600;
+  }
+  .compare-table th.us-col, .compare-table td.us-col{
+    background:var(--amber-soft);border-left:1px solid rgba(24,192,216,0.35);border-right:1px solid rgba(24,192,216,0.35);
+  }
+  .compare-table th.us-col{color:var(--amber);}
+  .compare-table td{color:var(--muted);}
+  .compare-table td.us-col{color:var(--text);}
+  .compare-table td strong{color:inherit;}
+  .compare-row-label{color:var(--text) !important;font-weight:500;}
+  .compare-table-scroll{overflow-x:auto;}
+  @media (max-width:700px){ .compare-table{font-size:12px;} .compare-table th,.compare-table td{padding:10px 10px;} }
+
+  /* ---------- FAQ ---------- */
+  .faq{margin-top:36px;border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    padding:20px 0;font-size:15.5px;font-weight:600;color:#fff;cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:'+';font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:20px;flex-shrink:0;
+    transition:transform .2s;
+  }
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{padding-bottom:20px;color:var(--muted);font-size:14px;max-width:68ch;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    margin-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
+    background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:28px 30px;
+  }
+  .contact-box p{color:var(--muted);font-size:14px;max-width:50ch;}
+  .contact-box p strong{color:#fff;}
+  .cta-final{text-align:center;padding:90px 0 70px;}
+  .cta-final h2{max-width:none;margin:0 auto 16px;font-size:32px;}
+  .cta-final .lead-text{margin:0 auto 34px;}
+  footer{border-top:1px solid var(--line);padding:28px 0;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer p{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 880px){
+    .hero-grid{grid-template-columns:1fr;gap:44px;}
+    h1{font-size:34px;}
+    .steps{grid-template-columns:1fr 1fr;row-gap:32px;}
+    .steps::before{display:none;}
+    .sec-list{grid-template-columns:1fr;}
+    .doc-card{transform:rotate(0deg);max-width:100%;}
+  }
+  @media (max-width: 520px){
+    .steps{grid-template-columns:1fr;}
+    .toc-row{grid-template-columns:32px 1fr;}
+    .toc-tag{grid-column:2;justify-self:start;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand" style="display:flex;align-items:center;gap:10px;">
+      <img src="logo-icon.png" alt="" style="height:38px;width:auto;display:block;">
+      <span>Codebase<span class="dot">·</span>Time Machine</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="#compare">Compare</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <a class="nav-link" href="#contact">Contact</a>
+      <a class="nav-cta" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">M&amp;A Technical Due Diligence</div>
+      <h1>Before you close, know who <em>actually</em> holds the code.</h1>
+      <p class="lede">Codebase Time Machine turns a target company's Git history into a ranked, confidence-scored key-person risk report — not a code-quality score, an ownership map.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
+        <a class="btn-secondary" href="#sample">View sample report</a>
+      </div>
+    </div>
+    <div class="doc-stage">
+      <div class="doc-card">
+        <div class="doc-stamp">CONFIDENTIAL</div>
+        <h3>Ranked Material Assets</h3>
+        <div class="doc-sub">react · depth 5000 · prepared for sample review</div>
+        <table class="doc-table">
+          <tr><th>Asset</th><th>Tier</th><th>Confid.</th><th>Share</th></tr>
+          <tr><td>ReactFiberCommitWork.js</td><td class="tier-critical">Critical</td><td>Medium</td><td>56.9%</td></tr>
+          <tr><td>ReactFlightServerConfigDebugNode.js</td><td class="tier-critical">Critical</td><td>High</td><td>88.9%</td></tr>
+          <tr><td>ReactFiberConfigWithNoMutation.js</td><td class="tier-critical">Critical</td><td>High</td><td>90.9%</td></tr>
+        </table>
+        <div class="doc-foot">Full material list (40–65 rows) delivered in Excel workbook.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">The gap</div>
+    <h2>Code-quality scanners answer the wrong question.</h2>
+    <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks who actually understands it — or whether that understanding is dangerously concentrated in one or two people who may not stay past close.</p>
+    <p class="problem-quote">"If this engineer leaves the day after we sign, what breaks — and how long does it take to fix?"</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">How it works</div>
+    <h2>Grant access. We scan. You get the report. We delete the clone.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Read-only access</h4>
+        <p>GitHub App install, a scoped token, or a read collaborator — never write or admin.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Scoped, temporary scan</h4>
+        <p>Commit history analyzed in a dedicated temporary workspace, wiped after use. Default depth: 1,500–2,000 commits.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Branded package</h4>
+        <p>A PDF for the IC and a full Excel workbook for the working team, delivered by email.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Clone deleted</h4>
+        <p>The working copy — and any access token — is removed immediately after delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">What's in the report</div>
+    <h2>Seven sections. Built for a one-sitting IC read.</h2>
+    <div class="toc">
+      <div class="toc-row">
+        <div class="toc-num">01</div>
+        <div><h4>Summary &amp; highest-risk finding</h4><p>Files analyzed, material risk count, and the single highest-priority finding up front.</p></div>
+        <div class="toc-tag">PDF</div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">02</div>
+        <div><h4>Bus-factor tiers</h4><p>High-confidence, Watch, or None — calibrated against commit-history thresholds, not a subjective score.</p></div>
+        <div class="toc-tag">PDF + XLSX</div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">03</div>
+        <div><h4>Author &amp; subsystem concentration</h4><p>Exactly which people own which parts of the codebase, and how tightly.</p></div>
+        <div class="toc-tag">PDF + XLSX</div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">04</div>
+        <div><h4>Risk evolution</h4><p>Whether ownership is stable, consolidating, diversifying, or already handed off — not just a snapshot.</p></div>
+        <div class="toc-tag">PDF</div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">05</div>
+        <div><h4>Detailed risk briefs</h4><p>For the top findings: context, departure scenario, remediation effort, and a 90-day mitigation plan.</p></div>
+        <div class="toc-tag">PDF</div>
+      </div>
+      <div class="toc-row">
+        <div class="toc-num">06</div>
+        <div><h4>Full material asset list</h4><p>Every flagged file — commonly 40–65 rows — kept in the workbook, not dumped into the IC deck.</p></div>
+        <div class="toc-tag">XLSX</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample">
+  <div class="wrap reveal">
+    <div class="section-label">Proof</div>
+    <h2>Run against real, large codebases — not a toy demo.</h2>
+    <div class="proof-box">
+      <div class="left">
+        <p><strong>React</strong> and <strong>VS Code</strong> — public repositories, production commit depth.</p>
+        <p class="mono">Both correctly surface genuine ownership patterns: consolidation, diversification, and clean handoffs.</p>
+      </div>
+      <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com?subject=Sample%20report%20request">Request the sample PDF →</a>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap reveal">
+    <div class="section-label">Compare</div>
+    <h2>Not a scanner. Not just interviews.</h2>
+    <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: a calibrated, evidence-backed picture of who actually holds the risk.</p>
+    <div class="compare-table-scroll">
+      <table class="compare-table">
+        <tr>
+          <th></th>
+          <th>Manual interviews only</th>
+          <th>Generic code scanners</th>
+          <th class="us-col">Codebase Time Machine</th>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Finds key-person risk</td>
+          <td>Sometimes — depends who's in the room</td>
+          <td>No — measures code quality, not ownership</td>
+          <td class="us-col"><strong>Yes</strong> — bus-factor tiers from commit history</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Shows how risk changed over time</td>
+          <td>No</td>
+          <td>No</td>
+          <td class="us-col"><strong>Yes</strong> — Risk Evolution timeline</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Deliverable</td>
+          <td>Varies by consultant</td>
+          <td>Raw scanner output</td>
+          <td class="us-col">Branded PDF + Excel, IC-ready</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Turnaround</td>
+          <td>Days to weeks</td>
+          <td>Minutes</td>
+          <td class="us-col">Minutes to a few hours</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Repo access required</td>
+          <td>None</td>
+          <td>Often broad or persistent</td>
+          <td class="us-col">Read-only, revoked after delivery</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">Security</div>
+    <h2>Honest about where we are.</h2>
+    <div class="sec-list">
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Read-only, revocable access.</strong> We never ask for write or admin permissions.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Dedicated, temporary workspace per scan.</strong> Each engagement clones into its own temp directory, wiped immediately after the report is sent.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deleted after delivery.</strong> The cloned repo and any token are removed once the report is sent.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>No secrets in logs.</strong> Tokens exist in memory only, never written to disk or logged.</p></div>
+    </div>
+    <p class="sec-note">We're a small team early in this process. We won't claim a full zero-trust or enterprise-vault architecture until it's actually built — what's above reflects what we do today, not a roadmap.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap reveal">
+    <div class="section-label">FAQ</div>
+    <h2>What people ask before their first scan.</h2>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>What does Codebase Time Machine actually analyze?</summary>
+        <p>Only Git commit history and metadata — authors, dates, file paths, and commit messages. Not runtime data, not business logic beyond what's visible in the repo itself.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you need write access to our repo?</summary>
+        <p>No. Access is always read-only — via a GitHub App install, a scoped token, or a read collaborator invite — and it's revocable by you at any time.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What happens to our code after the scan?</summary>
+        <p>The repo is cloned into a dedicated temporary workspace for the scan, then deleted immediately once the report is generated. Nothing is retained.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is "risk" actually calculated?</summary>
+        <p>Bus-factor tiers are calibrated against commit-history thresholds — for example, 10+ commits on a file with one author holding over 70% share is High-confidence. It's not a subjective score.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How long does a scan take?</summary>
+        <p>Typically minutes to a few hours, depending on repo size and commit depth. Production runs default to 1,500–2,000 commits of history.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can we see a sample before committing our own repo?</summary>
+        <p>Yes — we've run the same analysis against React and VS Code's public history. Request the sample PDF and see the real output first.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="section-label">Contact</div>
+    <h2>Talk to a person, not a ticket queue.</h2>
+    <div class="contact-box">
+      <p>Questions before you hand over repo access? Email us directly — <strong>hello@codebasetimemachine.com</strong> — and you'll hear back from someone who actually built this, not a support rotation.</p>
+      <a class="btn-primary" href="mailto:hello@codebasetimemachine.com">Send an email →</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" style="border-top:1px solid var(--line);">
+  <div class="wrap reveal">
+    <h2>Bring us your next target before you sign.</h2>
+    <p class="lead-text">One repo, one report, one sitting for your IC.</p>
+    <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Codebase Time Machine</p>
+    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a> · hello@codebasetimemachine.com</p>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
