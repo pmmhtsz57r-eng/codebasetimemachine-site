@@ -234,11 +234,7 @@
   footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
   footer p{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
 
-  /* ---------- REVEAL ---------- */
-  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
     html{scroll-behavior:auto;}
   }
 
@@ -267,6 +263,7 @@
       <span>Codebase<span class="dot">·</span>Time Machine</span>
     </div>
     <div class="nav-links">
+      <a class="nav-link" href="#sample">Sample report</a>
       <a class="nav-link" href="#compare">Compare</a>
       <a class="nav-link" href="#faq">FAQ</a>
       <a class="nav-link" href="#contact">Contact</a>
@@ -282,8 +279,8 @@
       <h1>Before you close, know who <em>actually</em> holds the code.</h1>
       <p class="lede">Codebase Time Machine turns a target company's Git history into a ranked, confidence-scored key-person risk report — not a code-quality score, an ownership map.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
-        <a class="btn-secondary" href="#sample">View sample report</a>
+        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Sample%20report%20request">See a sample report →</a>
+        <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
       </div>
     </div>
     <div class="doc-stage">
@@ -304,16 +301,16 @@
 </header>
 
 <section>
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">The gap</div>
     <h2>Code-quality scanners answer the wrong question.</h2>
     <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks who actually understands it — or whether that understanding is dangerously concentrated in one or two people who may not stay past close.</p>
-    <p class="problem-quote">"If this engineer leaves the day after we sign, what breaks — and how long does it take to fix?"</p>
+    <p class="problem-quote">The question diligence rarely answers: if this engineer leaves the day after you sign, what breaks — and how long does it take to fix?</p>
   </div>
 </section>
 
 <section>
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">How it works</div>
     <h2>Grant access. We scan. You get the report. We delete the clone.</h2>
     <div class="steps">
@@ -325,7 +322,7 @@
       <div class="step">
         <div class="step-num">2</div>
         <h4>Scoped, temporary scan</h4>
-        <p>Commit history analyzed in a dedicated temporary workspace, wiped after use. Default depth: 1,500–2,000 commits.</p>
+        <p>Commit history analyzed in a dedicated temporary workspace, wiped after use. You choose the depth — up to the repository's complete history — and the report states what share of it was actually analyzed.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
@@ -342,7 +339,7 @@
 </section>
 
 <section>
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">What's in the report</div>
     <h2>Seven sections. Built for a one-sitting IC read.</h2>
     <div class="toc">
@@ -376,12 +373,17 @@
         <div><h4>Full material asset list</h4><p>Every flagged file — commonly 40–65 rows — kept in the workbook, not dumped into the IC deck.</p></div>
         <div class="toc-tag">XLSX</div>
       </div>
+      <div class="toc-row">
+        <div class="toc-num">07</div>
+        <div><h4>History coverage &amp; provenance</h4><p>Exactly how much of the repository's history was analyzed, stated as a share of the total — and which figures come from the scan versus repository-wide metadata.</p></div>
+        <div class="toc-tag">PDF</div>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="sample">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">Proof</div>
     <h2>Run against real, large codebases — not a toy demo.</h2>
     <div class="proof-box">
@@ -395,7 +397,7 @@
 </section>
 
 <section id="compare">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">Compare</div>
     <h2>Not a scanner. Not just interviews.</h2>
     <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: a calibrated, evidence-backed picture of who actually holds the risk.</p>
@@ -443,7 +445,7 @@
 </section>
 
 <section>
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">Security</div>
     <h2>Honest about where we are.</h2>
     <div class="sec-list">
@@ -452,12 +454,12 @@
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deleted after delivery.</strong> The cloned repo and any token are removed once the report is sent.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>No secrets in logs.</strong> Tokens exist in memory only, never written to disk or logged.</p></div>
     </div>
-    <p class="sec-note">We're a small team early in this process. We won't claim a full zero-trust or enterprise-vault architecture until it's actually built — what's above reflects what we do today, not a roadmap.</p>
+    <p class="sec-note">Codebase Time Machine is an independent practice, not a platform vendor — which is the point: the analysis has no stake in the outcome of your deal. We won't claim a zero-trust or enterprise-vault architecture until it's actually built. The above is what we do today, not a roadmap.</p>
   </div>
 </section>
 
 <section id="faq">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">FAQ</div>
     <h2>What people ask before their first scan.</h2>
     <div class="faq">
@@ -490,7 +492,7 @@
 </section>
 
 <section id="contact">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section-label">Contact</div>
     <h2>Talk to a person, not a ticket queue.</h2>
     <div class="contact-box">
@@ -501,7 +503,7 @@
 </section>
 
 <section class="cta-final" style="border-top:1px solid var(--line);">
-  <div class="wrap reveal">
+  <div class="wrap">
     <h2>Bring us your next target before you sign.</h2>
     <p class="lead-text">One repo, one report, one sitting for your IC.</p>
     <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
@@ -515,13 +517,7 @@
   </div>
 </footer>
 
-<script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
-</script>
+
 
 </body>
 </html>
