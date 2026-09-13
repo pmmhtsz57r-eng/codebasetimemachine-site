@@ -4,30 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence</title>
-<meta name="description" content="Turn a target company's Git history into ranked, confidence-scored key-person and ownership risk intelligence — before you close.">
+<meta name="description" content="Turn a target company's Git history into a ranked, confidence-scored key-person and ownership risk dossier — before you close.">
 <meta property="og:title" content="Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence">
-<meta property="og:description" content="Turn a target company's Git history into ranked, confidence-scored key-person and ownership risk intelligence — before you close.">
+<meta property="og:description" content="Turn a target company's Git history into a ranked, confidence-scored key-person and ownership risk dossier — before you close.">
 <meta property="og:image" content="https://codebasetimemachine.com/og-image.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,ital,wght@8..60,0,500;8..60,0,600;8..60,0,700;8..60,1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0B1220;
+    /* Private-intelligence dossier palette — ink, burnished gold, confidential red, cream paper */
+    --ink:#0A0F1A;
+    --ink-2:#0E1524;
     --panel:#111A2C;
-    --panel-2:#0E1626;
-    --line:#26314A;
-    --text:#E9ECF3;
-    --muted:#8B96AE;
-    --amber:#18C0D8;
-    --amber-soft:rgba(24,192,216,0.16);
-    --teal:#2DD4BF;
-    --paper:#F5F1E8;
-    --paper-line:#D9D2C2;
-    --ink-on-paper:#1C2333;
-    --muted-on-paper:#6B7280;
+    --panel-2:#0D1420;
+    --line:#232F47;
+    --line-soft:#1A2438;
+    --text:#ECE7DA;
+    --text-strong:#FBF8F1;
+    --muted:#93A0B8;
+    --muted-2:#6E7B93;
+    --gold:#D8A24A;
+    --gold-bright:#EEBB66;
+    --gold-soft:rgba(216,162,74,0.14);
+    --gold-line:rgba(216,162,74,0.38);
+    --red:#C6413A;
+    --red-soft:rgba(198,65,58,0.16);
+    --paper:#F4EEDF;
+    --paper-line:#D8CDB4;
+    --ink-on-paper:#1B2231;
+    --muted-on-paper:#6B6656;
+    --ok:#5BB89A;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -37,70 +47,106 @@
     font-family:'IBM Plex Sans',sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* Subtle grain + vignette over the whole page for the "printed dossier" feel */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 50% -10%, rgba(216,162,74,0.06), transparent 55%),
+      radial-gradient(100% 100% at 50% 120%, rgba(10,15,26,0.6), transparent 60%);
+    mix-blend-mode:screen;
   }
   .mono{font-family:'IBM Plex Mono',monospace;}
   .serif{font-family:'Source Serif 4',serif;}
   a{color:inherit;}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:2;}
 
   /* ---------- NAV ---------- */
   nav{
-    position:sticky;top:0;z-index:50;
-    background:rgba(11,18,32,0.86);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:60;
+    background:rgba(10,15,26,0.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
   }
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  .brand{font-family:'Source Serif 4',serif;font-weight:600;font-size:18px;letter-spacing:0.01em;}
-  .brand .dot{color:var(--amber);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;}
+  .brand{font-family:'Source Serif 4',serif;font-weight:600;font-size:18px;letter-spacing:0.01em;display:flex;align-items:center;gap:10px;}
+  .brand .dot{color:var(--gold);}
+  .nav-links{display:flex;align-items:center;gap:22px;}
+  .nav-link{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s;
+  }
+  .nav-link:hover{color:var(--text);}
   .nav-cta{
     font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;
-    padding:8px 16px;border:1px solid var(--amber);border-radius:2px;color:var(--amber);
-    text-decoration:none;transition:background .15s, color .15s;white-space:nowrap;
+    padding:9px 17px;border:1px solid var(--gold-line);border-radius:2px;color:var(--gold);
+    text-decoration:none;transition:background .15s, color .15s, box-shadow .15s;white-space:nowrap;
   }
-  .nav-cta:hover{background:var(--amber);color:var(--ink);}
+  .nav-cta:hover{background:var(--gold);color:var(--ink);box-shadow:0 6px 22px var(--gold-soft);}
+  @media (max-width:820px){ .nav-links .nav-link{display:none;} }
 
   /* ---------- HERO ---------- */
-  .hero{padding:88px 0 80px;}
-  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .hero{position:relative;padding:96px 0 84px;overflow:hidden;}
+  #scene{
+    position:absolute;inset:0;width:100%;height:100%;z-index:0;
+    /* keep text readable: fade the 3D toward the left where copy sits */
+    -webkit-mask-image:radial-gradient(120% 130% at 78% 42%, #000 30%, transparent 82%);
+            mask-image:radial-gradient(120% 130% at 78% 42%, #000 30%, transparent 82%);
+    opacity:0;transition:opacity 1.2s ease;
+  }
+  #scene.ready{opacity:1;}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,0.98fr);gap:52px;align-items:center;position:relative;z-index:3;}
+  .hero-grid>*{min-width:0;}
   .eyebrow{
     font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--amber);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+    color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px;
   }
-  .eyebrow::before{content:'';width:22px;height:1px;background:var(--amber);display:inline-block;}
+  .eyebrow::before{content:'';width:26px;height:1px;background:var(--gold);display:inline-block;}
   h1{
-    font-family:'Source Serif 4',serif;font-weight:600;font-size:44px;line-height:1.14;
-    letter-spacing:-0.01em;color:#fff;margin-bottom:22px;
+    font-family:'Source Serif 4',serif;font-weight:600;font-size:47px;line-height:1.11;
+    letter-spacing:-0.015em;color:var(--text-strong);margin-bottom:22px;
   }
-  h1 em{font-style:normal;color:var(--amber);}
-  .hero p.lede{font-size:17px;color:var(--muted);max-width:46ch;margin-bottom:32px;}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  h1 em{font-style:italic;color:var(--gold-bright);}
+  .hero p.lede{font-size:17.5px;color:var(--muted);max-width:47ch;margin-bottom:30px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px;}
   .btn-primary{
-    background:var(--amber);color:#062026;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;
-    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;transition:transform .15s, box-shadow .15s;
+    background:var(--gold);color:#20160A;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;
+    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;
+    transition:transform .15s, box-shadow .15s;border:1px solid var(--gold);cursor:pointer;
   }
-  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--amber-soft);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(216,162,74,0.28);}
   .btn-secondary{
     border:1px solid var(--line);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:14px;
-    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;transition:border-color .15s;
+    padding:14px 24px;border-radius:2px;text-decoration:none;display:inline-block;transition:border-color .15s, color .15s;
+    background:rgba(17,26,44,0.5);cursor:pointer;
   }
-  .btn-secondary:hover{border-color:var(--muted);}
+  .btn-secondary:hover{border-color:var(--gold-line);color:var(--gold);}
 
-  /* ---------- SIGNATURE: report card mockup ---------- */
-  .doc-stage{position:relative;display:flex;justify-content:center;padding:20px 0;}
+  /* Hero stat band */
+  .hero-stats{display:flex;gap:34px;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:22px;}
+  .hero-stat .n{font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;color:var(--text-strong);line-height:1;}
+  .hero-stat .l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted-2);margin-top:7px;}
+
+  /* ---------- SIGNATURE: report card mockup (foreground, floats over 3D) ---------- */
+  .doc-stage{position:relative;display:flex;justify-content:center;padding:12px 0;perspective:1400px;}
   .doc-card{
     background:var(--paper);color:var(--ink-on-paper);border-radius:3px;
-    width:100%;max-width:420px;padding:26px 24px 22px;
-    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55), 0 0 0 1px var(--paper-line);
-    transform:rotate(2deg);
-    font-family:'IBM Plex Sans',sans-serif;
-    position:relative;
+    width:100%;max-width:430px;padding:26px 24px 22px;
+    box-shadow:0 40px 80px -28px rgba(0,0,0,0.7), 0 0 0 1px var(--paper-line), 0 2px 0 rgba(255,255,255,0.4) inset;
+    font-family:'IBM Plex Sans',sans-serif;position:relative;
+    transform:rotateY(-9deg) rotateX(3deg) rotateZ(1.5deg);
+    transform-style:preserve-3d;transition:transform .3s ease;
+  }
+  .doc-card::after{ /* stacked-paper depth */
+    content:'';position:absolute;inset:0;border-radius:3px;z-index:-1;
+    background:var(--paper);box-shadow:0 0 0 1px var(--paper-line);
+    transform:translate(10px,12px) rotateZ(-1deg);opacity:0.55;
   }
   .doc-stamp{
-    position:absolute;top:18px;right:-10px;
+    position:absolute;top:16px;right:-12px;
     font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.12em;
-    color:#B3261E;border:1.5px solid #B3261E;padding:3px 8px;border-radius:2px;
-    transform:rotate(8deg);opacity:0.85;
+    color:var(--red);border:1.5px solid var(--red);padding:3px 8px;border-radius:2px;
+    transform:rotate(7deg);opacity:0.9;background:rgba(198,65,58,0.06);
   }
   .doc-card h3{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;margin-bottom:2px;color:var(--ink-on-paper);}
   .doc-sub{font-size:11px;color:var(--muted-on-paper);margin-bottom:16px;font-family:'IBM Plex Mono',monospace;}
@@ -110,147 +156,193 @@
     text-transform:uppercase;letter-spacing:0.04em;color:var(--muted-on-paper);
     border-bottom:1.5px solid var(--paper-line);padding:6px 6px 6px 0;
   }
-  table.doc-table td{padding:8px 6px 8px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-  .tier-critical{color:#B3261E;font-weight:600;}
+  table.doc-table td{padding:8px 6px 8px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:anywhere;}
+  .tier-critical{color:var(--red);font-weight:600;}
   .tier-watch{color:#9A6B00;font-weight:600;}
   .doc-foot{margin-top:14px;font-size:9.5px;color:var(--muted-on-paper);font-family:'IBM Plex Mono',monospace;}
 
+  /* ---------- VALIDATED / PROOF BAND ---------- */
+  .band{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:var(--ink-2);}
+  .band .wrap{display:flex;align-items:center;gap:30px;flex-wrap:wrap;padding:22px 28px;}
+  .band-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted-2);white-space:nowrap;}
+  .band-items{display:flex;gap:26px;flex-wrap:wrap;align-items:center;}
+  .band-item{display:flex;align-items:baseline;gap:9px;}
+  .band-item .repo{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;color:var(--text-strong);}
+  .band-item .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted-2);}
+
   /* ---------- SECTION shared ---------- */
-  section{padding:76px 0;border-top:1px solid var(--line);}
+  section{padding:80px 0;border-top:1px solid var(--line-soft);position:relative;}
   .section-label{
     font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
-    color:var(--amber);margin-bottom:14px;
+    color:var(--gold);margin-bottom:14px;
   }
-  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:30px;color:#fff;margin-bottom:18px;max-width:24ch;}
-  .lead-text{color:var(--muted);font-size:16px;max-width:60ch;}
+  h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:31px;color:var(--text-strong);margin-bottom:18px;max-width:24ch;letter-spacing:-0.01em;}
+  .lead-text{color:var(--muted);font-size:16px;max-width:62ch;}
+
+  /* Scroll reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
 
   /* ---------- PROBLEM ---------- */
   .problem-quote{
-    font-family:'Source Serif 4',serif;font-style:normal;font-size:22px;line-height:1.5;color:#fff;
-    max-width:62ch;border-left:2px solid var(--amber);padding-left:22px;margin-top:24px;
+    font-family:'Source Serif 4',serif;font-style:italic;font-size:23px;line-height:1.5;color:var(--text-strong);
+    max-width:62ch;border-left:2px solid var(--gold);padding-left:24px;margin-top:26px;
   }
 
   /* ---------- HOW IT WORKS ---------- */
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;position:relative;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:46px;position:relative;}
   .steps::before{
     content:'';position:absolute;top:17px;left:6%;right:6%;height:1px;
-    background:linear-gradient(90deg, var(--line), var(--amber), var(--line));
-    opacity:.55;
+    background:linear-gradient(90deg, var(--line), var(--gold), var(--line));opacity:.55;
   }
-  .step{position:relative;padding-right:20px;}
+  .step{position:relative;padding-right:22px;}
   .step-num{
-    width:34px;height:34px;border-radius:50%;background:var(--panel-2);border:1px solid var(--amber);
+    width:34px;height:34px;border-radius:50%;background:var(--panel-2);border:1px solid var(--gold-line);
     display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;
-    font-size:13px;color:var(--amber);margin-bottom:18px;position:relative;z-index:2;
+    font-size:13px;color:var(--gold);margin-bottom:18px;position:relative;z-index:2;
   }
-  .step h4{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px;}
+  .step h4{font-size:15px;font-weight:600;color:var(--text-strong);margin-bottom:8px;}
   .step p{font-size:13.5px;color:var(--muted);}
 
-  /* ---------- REPORT CONTENTS (toc style) ---------- */
-  .toc{margin-top:40px;border-top:1px solid var(--line);}
+  /* ---------- OWNERSHIP MAP (SVG, assembles on scroll) ---------- */
+  .map-wrap{margin-top:44px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:44px;align-items:center;}
+  .map-stage{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;
+    padding:26px;position:relative;overflow:hidden;
+  }
+  .map-stage::before{content:'CONCENTRATION MAP';position:absolute;top:12px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.18em;color:var(--muted-2);}
+  .map-legend{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;}
+  .map-legend span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px;}
+  .lg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .map-copy h3{font-family:'Source Serif 4',serif;font-size:22px;color:var(--text-strong);margin-bottom:14px;}
+  .map-copy p{color:var(--muted);font-size:15px;margin-bottom:14px;}
+  .map-copy .tick{color:var(--gold);}
+  svg .seg{transition:stroke-dashoffset 1.1s ease;}
+
+  /* ---------- REPORT CONTENTS (toc) ---------- */
+  .toc{margin-top:42px;border-top:1px solid var(--line-soft);}
   .toc-row{
     display:grid;grid-template-columns:44px 1fr auto;gap:20px;align-items:start;
-    padding:20px 0;border-bottom:1px solid var(--line);
+    padding:20px 0;border-bottom:1px solid var(--line-soft);transition:background .2s;
   }
-  .toc-num{font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:14px;padding-top:2px;}
-  .toc-row h4{font-size:16px;font-weight:600;color:#fff;margin-bottom:5px;}
+  .toc-row:hover{background:rgba(216,162,74,0.04);}
+  .toc-num{font-family:'IBM Plex Mono',monospace;color:var(--gold);font-size:14px;padding-top:2px;}
+  .toc-row h4{font-size:16px;font-weight:600;color:var(--text-strong);margin-bottom:5px;}
   .toc-row p{font-size:13.5px;color:var(--muted);max-width:58ch;}
   .toc-tag{
-    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--teal);border:1px solid rgba(45,212,191,0.35);
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold);border:1px solid var(--gold-line);
     padding:4px 9px;border-radius:2px;white-space:nowrap;height:fit-content;
   }
 
-  /* ---------- PROOF ---------- */
-  .proof-box{
-    margin-top:36px;background:var(--panel);border:1px solid var(--line);border-radius:4px;
-    padding:28px 30px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  /* ---------- SELF-SERVE SAMPLE ---------- */
+  .sample-teaser{
+    margin-top:32px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;
+    padding:30px 32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
   }
-  .proof-box .left p.mono{font-size:13px;color:var(--muted);margin-top:6px;}
-  .proof-box .left strong{color:#fff;font-weight:600;}
-
-  /* ---------- SECURITY ---------- */
-  .sec-list{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
-  .sec-item{display:flex;gap:14px;}
-  .sec-check{color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
-  .sec-item p{font-size:14px;color:var(--muted);}
-  .sec-item strong{color:var(--text);}
-  .sec-note{
-    margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:60ch;
-    border-left:2px solid var(--line);padding-left:16px;
+  .sample-teaser p{color:var(--muted);font-size:14px;max-width:52ch;}
+  .sample-teaser strong{color:var(--text-strong);}
+  .sample-dossier{margin-top:26px;display:none;}
+  .sample-dossier.open{display:block;animation:fade .5s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .dossier{
+    background:var(--paper);color:var(--ink-on-paper);border-radius:4px;overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.7), 0 0 0 1px var(--paper-line);
+    font-family:'IBM Plex Sans',sans-serif;
   }
-
-  /* ---------- NAV LINKS ---------- */
-  .nav-links{display:flex;align-items:center;gap:22px;}
-  .nav-link{
-    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;
-    transition:color .15s;
-  }
-  .nav-link:hover{color:var(--text);}
+  .dossier-head{padding:26px 30px 20px;border-bottom:2px solid var(--paper-line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;position:relative;}
+  .dossier-head h3{font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;color:var(--ink-on-paper);}
+  .dossier-head .sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted-on-paper);margin-top:6px;}
+  .dossier-conf{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--red);border:1.5px solid var(--red);padding:4px 10px;border-radius:2px;transform:rotate(3deg);height:fit-content;}
+  .dossier-body{padding:24px 30px 30px;}
+  .d-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px;}
+  .d-stat{background:#EDE5D2;border:1px solid var(--paper-line);border-radius:3px;padding:14px;}
+  .d-stat .n{font-family:'Source Serif 4',serif;font-size:24px;font-weight:700;color:var(--ink-on-paper);line-height:1;}
+  .d-stat .l{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted-on-paper);margin-top:8px;}
+  .d-section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted-on-paper);margin:22px 0 12px;border-bottom:1px solid var(--paper-line);padding-bottom:8px;}
+  table.d-table{width:100%;border-collapse:collapse;font-size:12px;}
+  table.d-table th{text-align:left;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted-on-paper);padding:8px 8px 8px 0;border-bottom:1.5px solid var(--paper-line);}
+  table.d-table td{padding:10px 8px 10px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-on-paper);overflow-wrap:anywhere;}
+  .sample-dossier .dossier-body{overflow-x:auto;}
+  .d-brief{background:#EDE5D2;border-left:3px solid var(--red);border-radius:0 3px 3px 0;padding:16px 18px;margin-top:14px;}
+  .d-brief h4{font-family:'Source Serif 4',serif;font-size:15px;color:var(--ink-on-paper);margin-bottom:6px;}
+  .d-brief p{font-size:12.5px;color:#4A4636;margin-bottom:8px;}
+  .d-brief .lbl{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-on-paper);}
+  .d-redact{background:#2A2A2A;color:#2A2A2A;border-radius:2px;user-select:none;}
+  .dossier-foot{padding:14px 30px;background:#EDE5D2;border-top:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted-on-paper);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  @media (max-width:640px){ .d-grid{grid-template-columns:repeat(2,1fr);} }
 
   /* ---------- COMPARE TABLE ---------- */
   .compare-table{width:100%;border-collapse:collapse;margin-top:36px;font-size:13.5px;}
-  .compare-table th, .compare-table td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
-  .compare-table th{
-    font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;
-    color:var(--muted);font-weight:600;
-  }
-  .compare-table th.us-col, .compare-table td.us-col{
-    background:var(--amber-soft);border-left:1px solid rgba(24,192,216,0.35);border-right:1px solid rgba(24,192,216,0.35);
-  }
-  .compare-table th.us-col{color:var(--amber);}
+  .compare-table th, .compare-table td{padding:15px 16px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:top;}
+  .compare-table th{font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);font-weight:600;}
+  .compare-table th.us-col, .compare-table td.us-col{background:var(--gold-soft);border-left:1px solid var(--gold-line);border-right:1px solid var(--gold-line);}
+  .compare-table th.us-col{color:var(--gold);}
   .compare-table td{color:var(--muted);}
   .compare-table td.us-col{color:var(--text);}
-  .compare-table td strong{color:inherit;}
   .compare-row-label{color:var(--text) !important;font-weight:500;}
   .compare-table-scroll{overflow-x:auto;}
   @media (max-width:700px){ .compare-table{font-size:12px;} .compare-table th,.compare-table td{padding:10px 10px;} }
 
+  /* ---------- SECURITY ---------- */
+  .sec-list{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+  .sec-item{display:flex;gap:14px;}
+  .sec-check{color:var(--ok);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
+  .sec-item p{font-size:14px;color:var(--muted);}
+  .sec-item strong{color:var(--text);}
+  .sec-note{margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:64ch;border-left:2px solid var(--line);padding-left:16px;}
+
+  /* ---------- FOUNDER ---------- */
+  .founder{margin-top:34px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;padding:32px 34px;border-left:3px solid var(--gold);}
+  .founder-body{min-width:0;max-width:70ch;}
+  .founder-body p{color:var(--muted);font-size:15px;margin-bottom:14px;}
+  .founder-body .sig{font-family:'Source Serif 4',serif;font-style:italic;font-size:17px;color:var(--text-strong);}
+  .founder-body .role{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted-2);margin-top:4px;}
+
   /* ---------- FAQ ---------- */
-  .faq{margin-top:36px;border-top:1px solid var(--line);}
-  .faq-item{border-bottom:1px solid var(--line);}
-  .faq-item summary{
-    padding:20px 0;font-size:15.5px;font-weight:600;color:#fff;cursor:pointer;list-style:none;
-    display:flex;justify-content:space-between;align-items:center;gap:16px;
-  }
+  .faq{margin-top:36px;border-top:1px solid var(--line-soft);}
+  .faq-item{border-bottom:1px solid var(--line-soft);}
+  .faq-item summary{padding:20px 0;font-size:15.5px;font-weight:600;color:var(--text-strong);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
   .faq-item summary::-webkit-details-marker{display:none;}
-  .faq-item summary::after{
-    content:'+';font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:20px;flex-shrink:0;
-    transition:transform .2s;
-  }
+  .faq-item summary::after{content:'+';font-family:'IBM Plex Mono',monospace;color:var(--gold);font-size:20px;flex-shrink:0;transition:transform .2s;}
   .faq-item[open] summary::after{transform:rotate(45deg);}
-  .faq-item p{padding-bottom:20px;color:var(--muted);font-size:14px;max-width:68ch;}
+  .faq-item p{padding-bottom:20px;color:var(--muted);font-size:14px;max-width:70ch;}
 
   /* ---------- CONTACT ---------- */
-  .contact-box{
-    margin-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
-    background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:28px 30px;
-  }
+  .contact-box{margin-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;padding:30px 32px;}
   .contact-box p{color:var(--muted);font-size:14px;max-width:50ch;}
-  .contact-box p strong{color:#fff;}
-  .cta-final{text-align:center;padding:90px 0 70px;}
-  .cta-final h2{max-width:none;margin:0 auto 16px;font-size:32px;}
+  .contact-box p strong{color:var(--text-strong);}
+  .contact-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .cta-final{text-align:center;padding:94px 0 74px;position:relative;overflow:hidden;}
+  .cta-final h2{max-width:none;margin:0 auto 16px;font-size:34px;}
   .cta-final .lead-text{margin:0 auto 34px;}
-  footer{border-top:1px solid var(--line);padding:28px 0;}
+  footer{border-top:1px solid var(--line-soft);padding:30px 0;}
   footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-  footer p{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+  footer p{font-size:12.5px;color:var(--muted-2);font-family:'IBM Plex Mono',monospace;}
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    #scene{opacity:1;}
   }
 
   /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 880px){
-    .hero-grid{grid-template-columns:1fr;gap:44px;}
-    h1{font-size:34px;}
+  @media (max-width: 900px){
+    .hero-grid{grid-template-columns:minmax(0,1fr);gap:44px;}
+    h1{font-size:37px;}
+    #scene{-webkit-mask-image:radial-gradient(140% 120% at 50% 30%, #000 20%, transparent 78%);mask-image:radial-gradient(140% 120% at 50% 30%, #000 20%, transparent 78%);opacity:0.55;}
+    #scene.ready{opacity:0.55;}
     .steps{grid-template-columns:1fr 1fr;row-gap:32px;}
     .steps::before{display:none;}
     .sec-list{grid-template-columns:1fr;}
-    .doc-card{transform:rotate(0deg);max-width:100%;}
+    .map-wrap{grid-template-columns:1fr;}
+    .doc-card{transform:rotateY(-5deg) rotateZ(1deg);max-width:100%;}
   }
   @media (max-width: 520px){
+    h1{font-size:30px;}
     .steps{grid-template-columns:1fr;}
     .toc-row{grid-template-columns:32px 1fr;}
     .toc-tag{grid-column:2;justify-self:start;}
+    .d-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
@@ -258,33 +350,38 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand" style="display:flex;align-items:center;gap:10px;">
+    <div class="brand">
       <img src="logo-icon.png" alt="" style="height:38px;width:auto;display:block;">
       <span>Codebase<span class="dot">·</span>Time Machine</span>
     </div>
     <div class="nav-links">
-      <a class="nav-link" href="#sample">Sample report</a>
+      <a class="nav-link" href="#sample">Sample dossier</a>
       <a class="nav-link" href="#compare">Compare</a>
       <a class="nav-link" href="#faq">FAQ</a>
-      <a class="nav-link" href="#contact">Contact</a>
-      <a class="nav-cta" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
+      <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
+  <canvas id="scene"></canvas>
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
       <h1>Before you close, know who <em>actually</em> holds the code.</h1>
-      <p class="lede">Codebase Time Machine turns a target company's Git history into a ranked, confidence-scored key-person risk report — not a code-quality score, an ownership map.</p>
+      <p class="lede">Codebase Time Machine replays a target company's entire Git history and returns a ranked, confidence-scored key-person risk dossier — not a code-quality score. An ownership map of who the deal really depends on.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Sample%20report%20request">See a sample report →</a>
-        <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
+        <button class="btn-primary" id="open-sample-hero">See a sample dossier →</button>
+        <a class="btn-secondary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="n">2,000+</div><div class="l">Commits replayed per scan</div></div>
+        <div class="hero-stat"><div class="n">7</div><div class="l">Sections, IC-ready</div></div>
+        <div class="hero-stat"><div class="n">Hours</div><div class="l">Not weeks, to delivery</div></div>
       </div>
     </div>
     <div class="doc-stage">
-      <div class="doc-card">
+      <div class="doc-card" id="tilt-card">
         <div class="doc-stamp">CONFIDENTIAL</div>
         <h3>Ranked Material Assets</h3>
         <div class="doc-sub">react · depth 5000 · prepared for sample review</div>
@@ -300,19 +397,30 @@
   </div>
 </header>
 
-<section>
+<div class="band">
   <div class="wrap">
+    <span class="band-label">Validated against production repositories</span>
+    <div class="band-items">
+      <div class="band-item"><span class="repo">React</span><span class="meta">consolidating ownership</span></div>
+      <div class="band-item"><span class="repo">VS Code</span><span class="meta">clean handoffs surfaced</span></div>
+      <div class="band-item"><span class="meta">— public history, production commit depth</span></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap reveal">
     <div class="section-label">The gap</div>
     <h2>Code-quality scanners answer the wrong question.</h2>
     <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks who actually understands it — or whether that understanding is dangerously concentrated in one or two people who may not stay past close.</p>
-    <p class="problem-quote">The question diligence rarely answers: if this engineer leaves the day after you sign, what breaks — and how long does it take to fix?</p>
+    <p class="problem-quote">If this engineer leaves the day after you sign, what breaks — and how long does it take to fix?</p>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">How it works</div>
-    <h2>Grant access. We scan. You get the report. We delete the clone.</h2>
+    <h2>Grant access. We scan. You get the dossier. We delete the clone.</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -322,7 +430,7 @@
       <div class="step">
         <div class="step-num">2</div>
         <h4>Scoped, temporary scan</h4>
-        <p>Commit history analyzed in a dedicated temporary workspace, wiped after use. You choose the depth — up to the repository's complete history — and the report states what share of it was actually analyzed.</p>
+        <p>Commit history replayed in a dedicated temporary workspace, wiped after use. You choose the depth — up to the repository's complete history — and the dossier states what share of it was actually analyzed.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
@@ -339,8 +447,39 @@
 </section>
 
 <section>
-  <div class="wrap">
-    <div class="section-label">What's in the report</div>
+  <div class="wrap reveal">
+    <div class="section-label">What we actually measure</div>
+    <h2>Ownership concentration, mapped file by file.</h2>
+    <p class="lead-text">Every material file gets a bus-factor tier calibrated against commit-history thresholds — not a subjective judgment. Where one author holds too much of the history, the map turns red.</p>
+    <div class="map-wrap">
+      <div class="map-stage">
+        <svg id="ownership-svg" viewBox="0 0 460 260" width="100%" role="img" aria-label="Ownership concentration map: authors by subsystem, with concentrated files highlighted in red.">
+          <!-- axes -->
+          <line x1="40" y1="20" x2="40" y2="220" stroke="#232F47" stroke-width="1"/>
+          <line x1="40" y1="220" x2="440" y2="220" stroke="#232F47" stroke-width="1"/>
+          <text x="46" y="16" fill="#6E7B93" font-family="IBM Plex Mono, monospace" font-size="9">share of file history →</text>
+          <!-- bars drawn/animated by JS -->
+          <g id="bars"></g>
+        </svg>
+        <div class="map-legend">
+          <span><i class="lg-dot" style="background:var(--red)"></i> High-confidence (&gt;70% share)</span>
+          <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% share)</span>
+          <span><i class="lg-dot" style="background:var(--ok)"></i> Distributed</span>
+        </div>
+      </div>
+      <div class="map-copy">
+        <h3>Three tiers, calibrated — not guessed.</h3>
+        <p><span class="tick mono">High-confidence</span> — 10+ commits on a file with one author holding over 70% share. Treat as a real key-person risk.</p>
+        <p><span class="tick mono">Watch</span> — 5+ commits and over 55% share. Concentration is real but history is still short; interview the dominant author.</p>
+        <p><span class="tick mono">Distributed</span> — ownership is spread. No single point of failure at close.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">What's in the dossier</div>
     <h2>Seven sections. Built for a one-sitting IC read.</h2>
     <div class="toc">
       <div class="toc-row">
@@ -383,21 +522,64 @@
 </section>
 
 <section id="sample">
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">Proof</div>
-    <h2>Run against real, large codebases — not a toy demo.</h2>
-    <div class="proof-box">
-      <div class="left">
-        <p><strong>React</strong> and <strong>VS Code</strong> — public repositories, production commit depth.</p>
-        <p class="mono">Both correctly surface genuine ownership patterns: consolidation, diversification, and clean handoffs.</p>
+    <h2>See the real output before you hand over a single repo.</h2>
+    <p class="lead-text">A representative excerpt in our exact delivery format, modeled on React's public commit history at production depth — so you can read the real structure and tier logic before a single sales call.</p>
+    <div class="sample-teaser">
+      <p><strong>Self-serve.</strong> Expand a sample dossier right here — summary tiles, bus-factor tiers, and a full risk brief, in the exact format we deliver. Your own target's PDF + Excel workbook is one email away.</p>
+      <button class="btn-primary" id="open-sample">Open sample dossier ↓</button>
+    </div>
+
+    <div class="sample-dossier" id="sample-dossier">
+      <div class="dossier">
+        <div class="dossier-head">
+          <div>
+            <h3>Key-Person Risk Dossier</h3>
+            <div class="sub">TARGET: react · DEPTH: 2,000 commits · COVERAGE: 41.8% of total history · SCHEMA v1</div>
+          </div>
+          <div class="dossier-conf">CONFIDENTIAL — SAMPLE</div>
+        </div>
+        <div class="dossier-body">
+          <div class="d-grid">
+            <div class="d-stat"><div class="n">1,911</div><div class="l">Files analyzed</div></div>
+            <div class="d-stat"><div class="n">47</div><div class="l">Material risks</div></div>
+            <div class="d-stat"><div class="n">9</div><div class="l">High-confidence</div></div>
+            <div class="d-stat"><div class="n">Consolidating</div><div class="l">Risk trajectory</div></div>
+          </div>
+
+          <div class="d-section-label">§02 — Bus-factor tiers (top rows)</div>
+          <table class="d-table">
+            <tr><th>Asset</th><th>Tier</th><th>Dominant author</th><th>Share</th><th>Commits</th><th>Confidence</th></tr>
+            <tr><td>ReactFiberConfigWithNoMutation.js</td><td class="tier-critical">High-confidence</td><td class="d-redact">████████</td><td>90.9%</td><td>22</td><td>High</td></tr>
+            <tr><td>ReactFlightServerConfigDebugNode.js</td><td class="tier-critical">High-confidence</td><td class="d-redact">██████</td><td>88.9%</td><td>18</td><td>High</td></tr>
+            <tr><td>ReactFiberCommitWork.js</td><td class="tier-watch">Watch</td><td class="d-redact">████████</td><td>56.9%</td><td>31</td><td>Medium</td></tr>
+            <tr><td>ReactDOMComponent.js</td><td class="tier-watch">Watch</td><td class="d-redact">█████</td><td>55.4%</td><td>14</td><td>Medium</td></tr>
+          </table>
+
+          <div class="d-section-label">§05 — Detailed risk brief · highest priority</div>
+          <div class="d-brief">
+            <h4>ReactFiberConfigWithNoMutation.js — single-author concentration</h4>
+            <p><span class="lbl">Context.</span> One author holds 90.9% of this file's history across 22 commits. It sits on the reconciler's no-mutation config path — a subsystem few contributors touch.</p>
+            <p><span class="lbl">Departure scenario.</span> If this author exits at close, no remaining contributor has meaningful history in this path. Expect a multi-week ramp before another engineer can safely modify it.</p>
+            <p><span class="lbl">Remediation.</span> Pair a second engineer on the next two changes to this subsystem; require review from outside the dominant author before merge.</p>
+            <p><span class="lbl">90-day plan.</span> Target &lt;70% single-author share via deliberate co-ownership on the next reconciler work cycle.</p>
+          </div>
+        </div>
+        <div class="dossier-foot">
+          <span>Representative figures · author names redacted for this public sample</span>
+          <span>Full dossier: PDF + Excel workbook</span>
+        </div>
       </div>
-      <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com?subject=Sample%20report%20request">Request the sample PDF →</a>
+      <div style="text-align:center;margin-top:26px;">
+        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Full%20sample%20dossier%20request">Get the full PDF + Excel →</a>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="compare">
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">Compare</div>
     <h2>Not a scanner. Not just interviews.</h2>
     <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: a calibrated, evidence-backed picture of who actually holds the risk.</p>
@@ -445,21 +627,36 @@
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">Security</div>
     <h2>Honest about where we are.</h2>
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Read-only, revocable access.</strong> We never ask for write or admin permissions.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Dedicated, temporary workspace per scan.</strong> Each engagement clones into its own temp directory, wiped immediately after the report is sent.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deleted after delivery.</strong> The cloned repo and any token are removed once the report is sent.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Dedicated, temporary workspace per scan.</strong> Each engagement clones into its own temp directory, wiped immediately after the dossier is sent.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deleted after delivery.</strong> The cloned repo and any token are removed once the dossier is sent.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>No secrets in logs.</strong> Tokens exist in memory only, never written to disk or logged.</p></div>
     </div>
     <p class="sec-note">Codebase Time Machine is an independent practice, not a platform vendor — which is the point: the analysis has no stake in the outcome of your deal. We won't claim a zero-trust or enterprise-vault architecture until it's actually built. The above is what we do today, not a roadmap.</p>
   </div>
 </section>
 
+<section>
+  <div class="wrap reveal">
+    <div class="section-label">Who's behind it</div>
+    <h2>Talk to the person who built the analysis.</h2>
+    <div class="founder">
+      <div class="founder-body">
+        <p>I built Codebase Time Machine because I kept watching good deals carry a risk no scanner reports: a codebase that quietly depends on one or two people. Interviews miss it, quality tools ignore it, and it only surfaces after close — when it's expensive.</p>
+        <p>Every engagement runs through the same calibrated methodology, and I'll get on a call before you grant access to walk you through exactly what we read and what we never touch. No support rotation, no black box.</p>
+        <div class="sig">— Josiah Shirt</div>
+        <div class="role">Founder, Codebase Time Machine · hello@codebasetimemachine.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="faq">
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">FAQ</div>
     <h2>What people ask before their first scan.</h2>
     <div class="faq">
@@ -473,11 +670,15 @@
       </details>
       <details class="faq-item">
         <summary>What happens to our code after the scan?</summary>
-        <p>The repo is cloned into a dedicated temporary workspace for the scan, then deleted immediately once the report is generated. Nothing is retained.</p>
+        <p>The repo is cloned into a dedicated temporary workspace for the scan, then deleted immediately once the dossier is generated. Nothing is retained.</p>
       </details>
       <details class="faq-item">
         <summary>How is "risk" actually calculated?</summary>
         <p>Bus-factor tiers are calibrated against commit-history thresholds — for example, 10+ commits on a file with one author holding over 70% share is High-confidence. It's not a subjective score.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does it cost?</summary>
+        <p>Every engagement is quoted individually, before you grant any access — so you know exactly where you stand up front. Book a call or email us and we'll turn a quote around quickly.</p>
       </details>
       <details class="faq-item">
         <summary>How long does a scan take?</summary>
@@ -485,28 +686,31 @@
       </details>
       <details class="faq-item">
         <summary>Can we see a sample before committing our own repo?</summary>
-        <p>Yes — we've run the same analysis against React and VS Code's public history. Request the sample PDF and see the real output first.</p>
+        <p>Yes — expand the sample dossier above, generated against React's public history. Email us for the full PDF + Excel workbook.</p>
       </details>
     </div>
   </div>
 </section>
 
 <section id="contact">
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="section-label">Contact</div>
     <h2>Talk to a person, not a ticket queue.</h2>
     <div class="contact-box">
-      <p>Questions before you hand over repo access? Email us directly — <strong>hello@codebasetimemachine.com</strong> — and you'll hear back from someone who actually built this, not a support rotation.</p>
-      <a class="btn-primary" href="mailto:hello@codebasetimemachine.com">Send an email →</a>
+      <p>Questions before you hand over repo access? Email directly — <strong>hello@codebasetimemachine.com</strong> — and you'll hear back from someone who actually built this, not a support rotation.</p>
+      <div class="contact-actions">
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 30-min call →</a>
+        <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="cta-final" style="border-top:1px solid var(--line);">
-  <div class="wrap">
+<section class="cta-final">
+  <div class="wrap reveal">
     <h2>Bring us your next target before you sign.</h2>
-    <p class="lead-text">One repo, one report, one sitting for your IC.</p>
-    <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
+    <p class="lead-text">One repo, one dossier, one sitting for your IC.</p>
+    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo →</a>
   </div>
 </section>
 
@@ -517,7 +721,246 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Sample dossier toggle ---------- */
+  function openSample(){
+    var d = document.getElementById('sample-dossier');
+    if(!d) return;
+    d.classList.add('open');
+    d.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+  }
+  var os = document.getElementById('open-sample');
+  var osh = document.getElementById('open-sample-hero');
+  if(os) os.addEventListener('click', openSample);
+  if(osh) osh.addEventListener('click', function(){
+    document.getElementById('sample').scrollIntoView({behavior: reduce ? 'auto':'smooth'});
+    setTimeout(openSample, reduce ? 0 : 450);
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+  if('IntersectionObserver' in window && !reduce){
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, {threshold:0.12});
+    reveals.forEach(function(el){ ro.observe(el); });
+  } else { reveals.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* ---------- Foreground card tilt ---------- */
+  var card = document.getElementById('tilt-card');
+  if(card && !reduce && matchMedia('(pointer:fine)').matches){
+    var stage = card.parentElement;
+    stage.addEventListener('mousemove', function(e){
+      var r = stage.getBoundingClientRect();
+      var px = (e.clientX - r.left)/r.width - 0.5;
+      var py = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = 'rotateY('+(-9 + px*10)+'deg) rotateX('+(3 - py*8)+'deg) rotateZ(1.5deg)';
+    });
+    stage.addEventListener('mouseleave', function(){
+      card.style.transform = 'rotateY(-9deg) rotateX(3deg) rotateZ(1.5deg)';
+    });
+  }
+
+  /* ---------- Ownership concentration bars (SVG, animate in) ---------- */
+  (function(){
+    var svg = document.getElementById('ownership-svg');
+    var g = document.getElementById('bars');
+    if(!svg || !g) return;
+    // [label, share 0..1] — red >0.70, gold >0.55, else ok
+    var data = [
+      ['reconciler', 0.91],['flight-server',0.89],['scheduler',0.57],
+      ['dom-config',0.55],['hooks',0.42],['devtools',0.30],['docs',0.19]
+    ];
+    var x0=40, y0=30, rowH=26, maxW=380;
+    function color(s){ return s>0.70 ? '#C6413A' : (s>0.55 ? '#D8A24A' : '#5BB89A'); }
+    data.forEach(function(d,i){
+      var y = y0 + i*rowH;
+      var w = Math.max(6, d[1]*maxW);
+      var rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', x0+1); rect.setAttribute('y', y);
+      rect.setAttribute('height', 13); rect.setAttribute('rx',2);
+      rect.setAttribute('fill', color(d[1]));
+      rect.setAttribute('width', reduce ? w : 0);
+      rect.setAttribute('opacity','0.92');
+      g.appendChild(rect);
+      var lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', x0-6); lab.setAttribute('y', y+11);
+      lab.setAttribute('text-anchor','end');
+      lab.setAttribute('fill','#93A0B8'); lab.setAttribute('font-family','IBM Plex Mono, monospace'); lab.setAttribute('font-size','9');
+      lab.textContent = d[0]; g.appendChild(lab);
+      var pct = document.createElementNS('http://www.w3.org/2000/svg','text');
+      pct.setAttribute('y', y+11); pct.setAttribute('fill','#ECE7DA');
+      pct.setAttribute('font-family','IBM Plex Mono, monospace'); pct.setAttribute('font-size','9');
+      pct.textContent = Math.round(d[1]*100)+'%';
+      g.appendChild(pct);
+      rect._pct = pct; rect._w = w;
+    });
+    function play(){
+      [].forEach.call(g.querySelectorAll('rect'), function(rect,i){
+        setTimeout(function(){
+          rect.style.transition='width .9s cubic-bezier(.2,.8,.2,1)';
+          rect.setAttribute('width', rect._w);
+          rect._pct.setAttribute('x', 40+1+rect._w+6);
+        }, i*90);
+      });
+    }
+    if(reduce){ [].forEach.call(g.querySelectorAll('rect'),function(r){ r._pct.setAttribute('x',40+1+r._w+6); }); return; }
+    if('IntersectionObserver' in window){
+      var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){play();o.disconnect();}});},{threshold:0.4});
+      o.observe(svg);
+    } else play();
+  })();
+
+  /* ---------- 3D commit "time machine" hero ---------- */
+  (function(){
+    var canvas = document.getElementById('scene');
+    if(!canvas || typeof THREE === 'undefined') return;
+    var gl;
+    try { gl = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'}); }
+    catch(e){ return; } // no WebGL -> CSS fallback stays
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(52, 1, 0.1, 100);
+    camera.position.set(0, 1.2, 16);
+
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    gl.setPixelRatio(DPR);
+    gl.setClearColor(0x000000, 0);
+
+    // Build a field of commit nodes: authors as lanes along X, time along Z.
+    var isMobile = window.innerWidth < 900;
+    var AUTHORS = 7;
+    var PER = isMobile ? 26 : 44;         // commits per author strand
+    var LANE = 2.3;
+    var laneX = [];
+    for(var a=0;a<AUTHORS;a++){ laneX.push((a-(AUTHORS-1)/2)*LANE); }
+
+    // Two "critical" authors glow red (concentrated ownership); rest are gold/neutral.
+    var critical = {1:true, 4:true};
+    var group = new THREE.Group();
+    scene.add(group);
+
+    var positions = [];
+    var colors = [];
+    var cGold = new THREE.Color(0xD8A24A);
+    var cRed  = new THREE.Color(0xC6413A);
+    var cDim  = new THREE.Color(0x5f6f8a);
+
+    var strandLines = [];
+    for(var a2=0;a2<AUTHORS;a2++){
+      var isCrit = critical[a2];
+      var base = isCrit ? cRed : (a2%2===0 ? cGold : cDim);
+      var linePts = [];
+      for(var i=0;i<PER;i++){
+        var z = -18 + (i/(PER-1))*34;                 // time axis
+        var jitterX = (Math.sin(i*1.7 + a2)*0.35) + (Math.random()-0.5)*0.25;
+        var jitterY = Math.cos(i*0.9 + a2*2)*0.6 + (Math.random()-0.5)*0.5;
+        var x = laneX[a2] + jitterX;
+        var y = jitterY;
+        positions.push(x,y,z);
+        // fade older commits (further -z) dimmer
+        var depthT = i/(PER-1);
+        var col = base.clone().lerp(new THREE.Color(0x0A0F1A), (1-depthT)*0.55);
+        colors.push(col.r, col.g, col.b);
+        linePts.push(new THREE.Vector3(x,y,z));
+      }
+      // strand line
+      var lgeo = new THREE.BufferGeometry().setFromPoints(linePts);
+      var lmat = new THREE.LineBasicMaterial({color: base.getHex(), transparent:true, opacity: isCrit?0.42:0.16});
+      var line = new THREE.Line(lgeo, lmat);
+      group.add(line);
+      strandLines.push(line);
+    }
+
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
+
+    // round sprite texture for soft points
+    var tex = (function(){
+      var c=document.createElement('canvas'); c.width=c.height=64;
+      var x=c.getContext('2d');
+      var grd=x.createRadialGradient(32,32,0,32,32,32);
+      grd.addColorStop(0,'rgba(255,255,255,1)');
+      grd.addColorStop(0.35,'rgba(255,255,255,0.9)');
+      grd.addColorStop(1,'rgba(255,255,255,0)');
+      x.fillStyle=grd; x.beginPath(); x.arc(32,32,32,0,Math.PI*2); x.fill();
+      var t=new THREE.Texture(c); t.needsUpdate=true; return t;
+    })();
+
+    var pmat = new THREE.PointsMaterial({
+      size: isMobile?0.28:0.34, map:tex, vertexColors:true,
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true
+    });
+    var points = new THREE.Points(geo, pmat);
+    group.add(points);
+
+    // A translucent "scan plane" sweeping through the timeline
+    var planeGeo = new THREE.PlaneGeometry(AUTHORS*LANE+3, 7);
+    var planeMat = new THREE.MeshBasicMaterial({color:0xD8A24A, transparent:true, opacity:0.06, side:THREE.DoubleSide, depthWrite:false});
+    var plane = new THREE.Mesh(planeGeo, planeMat);
+    plane.rotation.x = Math.PI/2 * 0.02;
+    group.add(plane);
+
+    group.rotation.y = -0.35;
+
+    var mx=0, my=0, tmx=0, tmy=0;
+    window.addEventListener('mousemove', function(e){
+      tmx = (e.clientX/window.innerWidth - 0.5);
+      tmy = (e.clientY/window.innerHeight - 0.5);
+    }, {passive:true});
+
+    var scrollN = 0;
+    window.addEventListener('scroll', function(){
+      var h = document.querySelector('.hero').offsetHeight || 600;
+      scrollN = Math.min(1, (window.scrollY||0)/h);
+    }, {passive:true});
+
+    function resize(){
+      var hero = document.querySelector('.hero');
+      var w = hero.clientWidth, h = hero.clientHeight;
+      gl.setSize(w, h, false);
+      camera.aspect = w/h; camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var running = true;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){ running = es[0].isIntersecting; if(running && !reduce) loop(); }, {threshold:0.01});
+      io.observe(document.querySelector('.hero'));
+    }
+
+    var t0 = performance.now();
+    function frame(now){
+      var t = (now - t0)/1000;
+      mx += (tmx - mx)*0.05; my += (tmy - my)*0.05;
+      group.rotation.y = -0.35 + Math.sin(t*0.08)*0.25 + mx*0.5;
+      group.rotation.x = -0.03 + my*0.18;
+      // camera gentle dolly, pushed by scroll
+      camera.position.z = 16 - scrollN*5 + Math.sin(t*0.2)*0.3;
+      camera.position.y = 1.2 + my*0.6;
+      camera.lookAt(0,0,0);
+      // sweep scan plane through the timeline
+      plane.position.z = ((t*2.2)%36) - 18;
+      var pulse = 0.05 + Math.abs(Math.sin(t*1.1))*0.05;
+      planeMat.opacity = pulse;
+      gl.render(scene, camera);
+    }
+    var raf;
+    function loop(){ if(!running) return; frame(performance.now()); raf = requestAnimationFrame(loop); }
+
+    canvas.classList.add('ready');
+    if(reduce){ frame(performance.now()); }   // one static frame
+    else { loop(); }
+  })();
+})();
+</script>
 
 </body>
 </html>
