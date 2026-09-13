@@ -283,20 +283,6 @@
   .compare-table-scroll{overflow-x:auto;}
   @media (max-width:700px){ .compare-table{font-size:12px;} .compare-table th,.compare-table td{padding:10px 10px;} }
 
-  /* ---------- PRICING ---------- */
-  .pricing-band{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:22px;}
-  .price-card{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;padding:28px 28px;}
-  .price-card.feature{border-color:var(--gold-line);box-shadow:0 0 0 1px var(--gold-soft), 0 20px 50px -30px rgba(216,162,74,0.4);}
-  .price-card h4{font-family:'Source Serif 4',serif;font-size:19px;color:var(--text-strong);margin-bottom:6px;}
-  .price-card .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-  .price-card .amt{font-family:'Source Serif 4',serif;font-size:30px;color:var(--text-strong);margin-bottom:4px;}
-  .price-card .amt small{font-size:14px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
-  .price-card ul{list-style:none;margin-top:16px;}
-  .price-card li{font-size:13.5px;color:var(--muted);padding:7px 0;display:flex;gap:10px;}
-  .price-card li::before{content:'✓';color:var(--gold);font-family:'IBM Plex Mono',monospace;}
-  .price-note{margin-top:18px;font-size:12.5px;color:var(--muted-2);font-style:italic;max-width:64ch;}
-  @media (max-width:720px){ .pricing-band{grid-template-columns:1fr;} }
-
   /* ---------- SECURITY ---------- */
   .sec-list{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
   .sec-item{display:flex;gap:14px;}
@@ -372,9 +358,8 @@
     <div class="nav-links">
       <a class="nav-link" href="#sample">Sample dossier</a>
       <a class="nav-link" href="#compare">Compare</a>
-      <a class="nav-link" href="#pricing">Pricing</a>
       <a class="nav-link" href="#faq">FAQ</a>
-      <a class="nav-cta" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
+      <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo</a>
     </div>
   </div>
 </nav>
@@ -388,7 +373,7 @@
       <p class="lede">Codebase Time Machine replays a target company's entire Git history and returns a ranked, confidence-scored key-person risk dossier — not a code-quality score. An ownership map of who the deal really depends on.</p>
       <div class="hero-ctas">
         <button class="btn-primary" id="open-sample-hero">See a sample dossier →</button>
-        <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo</a>
+        <a class="btn-secondary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><div class="n">2,000+</div><div class="l">Commits replayed per scan</div></div>
@@ -541,9 +526,9 @@
   <div class="wrap reveal">
     <div class="section-label">Proof</div>
     <h2>See the real output before you hand over a single repo.</h2>
-    <p class="lead-text">This is a redacted excerpt of an actual dossier — generated against React's public history at production commit depth. No sales call required to look.</p>
+    <p class="lead-text">A representative excerpt in our exact delivery format, modeled on React's public commit history at production depth — so you can read the real structure and tier logic before a single sales call.</p>
     <div class="sample-teaser">
-      <p><strong>Self-serve.</strong> Expand a real dossier excerpt right here — summary tiles, bus-factor tiers, and a full risk brief. The complete PDF + Excel workbook is one email away.</p>
+      <p><strong>Self-serve.</strong> Expand a sample dossier right here — summary tiles, bus-factor tiers, and a full risk brief, in the exact format we deliver. Your own target's PDF + Excel workbook is one email away.</p>
       <button class="btn-primary" id="open-sample">Open sample dossier ↓</button>
     </div>
 
@@ -583,7 +568,7 @@
           </div>
         </div>
         <div class="dossier-foot">
-          <span>Figures from scan · author names redacted for this public sample</span>
+          <span>Representative figures · author names redacted for this public sample</span>
           <span>Full dossier: PDF + Excel workbook</span>
         </div>
       </div>
@@ -642,41 +627,6 @@
   </div>
 </section>
 
-<section id="pricing">
-  <div class="wrap reveal">
-    <div class="section-label">Pricing</div>
-    <h2>Flat fee per target. Quoted before you grant access.</h2>
-    <p class="lead-text">No seats, no subscription, no per-repo metering surprises. You know the number before a single line of history is read.</p>
-    <div class="pricing-band">
-      <div class="price-card feature">
-        <div class="tag">Single-target diligence</div>
-        <h4>Per-engagement dossier</h4>
-        <!-- EDIT: replace with your real anchor price when ready, e.g. "from $2,500" -->
-        <div class="amt">Fixed fee <small>/ per repository</small></div>
-        <ul>
-          <li>Full 7-section PDF dossier, IC-ready</li>
-          <li>Complete Excel workbook (40–65+ material rows)</li>
-          <li>Depth up to complete repository history</li>
-          <li>Read-only access, clone deleted after delivery</li>
-          <li>Turnaround in hours, not weeks</li>
-        </ul>
-      </div>
-      <div class="price-card">
-        <div class="tag">Portfolio &amp; repeat deal flow</div>
-        <h4>Deal-team retainer</h4>
-        <div class="amt">Volume terms</div>
-        <ul>
-          <li>Priority turnaround across active deals</li>
-          <li>Consistent methodology &amp; branding across targets</li>
-          <li>Direct line to the person who built the analysis</li>
-          <li>Custom risk thresholds &amp; core-path scoping</li>
-        </ul>
-      </div>
-    </div>
-    <p class="price-note">Every scan is quoted up front as one flat fee for the target repository — priced between what a diligence analyst's afternoon and a junior associate's week would cost you. Email for a same-day quote.</p>
-  </div>
-</section>
-
 <section>
   <div class="wrap reveal">
     <div class="section-label">Security</div>
@@ -696,12 +646,12 @@
     <div class="section-label">Who's behind it</div>
     <h2>Talk to the person who built the analysis.</h2>
     <div class="founder">
-      <!-- EDIT: swap initials / add a real photo + full name + title when ready -->
-      <div class="founder-avatar">J</div>
+      <!-- EDIT: add a real photo in place of the JS monogram when ready -->
+      <div class="founder-avatar">JS</div>
       <div class="founder-body">
         <p>I built Codebase Time Machine because I kept watching good deals carry a risk no scanner reports: a codebase that quietly depends on one or two people. Interviews miss it, quality tools ignore it, and it only surfaces after close — when it's expensive.</p>
         <p>Every engagement runs through the same calibrated methodology, and I'll get on a call before you grant access to walk you through exactly what we read and what we never touch. No support rotation, no black box.</p>
-        <div class="sig">— Josiah</div>
+        <div class="sig">— Josiah Shirt</div>
         <div class="role">Founder, Codebase Time Machine · hello@codebasetimemachine.com</div>
       </div>
     </div>
@@ -731,7 +681,7 @@
       </details>
       <details class="faq-item">
         <summary>What does it cost?</summary>
-        <p>A flat fee per target repository, quoted before you grant access — no seats or subscription. Repeat deal flow can move to volume retainer terms. Email us for a same-day quote.</p>
+        <p>Every engagement is quoted individually, before you grant any access — so you know exactly where you stand up front. Book a call or email us and we'll turn a quote around quickly.</p>
       </details>
       <details class="faq-item">
         <summary>How long does a scan take?</summary>
@@ -752,8 +702,7 @@
     <div class="contact-box">
       <p>Questions before you hand over repo access? Email directly — <strong>hello@codebasetimemachine.com</strong> — and you'll hear back from someone who actually built this, not a support rotation.</p>
       <div class="contact-actions">
-        <!-- EDIT: replace the mailto with your Calendly/Cal.com link when ready -->
-        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Book%20a%2020-minute%20call">Book a 20-min call →</a>
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 30-min call →</a>
         <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
       </div>
     </div>
@@ -764,7 +713,7 @@
   <div class="wrap reveal">
     <h2>Bring us your next target before you sign.</h2>
     <p class="lead-text">One repo, one dossier, one sitting for your IC.</p>
-    <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Demo%20request">Book a demo →</a>
+    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo →</a>
   </div>
 </section>
 
