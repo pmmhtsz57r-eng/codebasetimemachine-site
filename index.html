@@ -62,6 +62,40 @@
   a{color:inherit;}
   .wrap{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:2;}
 
+  /* Cinematic scanline + grain overlay — faint "surveillance dossier" texture */
+  body::after{
+    content:'';position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0.5;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:overlay;
+  }
+
+  /* Cursor-tracked gold glow inside the hero */
+  .hero-glow{
+    position:absolute;z-index:1;width:520px;height:520px;left:0;top:0;pointer-events:none;
+    transform:translate(-50%,-50%);opacity:0;transition:opacity .6s ease;
+    background:radial-gradient(circle, rgba(216,162,74,0.16), transparent 62%);
+    will-change:transform;
+  }
+  .hero:hover .hero-glow{opacity:1;}
+
+  /* Live "scan" HUD ticker over the 3D */
+  .scan-hud{
+    position:absolute;z-index:4;right:26px;bottom:34px;width:284px;pointer-events:none;
+    background:rgba(10,15,26,0.5);border:1px solid var(--line-soft);border-radius:4px;
+    backdrop-filter:blur(4px);padding:12px 13px;opacity:0;transition:opacity 1s ease;
+  }
+  .scan-hud.on{opacity:0.92;}
+  .scan-hud .hud-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+  .scan-hud .hud-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);}
+  .scan-hud .hud-live{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--red);display:flex;align-items:center;gap:5px;}
+  .scan-hud .hud-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.1s steps(2) infinite;}
+  @keyframes blink{50%{opacity:0.25;}}
+  .scan-hud .hud-line{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);line-height:1.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .scan-hud .hud-line b{color:var(--text);font-weight:500;}
+  .scan-hud .hud-line .h-crit{color:var(--red);}
+  .scan-hud .hud-line .h-watch{color:var(--gold);}
+  @media (max-width:1040px){ .scan-hud{display:none;} }
+
   /* ---------- NAV ---------- */
   nav{
     position:sticky;top:0;z-index:60;
@@ -365,6 +399,14 @@
 
 <header class="hero">
   <canvas id="scene"></canvas>
+  <div class="hero-glow" id="hero-glow"></div>
+  <div class="scan-hud" id="scan-hud" aria-hidden="true">
+    <div class="hud-top">
+      <span class="hud-title">Replaying history</span>
+      <span class="hud-live">SCAN</span>
+    </div>
+    <div id="hud-feed"></div>
+  </div>
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
@@ -375,8 +417,8 @@
         <a class="btn-secondary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a demo</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="n">2,000+</div><div class="l">Commits replayed per scan</div></div>
-        <div class="hero-stat"><div class="n">7</div><div class="l">Sections, IC-ready</div></div>
+        <div class="hero-stat"><div class="n" data-count="2000" data-suffix="+">2,000+</div><div class="l">Commits replayed per scan</div></div>
+        <div class="hero-stat"><div class="n" data-count="7">7</div><div class="l">Sections, IC-ready</div></div>
         <div class="hero-stat"><div class="n">Hours</div><div class="l">Not weeks, to delivery</div></div>
       </div>
     </div>
@@ -816,6 +858,66 @@
     } else play();
   })();
 
+  /* ---------- Cursor-tracked gold glow in hero ---------- */
+  (function(){
+    var hero = document.querySelector('.hero'), glow = document.getElementById('hero-glow');
+    if(!hero || !glow || reduce || !matchMedia('(pointer:fine)').matches) return;
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      glow.style.transform = 'translate('+(e.clientX-r.left)+'px,'+(e.clientY-r.top)+'px) translate(-50%,-50%)';
+    }, {passive:true});
+  })();
+
+  /* ---------- Count-up stats ---------- */
+  (function(){
+    var els = [].slice.call(document.querySelectorAll('.hero-stat .n[data-count]'));
+    if(!els.length) return;
+    function run(el){
+      var target = +el.getAttribute('data-count'), suf = el.getAttribute('data-suffix')||'';
+      if(reduce){ el.textContent = target.toLocaleString()+suf; return; }
+      var t0=null, dur=1400;
+      function step(ts){ t0=t0||ts; var p=Math.min(1,(ts-t0)/dur); var e=1-Math.pow(1-p,3);
+        el.textContent = Math.round(target*e).toLocaleString()+suf;
+        if(p<1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    }
+    if('IntersectionObserver' in window && !reduce){
+      var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);o.unobserve(e.target);}});},{threshold:0.6});
+      els.forEach(function(el){o.observe(el);});
+    } else els.forEach(run);
+  })();
+
+  /* ---------- Live "scan" HUD ticker ---------- */
+  (function(){
+    var hud = document.getElementById('scan-hud'), feed = document.getElementById('hud-feed');
+    if(!hud || !feed) return;
+    var files = ['ReactFiberCommitWork.js','SchedulerMinHeap.js','ReactDOMComponent.js','ReactFiberConfigWithNoMutation.js',
+      'ReactFlightServerConfigDebugNode.js','ReactFiberHooks.js','ReactFiberLane.js','ReactChildFiber.js','ReactFiberWorkLoop.js',
+      'ReactEventListener.js','ReactFiberBeginWork.js','ReactDOMRoot.js'];
+    var tiers=[['ok',''],['ok',''],['watch','Watch'],['ok',''],['crit','High-conf'],['watch','Watch'],['ok','']];
+    function hex(n){var s='';for(var i=0;i<n;i++)s+='0123456789abcdef'[(Math.random()*16)|0];return s;}
+    function line(){
+      var f=files[(Math.random()*files.length)|0], t=tiers[(Math.random()*tiers.length)|0];
+      var sh=(40+Math.random()*55).toFixed(1);
+      var cls = t[0]==='crit'?'h-crit':(t[0]==='watch'?'h-watch':'');
+      var tag = t[1]?' · <span class="'+cls+'">'+t[1]+' '+sh+'%</span>':'';
+      var d=document.createElement('div');
+      d.className='hud-line';
+      d.innerHTML='<b>'+hex(7)+'</b> '+f+tag;
+      feed.appendChild(d);
+      while(feed.children.length>5) feed.removeChild(feed.firstChild);
+    }
+    for(var i=0;i<5;i++) line();
+    if(reduce) return;
+    var timer=null;
+    function start(){ if(timer) return; timer=setInterval(line, 950); }
+    function stop(){ clearInterval(timer); timer=null; }
+    if('IntersectionObserver' in window){
+      var o=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ hud.classList.add('on'); start(); } else stop(); },{threshold:0.05});
+      o.observe(document.querySelector('.hero'));
+    } else { hud.classList.add('on'); start(); }
+  })();
+
   /* ---------- 3D commit "time machine" hero ---------- */
   (function(){
     var canvas = document.getElementById('scene');
@@ -834,14 +936,14 @@
 
     // Build a field of commit nodes: authors as lanes along X, time along Z.
     var isMobile = window.innerWidth < 900;
-    var AUTHORS = 7;
-    var PER = isMobile ? 26 : 44;         // commits per author strand
-    var LANE = 2.3;
+    var AUTHORS = isMobile ? 7 : 9;
+    var PER = isMobile ? 26 : 52;         // commits per author strand
+    var LANE = 2.15;
     var laneX = [];
     for(var a=0;a<AUTHORS;a++){ laneX.push((a-(AUTHORS-1)/2)*LANE); }
 
-    // Two "critical" authors glow red (concentrated ownership); rest are gold/neutral.
-    var critical = {1:true, 4:true};
+    // "Critical" authors glow red (concentrated ownership); rest are gold/neutral.
+    var critical = {1:true, 4:true, 7:true};
     var group = new THREE.Group();
     scene.add(group);
 
@@ -850,36 +952,6 @@
     var cGold = new THREE.Color(0xD8A24A);
     var cRed  = new THREE.Color(0xC6413A);
     var cDim  = new THREE.Color(0x5f6f8a);
-
-    var strandLines = [];
-    for(var a2=0;a2<AUTHORS;a2++){
-      var isCrit = critical[a2];
-      var base = isCrit ? cRed : (a2%2===0 ? cGold : cDim);
-      var linePts = [];
-      for(var i=0;i<PER;i++){
-        var z = -18 + (i/(PER-1))*34;                 // time axis
-        var jitterX = (Math.sin(i*1.7 + a2)*0.35) + (Math.random()-0.5)*0.25;
-        var jitterY = Math.cos(i*0.9 + a2*2)*0.6 + (Math.random()-0.5)*0.5;
-        var x = laneX[a2] + jitterX;
-        var y = jitterY;
-        positions.push(x,y,z);
-        // fade older commits (further -z) dimmer
-        var depthT = i/(PER-1);
-        var col = base.clone().lerp(new THREE.Color(0x0A0F1A), (1-depthT)*0.55);
-        colors.push(col.r, col.g, col.b);
-        linePts.push(new THREE.Vector3(x,y,z));
-      }
-      // strand line
-      var lgeo = new THREE.BufferGeometry().setFromPoints(linePts);
-      var lmat = new THREE.LineBasicMaterial({color: base.getHex(), transparent:true, opacity: isCrit?0.42:0.16});
-      var line = new THREE.Line(lgeo, lmat);
-      group.add(line);
-      strandLines.push(line);
-    }
-
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
-    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
 
     // round sprite texture for soft points
     var tex = (function(){
@@ -893,12 +965,68 @@
       var t=new THREE.Texture(c); t.needsUpdate=true; return t;
     })();
 
+    var strands = [];      // per-author array of Vector3 (for merge links + crit nodes)
+    var critNodes = [];    // "current owner" nodes that pulse red
+    for(var a2=0;a2<AUTHORS;a2++){
+      var isCrit = critical[a2];
+      var base = isCrit ? cRed : (a2%2===0 ? cGold : cDim);
+      var linePts = [];
+      for(var i=0;i<PER;i++){
+        var z = -18 + (i/(PER-1))*34;                 // time axis
+        var jitterX = (Math.sin(i*1.7 + a2)*0.35) + (Math.random()-0.5)*0.25;
+        var jitterY = Math.cos(i*0.9 + a2*2)*0.6 + (Math.random()-0.5)*0.5;
+        var x = laneX[a2] + jitterX;
+        var y = jitterY;
+        positions.push(x,y,z);
+        var depthT = i/(PER-1);
+        var col = base.clone().lerp(new THREE.Color(0x0A0F1A), (1-depthT)*0.55);
+        colors.push(col.r, col.g, col.b);
+        linePts.push(new THREE.Vector3(x,y,z));
+      }
+      strands.push(linePts);
+      var lgeo = new THREE.BufferGeometry().setFromPoints(linePts);
+      var lmat = new THREE.LineBasicMaterial({color: base.getHex(), transparent:true, opacity: isCrit?0.44:0.14});
+      group.add(new THREE.Line(lgeo, lmat));
+      if(isCrit){ critNodes.push(linePts[PER-1].clone()); }   // newest commit = current owner
+    }
+
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
     var pmat = new THREE.PointsMaterial({
       size: isMobile?0.28:0.34, map:tex, vertexColors:true,
       transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true
     });
-    var points = new THREE.Points(geo, pmat);
-    group.add(points);
+    group.add(new THREE.Points(geo, pmat));
+
+    // Pulsing red "current owner" nodes — the concentrated key-person risk
+    var critGeo = new THREE.BufferGeometry();
+    var cp=[]; critNodes.forEach(function(v){ cp.push(v.x,v.y,v.z); });
+    critGeo.setAttribute('position', new THREE.Float32BufferAttribute(cp,3));
+    var critMat = new THREE.PointsMaterial({ size:1.1, map:tex, color:0xC6413A, transparent:true, opacity:0.9, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true });
+    var critPts = new THREE.Points(critGeo, critMat);
+    group.add(critPts);
+
+    // Cross-author "handoff" links — faint diagonal connectors between strands
+    var mergePts = [];
+    var nMerge = AUTHORS * 2;
+    for(var m=0;m<nMerge;m++){
+      var aA=(Math.random()*AUTHORS)|0, aB=(Math.random()*AUTHORS)|0;
+      if(aA===aB) aB=(aB+1)%AUTHORS;
+      var idx=(Math.random()*PER)|0;
+      var p1=strands[aA][idx], p2=strands[aB][Math.min(PER-1, idx+((Math.random()*4)|0))];
+      mergePts.push(p1.x,p1.y,p1.z, p2.x,p2.y,p2.z);
+    }
+    var mgeo=new THREE.BufferGeometry();
+    mgeo.setAttribute('position', new THREE.Float32BufferAttribute(mergePts,3));
+    group.add(new THREE.LineSegments(mgeo, new THREE.LineBasicMaterial({color:0xD8A24A, transparent:true, opacity:0.10})));
+
+    // Far parallax "dust" for depth
+    var dustGroup = new THREE.Group(); scene.add(dustGroup);
+    var dpos=[]; var DN = isMobile?160:340;
+    for(var d=0;d<DN;d++){ dpos.push((Math.random()-0.5)*46,(Math.random()-0.5)*26,-30-Math.random()*40); }
+    var dgeo=new THREE.BufferGeometry(); dgeo.setAttribute('position', new THREE.Float32BufferAttribute(dpos,3));
+    dustGroup.add(new THREE.Points(dgeo, new THREE.PointsMaterial({size:0.12, map:tex, color:0x5f6f8a, transparent:true, opacity:0.5, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true})));
 
     // A translucent "scan plane" sweeping through the timeline
     var planeGeo = new THREE.PlaneGeometry(AUTHORS*LANE+3, 7);
@@ -915,15 +1043,29 @@
       tmy = (e.clientY/window.innerHeight - 0.5);
     }, {passive:true});
 
+    // Drag-to-orbit anywhere on the hero (skip actual controls)
+    var dragRY=0, dragRX=0, dragging=false, lastX=0, lastY=0;
+    var heroEl = document.querySelector('.hero');
+    heroEl.addEventListener('pointerdown', function(e){
+      if(e.target.closest('a,button,summary,input,textarea')) return;
+      dragging=true; lastX=e.clientX; lastY=e.clientY; heroEl.style.cursor='grabbing';
+    });
+    window.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      dragRY += (e.clientX-lastX)*0.005; dragRX += (e.clientY-lastY)*0.003;
+      dragRX = Math.max(-0.6, Math.min(0.6, dragRX));
+      lastX=e.clientX; lastY=e.clientY;
+    });
+    window.addEventListener('pointerup', function(){ dragging=false; heroEl.style.cursor=''; });
+
     var scrollN = 0;
     window.addEventListener('scroll', function(){
-      var h = document.querySelector('.hero').offsetHeight || 600;
+      var h = heroEl.offsetHeight || 600;
       scrollN = Math.min(1, (window.scrollY||0)/h);
     }, {passive:true});
 
     function resize(){
-      var hero = document.querySelector('.hero');
-      var w = hero.clientWidth, h = hero.clientHeight;
+      var w = heroEl.clientWidth, h = heroEl.clientHeight;
       gl.setSize(w, h, false);
       camera.aspect = w/h; camera.updateProjectionMatrix();
     }
@@ -933,23 +1075,27 @@
     var running = true;
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(es){ running = es[0].isIntersecting; if(running && !reduce) loop(); }, {threshold:0.01});
-      io.observe(document.querySelector('.hero'));
+      io.observe(heroEl);
     }
 
     var t0 = performance.now();
     function frame(now){
       var t = (now - t0)/1000;
       mx += (tmx - mx)*0.05; my += (tmy - my)*0.05;
-      group.rotation.y = -0.35 + Math.sin(t*0.08)*0.25 + mx*0.5;
-      group.rotation.x = -0.03 + my*0.18;
-      // camera gentle dolly, pushed by scroll
-      camera.position.z = 16 - scrollN*5 + Math.sin(t*0.2)*0.3;
+      group.rotation.y = -0.35 + Math.sin(t*0.08)*0.25 + mx*0.5 + dragRY;
+      group.rotation.x = -0.03 + my*0.18 + dragRX;
+      dustGroup.rotation.y = t*0.012 + mx*0.2;
+      // camera fly-through: scroll pushes deeper into the commit history
+      camera.position.z = 17 - scrollN*9 + Math.sin(t*0.2)*0.3;
       camera.position.y = 1.2 + my*0.6;
+      camera.fov = 52 + scrollN*6; camera.updateProjectionMatrix();
       camera.lookAt(0,0,0);
       // sweep scan plane through the timeline
       plane.position.z = ((t*2.2)%36) - 18;
-      var pulse = 0.05 + Math.abs(Math.sin(t*1.1))*0.05;
-      planeMat.opacity = pulse;
+      planeMat.opacity = 0.05 + Math.abs(Math.sin(t*1.1))*0.05;
+      // pulse the red "current owner" nodes
+      var pp = 0.5 + Math.abs(Math.sin(t*2.0))*0.5;
+      critMat.size = 0.85 + pp*0.9; critMat.opacity = 0.55 + pp*0.4;
       gl.render(scene, camera);
     }
     var raf;
