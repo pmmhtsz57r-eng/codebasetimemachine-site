@@ -264,14 +264,26 @@
     background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:6px;
     padding:26px;position:relative;overflow:hidden;
   }
-  .map-stage::before{content:'CONCENTRATION MAP';position:absolute;top:12px;right:14px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.18em;color:var(--muted-2);}
   .map-legend{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;}
   .map-legend span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px;}
   .lg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
   .map-copy h3{font-family:'Source Serif 4',serif;font-size:22px;color:var(--text-strong);margin-bottom:14px;}
   .map-copy p{color:var(--muted);font-size:15px;margin-bottom:14px;}
   .map-copy .tick{color:var(--gold);}
-  svg .seg{transition:stroke-dashoffset 1.1s ease;}
+  /* time-machine scrubber */
+  .tm-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;}
+  .tm-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted-2);}
+  .tm-count{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--red);border:1px solid var(--red);background:var(--red-soft);border-radius:2px;padding:4px 10px;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;}
+  .tm-count.zero{color:var(--muted-2);border-color:var(--line);background:transparent;}
+  #tm-canvas{display:block;width:100%;height:auto;border-radius:4px;cursor:crosshair;}
+  .tm-controls{display:flex;align-items:center;gap:14px;margin-top:16px;}
+  .tm-play{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);background:rgba(216,162,74,0.08);border:1px solid var(--gold-line);border-radius:2px;padding:7px 12px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;}
+  .tm-play:hover{background:var(--gold);color:var(--ink);}
+  .tm-range{-webkit-appearance:none;appearance:none;flex:1;height:3px;border-radius:2px;background:var(--line);outline:none;cursor:pointer;}
+  .tm-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;box-shadow:0 0 0 1px var(--gold-line);}
+  .tm-range::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;}
+  .tm-time{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted-2);white-space:nowrap;min-width:78px;text-align:right;}
+  .tm-note{margin-top:12px;font-size:11px;color:var(--muted-2);font-style:italic;line-height:1.5;}
 
   /* ---------- REPORT CONTENTS (toc) ---------- */
   .toc{margin-top:42px;border-top:1px solid var(--line-soft);}
@@ -554,22 +566,25 @@
   <div class="wrap reveal">
     <div class="section-label">What we actually measure</div>
     <h2>Where technical knowledge is concentrated — across every subsystem.</h2>
-    <p class="lead-text">Commit history is the evidence; concentrated know-how is the finding. Every material area of the codebase gets a bus-factor tier calibrated against measured thresholds — not a subjective judgment. Where one person carries too much of a subsystem's history, the map turns red.</p>
+    <p class="lead-text">Watch ownership concentrate over time. We measure how much of each subsystem's history one person owns — the evidence — then derive a bus-factor tier from that measured concentration, against fixed thresholds, not a subjective judgment. Where one person's share crosses the line, the map turns red.</p>
     <div class="map-wrap">
       <div class="map-stage">
-        <svg id="ownership-svg" viewBox="0 0 460 260" width="100%" role="img" aria-label="Ownership concentration map: authors by subsystem, with concentrated files highlighted in red.">
-          <!-- axes -->
-          <line x1="40" y1="20" x2="40" y2="220" stroke="#232F47" stroke-width="1"/>
-          <line x1="40" y1="220" x2="440" y2="220" stroke="#232F47" stroke-width="1"/>
-          <text x="46" y="16" fill="#6E7B93" font-family="IBM Plex Mono, monospace" font-size="9">share of file history →</text>
-          <!-- bars drawn/animated by JS -->
-          <g id="bars"></g>
-        </svg>
+        <div class="tm-head">
+          <span class="tm-title">Ownership concentration over time</span>
+          <span class="tm-count" id="tm-count">0 high-confidence</span>
+        </div>
+        <canvas id="tm-canvas" role="img" aria-label="Interactive subsystem map. Drag the timeline to replay the codebase's history: subsystems where one person's share crosses the threshold turn red. Fully concentrated view shows the high-confidence key-person risks."></canvas>
+        <div class="tm-controls">
+          <button id="tm-play" class="tm-play" aria-label="Replay the timeline">▶ Replay</button>
+          <input id="tm-range" class="tm-range" type="range" min="0" max="100" value="100" aria-label="Timeline position through repository history">
+          <span class="tm-time" id="tm-time">present day</span>
+        </div>
         <div class="map-legend">
           <span><i class="lg-dot" style="background:var(--red)"></i> High-confidence (&gt;70% share)</span>
           <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% share)</span>
           <span><i class="lg-dot" style="background:var(--ok)"></i> Distributed</span>
         </div>
+        <p class="tm-note">Single-owner share is measured from commit history. The bus-factor tier is derived from it against fixed thresholds. Illustrative data.</p>
       </div>
       <div class="map-copy">
         <h3>Three tiers, calibrated — not guessed.</h3>
@@ -940,54 +955,110 @@
     });
   }
 
-  /* ---------- Ownership concentration bars (SVG, animate in) ---------- */
+  /* ---------- Concentration time-machine scrubber (Canvas) ---------- */
   (function(){
-    var svg = document.getElementById('ownership-svg');
-    var g = document.getElementById('bars');
-    if(!svg || !g) return;
-    // [label, share 0..1] — red >0.70, gold >0.55, else ok
-    var data = [
-      ['reconciler', 0.91],['flight-server',0.89],['scheduler',0.57],
-      ['dom-config',0.55],['hooks',0.42],['devtools',0.30],['docs',0.19]
+    var canvas = document.getElementById('tm-canvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var range = document.getElementById('tm-range');
+    var playBtn = document.getElementById('tm-play');
+    var countEl = document.getElementById('tm-count');
+    var timeEl = document.getElementById('tm-time');
+
+    var RED='#C6413A', GOLD='#D8A24A', OK='#5BB89A', INK='#0A0F1A', LINE='#232F47', MUT='#93A0B8', TXT='#ECE7DA';
+
+    // subsystems: fractional treemap rects + start/final dominant share
+    var cells = [
+      {n:'reconciler',    x:0.00,y:0.00,w:0.42,h:0.50, s0:0.34,s1:0.91},
+      {n:'flight-server', x:0.42,y:0.00,w:0.30,h:0.50, s0:0.30,s1:0.89},
+      {n:'scheduler',     x:0.72,y:0.00,w:0.28,h:0.27, s0:0.28,s1:0.57},
+      {n:'dom',           x:0.72,y:0.27,w:0.28,h:0.23, s0:0.26,s1:0.55},
+      {n:'hooks',         x:0.00,y:0.50,w:0.27,h:0.50, s0:0.30,s1:0.76},
+      {n:'events',        x:0.27,y:0.50,w:0.25,h:0.28, s0:0.24,s1:0.38},
+      {n:'compiler',      x:0.52,y:0.50,w:0.26,h:0.28, s0:0.22,s1:0.44},
+      {n:'devtools',      x:0.27,y:0.78,w:0.25,h:0.22, s0:0.20,s1:0.30},
+      {n:'test-utils',    x:0.52,y:0.78,w:0.26,h:0.22, s0:0.18,s1:0.27},
+      {n:'docs',          x:0.78,y:0.50,w:0.22,h:0.50, s0:0.16,s1:0.22}
     ];
-    var x0=40, y0=30, rowH=26, maxW=380;
-    function color(s){ return s>0.70 ? '#C6413A' : (s>0.55 ? '#D8A24A' : '#5BB89A'); }
-    data.forEach(function(d,i){
-      var y = y0 + i*rowH;
-      var w = Math.max(6, d[1]*maxW);
-      var rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
-      rect.setAttribute('x', x0+1); rect.setAttribute('y', y);
-      rect.setAttribute('height', 13); rect.setAttribute('rx',2);
-      rect.setAttribute('fill', color(d[1]));
-      rect.setAttribute('width', reduce ? w : 0);
-      rect.setAttribute('opacity','0.92');
-      g.appendChild(rect);
-      var lab = document.createElementNS('http://www.w3.org/2000/svg','text');
-      lab.setAttribute('x', x0-6); lab.setAttribute('y', y+11);
-      lab.setAttribute('text-anchor','end');
-      lab.setAttribute('fill','#93A0B8'); lab.setAttribute('font-family','IBM Plex Mono, monospace'); lab.setAttribute('font-size','9');
-      lab.textContent = d[0]; g.appendChild(lab);
-      var pct = document.createElementNS('http://www.w3.org/2000/svg','text');
-      pct.setAttribute('y', y+11); pct.setAttribute('fill','#ECE7DA');
-      pct.setAttribute('font-family','IBM Plex Mono, monospace'); pct.setAttribute('font-size','9');
-      pct.textContent = Math.round(d[1]*100)+'%';
-      g.appendChild(pct);
-      rect._pct = pct; rect._w = w;
-    });
-    function play(){
-      [].forEach.call(g.querySelectorAll('rect'), function(rect,i){
-        setTimeout(function(){
-          rect.style.transition='width .9s cubic-bezier(.2,.8,.2,1)';
-          rect.setAttribute('width', rect._w);
-          rect._pct.setAttribute('x', 40+1+rect._w+6);
-        }, i*90);
-      });
+    cells.forEach(function(c){ c.seed=[]; for(var i=0;i<6;i++){ c.seed.push([Math.random(),Math.random()]); } });
+
+    function ease(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+    function shareAt(c,t){ return c.s0 + (c.s1-c.s0)*ease(t); }
+    function tier(s){ return s>0.70?RED:(s>0.55?GOLD:OK); }
+    function busFactor(s){ return Math.max(1, Math.round(6*(1-s))); }
+    function hexToRgb(h){ h=h.replace('#',''); return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]; }
+    function mix(a,b,t){ var A=hexToRgb(a),B=hexToRgb(b); return 'rgb('+Math.round(A[0]+(B[0]-A[0])*t)+','+Math.round(A[1]+(B[1]-A[1])*t)+','+Math.round(A[2]+(B[2]-A[2])*t)+')'; }
+
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2),pad=8,hover=-1,t=1;
+
+    function rrect(x,y,w,h,r){ r=Math.min(r,w/2,h/2); ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+
+    function resize(){
+      W=canvas.clientWidth; H=Math.max(240,Math.round(W*0.52));
+      canvas.style.height=H+'px'; canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+      ctx.setTransform(DPR,0,0,DPR,0,0);
     }
-    if(reduce){ [].forEach.call(g.querySelectorAll('rect'),function(r){ r._pct.setAttribute('x',40+1+r._w+6); }); return; }
-    if('IntersectionObserver' in window){
-      var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){play();o.disconnect();}});},{threshold:0.4});
-      o.observe(svg);
-    } else play();
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      var high=0;
+      for(var i=0;i<cells.length;i++){
+        var c=cells[i], s=shareAt(c,t), col=tier(s), bf=busFactor(s);
+        if(s>0.70) high++;
+        var x=c.x*W+pad, y=c.y*H+pad, w=c.w*W-pad*2, h=c.h*H-pad*2;
+        if(w<2||h<2) continue;
+        var conc=Math.max(0,(s-0.4)/0.55);
+        ctx.globalAlpha=1;
+        ctx.fillStyle=mix(INK,col,0.10+conc*0.32); rrect(x,y,w,h,5); ctx.fill();
+        ctx.lineWidth=(i===hover)?2:1; ctx.strokeStyle=(i===hover)?col:mix(LINE,col,conc*0.6); rrect(x,y,w,h,5); ctx.stroke();
+        var cx=x+w/2, cy=y+h/2, rad=Math.min(w,h)*0.26;
+        for(var d=0; d<bf; d++){
+          var ang=(d/bf)*Math.PI*2 + i, sd=c.seed[d]||[0.8,0.8];
+          var dominant=(d===0);
+          var dx=dominant?cx:cx+Math.cos(ang)*rad*(0.6+sd[0]*0.5);
+          var dy=dominant?cy:cy+Math.sin(ang)*rad*(0.6+sd[1]*0.5);
+          ctx.globalAlpha=dominant?0.95:0.5; ctx.fillStyle=dominant?col:mix(MUT,INK,0.2);
+          ctx.beginPath(); ctx.arc(dx,dy,dominant?Math.min(9,Math.max(4,rad*0.4)):3.2,0,Math.PI*2); ctx.fill();
+        }
+        ctx.globalAlpha=1;
+        if(w>62 && h>34){
+          ctx.fillStyle=mix(TXT,col,conc*0.35); ctx.font='600 11px "IBM Plex Mono", monospace';
+          ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(c.n,x+8,y+8);
+          ctx.fillStyle=MUT; ctx.font='10px "IBM Plex Mono", monospace';
+          ctx.fillText(Math.round(s*100)+'% → bus '+bf,x+8,y+22);
+        }
+      }
+      countEl.textContent=high+' high-confidence'; countEl.classList.toggle('zero',high===0);
+      timeEl.textContent = t>=0.995?'present day':(t<0.02?'founding':'history · '+Math.round(t*100)+'%');
+    }
+
+    function setT(v){ t=Math.max(0,Math.min(1,v)); range.value=Math.round(t*100); draw(); }
+
+    canvas.addEventListener('mousemove', function(e){
+      var r=canvas.getBoundingClientRect(), mx=(e.clientX-r.left)/W, my=(e.clientY-r.top)/H, hit=-1;
+      for(var i=0;i<cells.length;i++){ var c=cells[i]; if(mx>=c.x&&mx<=c.x+c.w&&my>=c.y&&my<=c.y+c.h){hit=i;break;} }
+      if(hit!==hover){ hover=hit; draw(); var s=hit>=0?shareAt(cells[hit],t):0; canvas.title = hit>=0? cells[hit].n+' — '+Math.round(s*100)+'% single-owner share (measured) → bus factor '+busFactor(s)+' (derived)' : ''; }
+    });
+    canvas.addEventListener('mouseleave', function(){ if(hover!==-1){hover=-1; draw();} });
+
+    var raf=null, playing=false;
+    function stopPlay(){ playing=false; if(raf) cancelAnimationFrame(raf); raf=null; playBtn.textContent='▶ Replay'; }
+    function playFrom0(){
+      stopPlay(); playing=true; playBtn.textContent='❚❚ Pause';
+      var start=null, dur=3400;
+      function step(ts){ if(!playing) return; start=start||ts; var p=Math.min(1,(ts-start)/dur); setT(p); if(p<1){ raf=requestAnimationFrame(step); } else { playing=false; playBtn.textContent='▶ Replay'; } }
+      setT(0); raf=requestAnimationFrame(step);
+    }
+    range.addEventListener('input', function(){ stopPlay(); setT(range.value/100); });
+    playBtn.addEventListener('click', function(){ if(playing) stopPlay(); else playFrom0(); });
+    window.addEventListener('resize', function(){ resize(); draw(); });
+
+    resize(); setT(1);
+    if(!reduce && 'IntersectionObserver' in window){
+      var seen=false;
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting && !seen){ seen=true; playFrom0(); } }); },{threshold:0.35});
+      io.observe(canvas);
+    }
   })();
 
   /* ---------- Cursor-tracked gold glow in hero ---------- */
