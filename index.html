@@ -283,6 +283,7 @@
   .tm-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;box-shadow:0 0 0 1px var(--gold-line);}
   .tm-range::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;}
   .tm-time{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted-2);white-space:nowrap;min-width:78px;text-align:right;}
+  .tm-note{margin-top:12px;font-size:11px;color:var(--muted-2);font-style:italic;line-height:1.5;}
 
   /* ---------- REPORT CONTENTS (toc) ---------- */
   .toc{margin-top:42px;border-top:1px solid var(--line-soft);}
@@ -565,11 +566,11 @@
   <div class="wrap reveal">
     <div class="section-label">What we actually measure</div>
     <h2>Where technical knowledge is concentrated — across every subsystem.</h2>
-    <p class="lead-text">Commit history is the evidence; concentrated know-how is the finding. Every material area of the codebase gets a bus-factor tier calibrated against measured thresholds — not a subjective judgment. Where one person carries too much of a subsystem's history, the map turns red.</p>
+    <p class="lead-text">Watch ownership concentrate over time. We measure how much of each subsystem's history one person owns — the evidence — then derive a bus-factor tier from that measured concentration, against fixed thresholds, not a subjective judgment. Where one person's share crosses the line, the map turns red.</p>
     <div class="map-wrap">
       <div class="map-stage">
         <div class="tm-head">
-          <span class="tm-title">Bus factor over the repo's history</span>
+          <span class="tm-title">Ownership concentration over time</span>
           <span class="tm-count" id="tm-count">0 high-confidence</span>
         </div>
         <canvas id="tm-canvas" role="img" aria-label="Interactive subsystem map. Drag the timeline to replay the codebase's history: subsystems where one person's share crosses the threshold turn red. Fully concentrated view shows the high-confidence key-person risks."></canvas>
@@ -583,6 +584,7 @@
           <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% share)</span>
           <span><i class="lg-dot" style="background:var(--ok)"></i> Distributed</span>
         </div>
+        <p class="tm-note">Single-owner share is measured from commit history. The bus-factor tier is derived from it against fixed thresholds. Illustrative data.</p>
       </div>
       <div class="map-copy">
         <h3>Three tiers, calibrated — not guessed.</h3>
@@ -1023,7 +1025,7 @@
           ctx.fillStyle=mix(TXT,col,conc*0.35); ctx.font='600 11px "IBM Plex Mono", monospace';
           ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(c.n,x+8,y+8);
           ctx.fillStyle=MUT; ctx.font='10px "IBM Plex Mono", monospace';
-          ctx.fillText('bus '+bf+' · '+Math.round(s*100)+'%',x+8,y+22);
+          ctx.fillText(Math.round(s*100)+'% → bus '+bf,x+8,y+22);
         }
       }
       countEl.textContent=high+' high-confidence'; countEl.classList.toggle('zero',high===0);
@@ -1035,7 +1037,7 @@
     canvas.addEventListener('mousemove', function(e){
       var r=canvas.getBoundingClientRect(), mx=(e.clientX-r.left)/W, my=(e.clientY-r.top)/H, hit=-1;
       for(var i=0;i<cells.length;i++){ var c=cells[i]; if(mx>=c.x&&mx<=c.x+c.w&&my>=c.y&&my<=c.y+c.h){hit=i;break;} }
-      if(hit!==hover){ hover=hit; draw(); var s=hit>=0?shareAt(cells[hit],t):0; canvas.title = hit>=0? cells[hit].n+' — bus factor '+busFactor(s)+', '+Math.round(s*100)+'% single-owner share' : ''; }
+      if(hit!==hover){ hover=hit; draw(); var s=hit>=0?shareAt(cells[hit],t):0; canvas.title = hit>=0? cells[hit].n+' — '+Math.round(s*100)+'% single-owner share (measured) → bus factor '+busFactor(s)+' (derived)' : ''; }
     });
     canvas.addEventListener('mouseleave', function(){ if(hover!==-1){hover=-1; draw();} });
 
