@@ -509,7 +509,7 @@
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
       <h1>Before you close, know where critical code knowledge is concentrated and who holds it, <em>on evidence</em>.</h1>
-      <p class="lede">Codebase Time Machine replays a target's Git history, as deep as you choose, to show which files rest on one or two key engineers' commits, how strong that evidence is, and what to ask management before you sign. It sees code contributors only: who wrote and changed the code, not who understands it today.</p>
+      <p class="lede">Codebase Time Machine replays a target's Git history, as deep as you choose, to show which files rest on one or two key engineers, how strong that evidence is, and what to ask management before you sign. It sees code contributors only: who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="#how">How it works</a>
@@ -606,30 +606,30 @@
   <div class="wrap reveal">
     <div class="section-label">What we actually measure</div>
     <h2>Where code knowledge is concentrated, file by file and subsystem by subsystem.</h2>
-    <p class="lead-text">We measure how much of each file's history one contributor holds (the evidence), then derive a tier from that share against fixed thresholds, not a subjective judgment. Where one contributor's share crosses the line, the map turns red.</p>
+    <p class="lead-text">We measure what share of each file's changed lines (added and removed, across its whole history) one contributor wrote. That line share is the evidence. A tier is then derived from the line share and the file's commit count against fixed thresholds, not a subjective judgment.</p>
     <div class="map-wrap">
       <div class="map-stage">
         <div class="tm-head">
           <span class="tm-title">Ownership concentration over time · illustrative data</span>
           <span class="tm-count" id="tm-count">0 high-confidence</span>
         </div>
-        <canvas id="tm-canvas" role="img" aria-label="Illustrative subsystem map. Drag the timeline to replay a codebase's history: subsystems where one contributor's share crosses the threshold turn red."></canvas>
+        <canvas id="tm-canvas" role="img" aria-label="Illustrative subsystem map. Drag the timeline to replay a codebase's history: subsystems whose most concentrated file crosses a threshold turn gold or red."></canvas>
         <div class="tm-controls">
           <button id="tm-play" class="tm-play" aria-label="Replay the timeline">▶ Replay</button>
           <input id="tm-range" class="tm-range" type="range" min="0" max="100" value="100" aria-label="Timeline position through repository history">
           <span class="tm-time" id="tm-time">today</span>
         </div>
         <div class="map-legend">
-          <span><i class="lg-dot" style="background:var(--red)"></i> High-confidence (&gt;70% share)</span>
-          <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% share)</span>
+          <span><i class="lg-dot" style="background:var(--red)"></i> High-confidence (&gt;70% line share, 10+ commits)</span>
+          <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% line share, 5+ commits)</span>
           <span><i class="lg-dot" style="background:var(--ok)"></i> Distributed</span>
         </div>
-        <p class="tm-note">Illustrative data, not a real repository. In a report, single-contributor share is measured from commit history and the tier is derived from it against fixed thresholds.</p>
+        <p class="tm-note">Illustrative data, not a real repository. Each tile is a subsystem, shown with the tier and line share of its most concentrated file. In a report, tiers are assigned per file; subsystems get their own concentration measures.</p>
       </div>
       <div class="map-copy">
         <h3>Three tiers, from fixed thresholds, not guessed.</h3>
-        <p><span class="tick mono">High-confidence</span>: 10+ commits on a file, with one contributor holding over 70% of its history (held at Watch when a single commit accounts for most of that share). Strong evidence of concentration; confirm with management who maintains it today.</p>
-        <p><span class="tick mono">Watch</span>: 5+ commits and over 55% share. Concentration is visible but the history is shorter; ask who maintains it today.</p>
+        <p><span class="tick mono">High-confidence</span>: 10+ commits on a file, with one contributor writing over 70% of its changed lines (held at Watch when a single commit accounts for most of that contributor's lines). Strong evidence of concentration; confirm with management who maintains it today.</p>
+        <p><span class="tick mono">Watch</span>: 5+ commits and over 55% line share. Concentration is visible but the history is shorter; ask who maintains it today.</p>
         <p><span class="tick mono">Distributed</span>: no single contributor reaches the Watch threshold.</p>
         <p>A file with fewer than 5 commits gets no tier, however concentrated it is: so few commits describe a few changes, not a pattern of who holds the knowledge.</p>
       </div>
@@ -654,7 +654,7 @@
       </div>
       <div class="toc-row">
         <div class="toc-num">03</div>
-        <div><h4>Ranked material assets</h4><p>Files ranked by concentration, with share, commit count and tier. The full list stays in the workbook.</p></div>
+        <div><h4>Ranked material assets</h4><p>Files ranked by concentration, with line share, commit count and tier. The full list stays in the workbook.</p></div>
         <div class="toc-tag">PDF + XLSX</div>
       </div>
       <div class="toc-row">
@@ -664,7 +664,7 @@
       </div>
       <div class="toc-row">
         <div class="toc-num">05</div>
-        <div><h4>Risk evolution</h4><p>How each top file's commit-count share has changed over time, not just a snapshot.</p></div>
+        <div><h4>Risk evolution</h4><p>How each top file's share of commits has changed over time, not just a snapshot. The report labels this separately from line share, the measure behind the tiers.</p></div>
         <div class="toc-tag">PDF</div>
       </div>
       <div class="toc-row">
@@ -689,7 +689,7 @@
     <div class="learn">
       <div class="learn-finding">
         <div class="learn-badge">Evidence → Risk → Question → Mitigation</div>
-        <p class="learn-headline">Which files and subsystems one contributor holds, the commits behind that share, and how strong the evidence is.</p>
+        <p class="learn-headline">Which files and subsystems one contributor holds, the commits behind that line share, and how strong the evidence is.</p>
         <div class="learn-meta">Measured from Git history · confidence stated for every tier</div>
       </div>
       <div class="learn-so">
@@ -717,7 +717,7 @@
         </tr>
         <tr>
           <td class="compare-row-label">Where is code history concentrated?</td>
-          <td class="us-col" data-label="What CTM gives you">Per file and subsystem: the share one contributor holds, the commits behind it, and a confidence tier</td>
+          <td class="us-col" data-label="What CTM gives you">Per file: the line share one contributor holds, the commits behind it, and a confidence tier. Per subsystem: how concentrated it is</td>
         </tr>
         <tr>
           <td class="compare-row-label">How has that changed over time?</td>
@@ -844,7 +844,7 @@
       </details>
       <details class="faq-item">
         <summary>How is "risk" actually calculated?</summary>
-        <p>Tiers come from fixed commit-history thresholds. For example, 10+ commits on a file with one contributor holding over 70% share is High-confidence, unless a single commit accounts for most of that share. It's not a subjective score, and it measures concentration of history, not who maintains the code today.</p>
+        <p>Tiers come from fixed thresholds on line share and commit count. For example, 10+ commits on a file with one contributor writing over 70% of its changed lines is High-confidence, unless a single commit accounts for most of those lines. It's not a subjective score, and it measures concentration of history, not who maintains the code today.</p>
       </details>
       <details class="faq-item">
         <summary>What does it cost?</summary>
@@ -856,7 +856,7 @@
       </details>
       <details class="faq-item">
         <summary>What does AI do in the report?</summary>
-        <p>Nothing, by default. Every number and finding is computed deterministically from Git history and repository metadata. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
+        <p>Nothing, by default. Every number and finding is computed deterministically from your repository's files, its Git history and repository metadata. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
       </details>
     </div>
   </div>
@@ -1112,7 +1112,7 @@
   /* ---------- Hero: Git history replay ----------
      Each line is a file. Commits arrive along it in time order, one colour per
      contributor (pseudonymised, so muted and unnamed). A scan line replays the
-     history left to right; where one contributor's share of a file's commits
+     history left to right; where one contributor's share of a file (shown here by commits)
      crosses the Watch (>55%, 5+ commits) or High-confidence (>70%, 10+ commits)
      threshold, that file turns gold or red. Illustrative data only. */
   (function(){
@@ -1135,7 +1135,7 @@
       var mobile = W < 900, n = mobile ? 5 : 15;
       X0 = mobile ? 0 : 0.5;
       var top = parseFloat(getComputedStyle(heroEl).paddingTop)||96;
-      band = mobile ? [12/H, (top-16)/H] : [0.1, 0.94];
+      band = mobile ? [12/H, (top-30)/H] : [0.1, 0.94];
       // Most files are spread across contributors; a few are not. Fixed counts,
       // shuffled positions, so every replay tells the same story.
       // Flagged files go on lines the report card does not cover, so they stay visible.
@@ -1167,7 +1167,7 @@
         }
         for(var k2=who.length-1;k2>0;k2--){ var q2=pick(k2+1), t2=who[k2]; who[k2]=who[q2]; who[q2]=t2; }
         var pts = xs.map(function(x,ix){ return {x:x, who:who[ix], dy:rnd(-2.5,2.5)}; });
-        lanes.push({y:(band[0] + (band[1]-band[0])*(i+0.5)/n), pts:pts, lead:lead});
+        lanes.push({y:(band[0] + (band[1]-band[0])*(i+0.5)/n), pts:pts, lead:lead, cap:kind, shown:0});
       }
     }
 
@@ -1188,7 +1188,12 @@
       var x0 = X0*W, span = W-x0, sx = x0+p*span;
       for(var i=0;i<lanes.length;i++){
         var l=lanes[i], y=l.y*H, st=tierAt(l,p);
-        var col = st.tier==='high' ? RED : (st.tier==='watch' ? GOLD : null);
+        // Tiers only step up within a replay, never past the file's own final
+        // tier, and spread files never flag.
+        var rank = st.tier==='high' ? 2 : (st.tier==='watch' ? 1 : 0);
+        var capRank = l.cap==='high' ? 2 : (l.cap==='watch' ? 1 : 0);
+        l.shown = Math.max(l.shown, Math.min(rank, capRank));
+        var col = l.shown===2 ? RED : (l.shown===1 ? GOLD : null);
         // the file's line: faint ahead of the scan, tinted behind it when concentrated
         ctx.lineWidth=1; ctx.strokeStyle=LINE;
         ctx.beginPath(); ctx.moveTo(x0,y); ctx.lineTo(W,y); ctx.stroke();
@@ -1199,7 +1204,7 @@
         }
         for(var j=0;j<l.pts.length;j++){
           var c=l.pts[j]; if(c.x>p) break;
-          var hot = col && c.who===st.who;
+          var hot = col && c.who===l.lead;
           ctx.fillStyle = hot ? col : PEOPLE[c.who];
           ctx.globalAlpha = alpha*(hot?0.95:0.55);
           ctx.beginPath(); ctx.arc(x0+c.x*span, y+c.dy, hot?2.6:2, 0, Math.PI*2); ctx.fill();
@@ -1215,6 +1220,12 @@
         ctx.fillStyle='rgba(216,162,74,0.55)'; ctx.fillRect(sx,by,1,bh);
       }
       ctx.globalAlpha=1;
+      // Always-visible caption: this is not anyone's repository.
+      ctx.font='10px "IBM Plex Mono", monospace'; ctx.textAlign='right'; ctx.textBaseline='bottom';
+      ctx.fillStyle='rgba(139,150,174,0.85)';
+      var ly = W<900 ? band[1]*H+14 : band[0]*H-6;
+      ctx.fillText('ILLUSTRATIVE REPLAY · NOT CLIENT DATA', W<900 ? W-16 : W*0.95, ly);
+      ctx.textAlign='left';
     }
 
     function resize(){
