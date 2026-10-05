@@ -277,10 +277,10 @@
   .tm-controls{display:flex;align-items:center;gap:14px;margin-top:16px;}
   .tm-play{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold);background:rgba(216,162,74,0.08);border:1px solid var(--gold-line);border-radius:2px;padding:7px 12px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s;}
   .tm-play:hover{background:var(--gold);color:var(--ink);}
-  .tm-range{-webkit-appearance:none;appearance:none;flex:1;height:3px;border-radius:2px;background:var(--line);outline:none;cursor:pointer;}
+  .tm-range{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:3px;border-radius:2px;background:var(--line);outline:none;cursor:pointer;}
   .tm-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;box-shadow:0 0 0 1px var(--gold-line);}
   .tm-range::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--ink);cursor:grab;}
-  .tm-time{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted-2);white-space:nowrap;min-width:78px;text-align:right;}
+  .tm-time{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted-2);white-space:nowrap;min-width:40px;text-align:right;}
   .tm-note{margin-top:12px;font-size:11px;color:var(--muted-2);font-style:italic;line-height:1.5;}
 
   /* ---------- REPORT CONTENTS (toc) ---------- */
@@ -345,7 +345,17 @@
   .compare-table td.us-col{color:var(--text);}
   .compare-row-label{color:var(--text) !important;font-weight:500;}
   .compare-table-scroll{overflow-x:auto;}
-  @media (max-width:700px){ .compare-table{font-size:12px;} .compare-table th,.compare-table td{padding:10px 10px;} }
+  @media (max-width:700px){
+    /* Phone: each row becomes a card, CTM first, so nothing sits off-screen. */
+    .compare-table, .compare-table tbody, .compare-table tr, .compare-table td{display:block;width:100%;}
+    .compare-table tr:first-child{display:none;}
+    .compare-table tr{border:1px solid var(--line);border-radius:6px;margin-bottom:14px;overflow:hidden;}
+    .compare-table td{border-bottom:1px solid var(--line-soft);padding:10px 14px;font-size:13px;}
+    .compare-table td:last-child{border-bottom:none;}
+    .compare-table td.us-col{border-left:none;border-right:none;}
+    .compare-table td[data-label]::before{content:attr(data-label);display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted-2);margin-bottom:3px;}
+    .compare-table td.us-col[data-label]::before{color:var(--gold);}
+  }
 
   /* ---------- WHERE IT FITS (P2) ---------- */
   .fit-flow{
@@ -471,13 +481,13 @@
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
       <h1>Before you close, know which engineers hold the critical code knowledge, <em>on evidence</em>.</h1>
-      <p class="lede">Codebase Time Machine replays a target's full Git history to show where critical code knowledge is concentrated in one or two key engineers, how strong the evidence is, and what to ask management before you sign. It sees code contributors only: it measures who wrote and changed the code, not who understands it today.</p>
+      <p class="lede">Codebase Time Machine replays a target's Git history, up to the complete history, to show where critical code knowledge is concentrated in one or two key engineers, how strong the evidence is, and what to ask management before you sign. It sees code contributors only: it measures who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="#how">How it works</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="n">Full&nbsp;history</div><div class="l">Replayed, not sampled</div></div>
+        <div class="hero-stat"><div class="n">Full&nbsp;history</div><div class="l">Up to every commit; share analysed stated</div></div>
         <div class="hero-stat"><div class="n">AI&nbsp;off</div><div class="l">By default</div></div>
         <div class="hero-stat"><div class="n">Pseudonymised</div><div class="l">Contributor identities, by default</div></div>
       </div>
@@ -507,7 +517,7 @@
       <div class="band-item"><span class="repo">AI off</span><span class="meta">by default</span></div>
       <div class="band-item"><span class="repo">Pseudonymised</span><span class="meta">identities, by default</span></div>
       <div class="band-item"><span class="repo">Read-only</span><span class="meta">access, revocable by you</span></div>
-      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">after every scan</span></div>
+      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">when each scan ends</span></div>
     </div>
   </div>
 </div>
@@ -547,8 +557,8 @@
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h4>One machine, one scan</h4>
-        <p>The repository is cloned to one machine, into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p>
+        <h4>A temporary copy, one scan</h4>
+        <p>The repository is cloned into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
@@ -579,7 +589,7 @@
         <div class="tm-controls">
           <button id="tm-play" class="tm-play" aria-label="Replay the timeline">▶ Replay</button>
           <input id="tm-range" class="tm-range" type="range" min="0" max="100" value="100" aria-label="Timeline position through repository history">
-          <span class="tm-time" id="tm-time">present day</span>
+          <span class="tm-time" id="tm-time">today</span>
         </div>
         <div class="map-legend">
           <span><i class="lg-dot" style="background:var(--red)"></i> High-confidence (&gt;70% share)</span>
@@ -674,45 +684,27 @@
       <table class="compare-table">
         <tr>
           <th></th>
-          <th>Manual interviews only</th>
-          <th>Generic code scanners</th>
           <th class="us-col">Codebase Time Machine</th>
+          <th>Manual interviews only</th>
+          <th>Generic code-quality scanners</th>
         </tr>
         <tr>
           <td class="compare-row-label">Measures where code history is concentrated</td>
-          <td>No, depends who's in the room</td>
-          <td>No, measures code quality, not ownership</td>
-          <td class="us-col"><strong>Yes</strong>, per file and subsystem, with stated confidence</td>
+          <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, per file and subsystem, with stated confidence</td>
+          <td data-label="Manual interviews only">No; it depends on who is asked</td>
+          <td data-label="Generic code-quality scanners">No; they measure code quality, not ownership</td>
         </tr>
         <tr>
           <td class="compare-row-label">Shows how concentration changed over time</td>
-          <td>No</td>
-          <td>No</td>
-          <td class="us-col"><strong>Yes</strong>, risk evolution per top file</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">Deliverable</td>
-          <td>Varies by consultant</td>
-          <td>Raw scanner output</td>
-          <td class="us-col">PDF + Excel workbook, IC-ready</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">Analysis time</td>
-          <td>Days to weeks</td>
-          <td>Minutes</td>
-          <td class="us-col">Minutes to a few hours, by repository size</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">Repo access required</td>
-          <td>None</td>
-          <td>Often broad or persistent</td>
-          <td class="us-col">Read-only token, revocable by you</td>
+          <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, risk evolution per top file</td>
+          <td data-label="Manual interviews only">Only as people remember it</td>
+          <td data-label="Generic code-quality scanners">No</td>
         </tr>
         <tr>
           <td class="compare-row-label">What it cannot see</td>
-          <td>What nobody mentions</td>
-          <td>Who holds the knowledge</td>
-          <td class="us-col">People who never committed code, and who maintains it today</td>
+          <td class="us-col" data-label="Codebase Time Machine">People who never committed code, and who maintains the code today</td>
+          <td data-label="Manual interviews only">What nobody mentions</td>
+          <td data-label="Generic code-quality scanners">Who holds the knowledge</td>
         </tr>
       </table>
     </div>
@@ -769,14 +761,14 @@
 <section id="security">
   <div class="wrap reveal">
     <div class="section-label">Security &amp; data handling</div>
-    <h2>Your source code is analysed on one machine for the duration of one scan, and then deleted.</h2>
-    <p class="lead-text">CTM is run as a tool by a single analyst, not consumed as a cloud service. There is no CTM platform holding your repository, no account, no database, and no server of ours that your code ever reaches.</p>
+    <h2>Your source code is copied for one scan, and the copy is deleted when the scan ends.</h2>
+    <p class="lead-text">The deletion is recorded. The one exception: a forcibly terminated process can leave a temporary copy behind without recording it, so we check by hand after any abnormal termination. CTM is a tool we run for you, not a cloud service you sign up to: there is no customer account and no database holding your repository.</p>
     <div class="sec-list">
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the single machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> Three things, and only three: the authenticated request to your repository host to fetch the code; a metadata request to that host's API; and nothing else, unless we tell you in advance that we are enabling the optional AI narrative, which is off by default.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> The authenticated request to your repository host to fetch the code; a metadata request to that host's API; the finished report, which we deliver to you; and, if you ask for it, the deletion record. Nothing else, unless you have agreed in writing to the optional AI narrative, which is off by default.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised in everything we deliver.</strong> By default, reports identify contributors as "Contributor A", "Contributor B", with no names and no email addresses on any page. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report says what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether its code was unmodified, the analysis settings, the timestamp, and whether AI was used. You can verify our data-handling claims from the document itself rather than taking our word for them.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report says what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether that version had local modifications, the analysis settings, the timestamp, and whether AI was used. You can verify our data-handling claims from the document itself rather than taking our word for them.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Every removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Credentials.</strong> You give us a read-only token scoped to the repository you want analysed, which you can revoke at any time. It is sent to your repository host as an HTTP authorisation header and is never written into the clone's configuration, a command line, a log, or any report.</p></div>
     </div>
@@ -785,12 +777,11 @@
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>No encryption at rest.</strong> Your code is protected while it exists by the short lifetime of the copy and by the machine's own access controls, not by application-level encryption.</p></div>
       <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>No certification.</strong> No SOC 2, no ISO 27001, no GDPR certification, and no independent penetration test.</p></div>
-      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>Access to the tool is a shared operator passphrase</strong>, not individual accounts or single sign-on.</p></div>
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>Access to the tool is protected by an operator passphrase</strong>, not individual accounts or single sign-on.</p></div>
       <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>A forcibly terminated process can leave a temporary copy behind</strong> without recording that it did. We check by hand after any abnormal termination.</p></div>
       <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>We support github.com, gitlab.com and bitbucket.org.</strong> GitHub Enterprise Server and self-managed GitLab are not supported today.</p></div>
     </div>
-    <p class="sec-note"><strong>Working with European customers.</strong> We can sign a data processing agreement under Art. 28 GDPR. In the default configuration CTM engages no subprocessors: the only party receiving your repository data is your own repository host, which you already contract with. Ask us for the Security &amp; Trust Pack: nine documents covering the data flow, retention and deletion, access control, incident response, AI egress, subprocessors, and a GDPR readiness checklist that states the open gaps as plainly as the controls.</p>
-    <p class="sec-note">Codebase Time Machine is an independent practice, not a platform vendor, which is the point: the analysis has no stake in the outcome of your deal.</p>
+    <p class="sec-note"><strong>Working with European customers.</strong> We can sign a data processing agreement under Art. 28 GDPR. Ask us for the Security &amp; Trust Pack: it covers the data flow, retention and deletion, access control, incident response, AI egress, subprocessors, and a GDPR readiness checklist that states the open gaps as plainly as the controls.</p>
   </div>
 </section>
 
@@ -803,7 +794,7 @@
         <p>I built Codebase Time Machine because technical diligence checks how good the code is, but rarely who holds the knowledge of it. That knowledge is written into a company's Git history, and it can be measured.</p>
         <p>I run every engagement myself, and I'll walk you through exactly what we read, and what we never touch, before you grant any access. No support rotation, no black box.</p>
         <div class="sig">— Josiah Shirt</div>
-        <div class="role">Founder, Codebase Time Machine · hello@codebasetimemachine.com</div>
+        <div class="role">Founder, Codebase Time Machine · <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
       </div>
     </div>
   </div>
@@ -824,7 +815,7 @@
       </details>
       <details class="faq-item">
         <summary>What happens to our code after the scan?</summary>
-        <p>Your repository is cloned to one machine for the duration of a single scan and then deleted, with the deletion recorded. There is no CTM server holding your code. The optional AI narrative is off by default, so nothing goes to any AI service. Delivered reports pseudonymise contributor identities by default, and each report states the exact tooling and settings that produced it. We hold no certification and do not encrypt at rest. Our full Security &amp; Trust Pack says so, along with everything else we do and do not do.</p>
+        <p>Your repository is copied for a single scan and the copy is deleted when the scan ends, with the deletion recorded (a forcibly terminated process is the exception; we check by hand after one). The optional AI narrative is off by default, so nothing goes to any AI service. Delivered reports pseudonymise contributor identities by default, and each report states the exact tooling and settings that produced it. We hold no certification and do not encrypt at rest. Our full Security &amp; Trust Pack says so, along with everything else we do and do not do.</p>
       </details>
       <details class="faq-item">
         <summary>How is "risk" actually calculated?</summary>
@@ -836,7 +827,7 @@
       </details>
       <details class="faq-item">
         <summary>How long does a scan take?</summary>
-        <p>The analysis runs in minutes to a few hours, depending on repository size and depth. Depth is your call, from a recent slice up to the repository's complete history, and the report states the exact share analysed. We replay history; we don't sample it.</p>
+        <p>The analysis runs in minutes to a few hours, depending on repository size and depth. Depth is your call, from the most recent commits up to the repository's complete history, and the report states the exact share of the history it analysed.</p>
       </details>
       <details class="faq-item">
         <summary>What does AI do in the report?</summary>
@@ -851,9 +842,9 @@
     <div class="section-label">Contact</div>
     <h2>Talk to a person, not a ticket queue.</h2>
     <div class="contact-box">
-      <p>Questions before you hand over repo access? Email directly at <strong>hello@codebasetimemachine.com</strong> and you'll hear back from the person who built this, not a support rotation.</p>
+      <p>Questions before you hand over repo access? Email directly at <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;"><strong>hello@codebasetimemachine.com</strong></a> and you'll hear back from the person who built this, not a support rotation.</p>
       <div class="contact-actions">
-        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
       </div>
     </div>
@@ -864,14 +855,14 @@
   <div class="wrap reveal">
     <h2>Bring us your next target before you sign.</h2>
     <p class="lead-text">AI off by default, contributor identities pseudonymised, read-only access. You receive the PDF and workbook. You never install anything, and the tool never leaves our hands.</p>
-    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
+    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · hello@codebasetimemachine.com</p>
+    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
   </div>
 </footer>
 
@@ -927,7 +918,7 @@
       {n:'api',           x:0.27,y:0.50,w:0.25,h:0.28, s0:0.24,s1:0.38},
       {n:'search',        x:0.52,y:0.50,w:0.26,h:0.28, s0:0.22,s1:0.44},
       {n:'reports',       x:0.27,y:0.78,w:0.25,h:0.22, s0:0.20,s1:0.30},
-      {n:'migrations',    x:0.52,y:0.78,w:0.26,h:0.22, s0:0.18,s1:0.27},
+      {n:'jobs',          x:0.52,y:0.78,w:0.26,h:0.22, s0:0.18,s1:0.27},
       {n:'docs',          x:0.78,y:0.50,w:0.22,h:0.50, s0:0.16,s1:0.22}
     ];
     cells.forEach(function(c){ c.seed=[]; for(var i=0;i<6;i++){ c.seed.push([Math.random(),Math.random()]); } });
@@ -961,25 +952,35 @@
         ctx.globalAlpha=1;
         ctx.fillStyle=mix(INK,col,0.10+conc*0.32); rrect(x,y,w,h,5); ctx.fill();
         ctx.lineWidth=(i===hover)?2:1; ctx.strokeStyle=(i===hover)?col:mix(LINE,col,conc*0.6); rrect(x,y,w,h,5); ctx.stroke();
-        var cx=x+w/2, cy=y+h/2, rad=Math.min(w,h)*0.26;
-        for(var d=0; d<bf; d++){
+        var fs=W<480?9:11, lp=W<480?5:8, room=w-lp*2, top=lp+fs*2+6;
+        // Dots sit below the two label lines so they never cover the text.
+        var compact=(h-top)<26;
+        // Short tiles: one dot to the right of the labels instead of a cluster.
+        var cx=compact?x+w-lp-8:x+w/2, cy=compact?y+h/2:y+top+(h-top)/2, rad=Math.min(w,h-top)*0.32;
+        for(var d=0; d<(compact?1:bf); d++){
           var ang=(d/bf)*Math.PI*2 + i, sd=c.seed[d]||[0.8,0.8];
           var dominant=(d===0);
           var dx=dominant?cx:cx+Math.cos(ang)*rad*(0.6+sd[0]*0.5);
           var dy=dominant?cy:cy+Math.sin(ang)*rad*(0.6+sd[1]*0.5);
           ctx.globalAlpha=dominant?0.95:0.5; ctx.fillStyle=dominant?col:mix(MUT,INK,0.2);
-          ctx.beginPath(); ctx.arc(dx,dy,dominant?Math.min(9,Math.max(4,rad*0.4)):3.2,0,Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(dx,dy,compact?5:(dominant?Math.min(9,Math.max(4,rad*0.4)):3.2),0,Math.PI*2); ctx.fill();
         }
         ctx.globalAlpha=1;
-        if(w>62 && h>34){
-          ctx.fillStyle=mix(TXT,col,conc*0.35); ctx.font='600 11px "IBM Plex Mono", monospace';
-          ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(c.n,x+8,y+8);
-          ctx.fillStyle=MUT; ctx.font='10px "IBM Plex Mono", monospace';
-          ctx.fillText(Math.round(s*100)+'% → bus '+bf,x+8,y+22);
+        // Labels: name, then single-contributor share. Each line is drawn only
+        // if it fits the tile, so narrow (phone) tiles never show cut-off text.
+        ctx.textAlign='left'; ctx.textBaseline='top';
+        ctx.font='600 '+fs+'px "IBM Plex Mono", monospace';
+        if(h>fs+lp*2 && ctx.measureText(c.n).width<=room){
+          ctx.fillStyle=mix(TXT,col,conc*0.35); ctx.fillText(c.n,x+lp,y+lp);
+          var shareTxt=Math.round(s*100)+'%';
+          ctx.font=(fs-1)+'px "IBM Plex Mono", monospace';
+          if(h>fs*2+lp*2+4 && ctx.measureText(shareTxt).width<=room){
+            ctx.fillStyle=MUT; ctx.fillText(shareTxt,x+lp,y+lp+fs+3);
+          }
         }
       }
       countEl.textContent=high+' high-confidence'; countEl.classList.toggle('zero',high===0);
-      timeEl.textContent = t>=0.995?'present day':(t<0.02?'founding':'history · '+Math.round(t*100)+'%');
+      timeEl.textContent = t>=0.995?'today':(t<0.02?'start':Math.round(t*100)+'%');
     }
 
     function setT(v){ t=Math.max(0,Math.min(1,v)); range.value=Math.round(t*100); draw(); }
@@ -987,7 +988,7 @@
     canvas.addEventListener('mousemove', function(e){
       var r=canvas.getBoundingClientRect(), mx=(e.clientX-r.left)/W, my=(e.clientY-r.top)/H, hit=-1;
       for(var i=0;i<cells.length;i++){ var c=cells[i]; if(mx>=c.x&&mx<=c.x+c.w&&my>=c.y&&my<=c.y+c.h){hit=i;break;} }
-      if(hit!==hover){ hover=hit; draw(); var s=hit>=0?shareAt(cells[hit],t):0; canvas.title = hit>=0? cells[hit].n+' — '+Math.round(s*100)+'% single-owner share (measured) → bus factor '+busFactor(s)+' (derived)' : ''; }
+      if(hit!==hover){ hover=hit; draw(); var s=hit>=0?shareAt(cells[hit],t):0; canvas.title = hit>=0? cells[hit].n+' — '+Math.round(s*100)+'% held by one contributor (illustrative)' : ''; }
     });
     canvas.addEventListener('mouseleave', function(){ if(hover!==-1){hover=-1; draw();} });
 
