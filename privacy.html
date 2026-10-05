@@ -3,9 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — Codebase Time Machine</title>
+<title>Privacy Notice — Codebase Time Machine</title>
+<meta name="description" content="How Codebase Time Machine handles personal data: website hosting, call bookings, email, and the repository analysis service, with legal bases, retention and your rights under the GDPR.">
+<meta property="og:url" content="https://codebasetimemachine.com/privacy.html">
+<link rel="canonical" href="https://codebasetimemachine.com/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Notice — Codebase Time Machine">
+<meta property="og:description" content="How Codebase Time Machine handles personal data, with legal bases, retention and your rights under the GDPR.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Privacy Notice — Codebase Time Machine">
+<meta name="twitter:description" content="How Codebase Time Machine handles personal data, with legal bases, retention and your rights under the GDPR.">
 <link rel="icon" type="image/png" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="assets/fonts.css" rel="stylesheet">
 <style>
   :root{
     --ink:#0B1220; --panel:#111A2C; --line:#26314A; --text:#E9ECF3; --muted:#8B96AE; --amber:#D98E04;
@@ -23,57 +32,77 @@
   p, li{color:var(--muted);font-size:14.5px;margin-bottom:12px;}
   li{margin-left:20px;}
   a{color:var(--amber);}
+  @media (max-width:700px){ p a[href^="mailto:"], footer a{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} footer a{min-width:44px;text-align:center;} .brand a{min-height:44px;} }
   footer{border-top:1px solid var(--line);margin-top:60px;padding:24px 0;font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+  .nw{white-space:nowrap;}
 </style>
 </head>
 <body>
 <nav><div class="wrap brand" style="display:flex;align-items:center;gap:10px;"><a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;"><img src="logo-icon.png" alt="" style="height:32px;width:auto;display:block;"><span>Codebase<span class="dot">·</span>Time Machine</span></a></div></nav>
 <div class="wrap">
-  <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: August 2026</p>
+  <h1>Privacy Notice</h1>
+  <p class="updated">Last updated: 5 October 2026</p>
 
-  <p>This policy explains what data Codebase Time Machine collects, why, and how it's handled — both for visitors to this website and for clients who use our repository analysis service.</p>
+  <p>This notice explains what personal data Codebase Time Machine processes, why, on what legal basis, and for how long. It covers visitors to this website and clients of our repository analysis service (Art. 13 GDPR).</p>
 
-  <h2>Who we are</h2>
-  <p>Codebase Time Machine is operated as a small, independent service. For any privacy question, contact us directly at <a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a> — you'll reach a person, not a support queue.</p>
+  <h2>Controller</h2>
+  <p>Josiah Shirt, trading as Codebase Time Machine, Bremen, Germany. Email: <span class="nw"><a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a>.</span> You'll reach a person, not a support queue.</p>
 
-  <h2>What we collect on this website</h2>
+  <h2>Visiting this website</h2>
   <ul>
-    <li>If you email us (including via the "Book a demo" or "Contact" links), we receive whatever you include in that email — typically your name, email address, and message content.</li>
-    <li>This website itself does not use tracking cookies, analytics scripts, or third-party advertising pixels.</li>
+    <li><strong>Hosting.</strong> This website is hosted on GitHub Pages (GitHub, Inc., USA). When you load a page, GitHub processes your IP address, the time of the request, the page requested and your browser's user-agent, to deliver the page and keep the service secure. Legal basis: our legitimate interest in operating a secure website (Art. 6(1)(f) GDPR). GitHub decides how long it keeps these logs; we have no access to them. For transfers to the USA, the safeguards are as described in GitHub's own privacy statement.</li>
+    <li><strong>Fonts and scripts</strong> are served from this website itself. No request is made to Google Fonts or any other third-party content network when you load a page.</li>
+    <li><strong>No cookies, analytics or tracking.</strong> This website sets no cookies and uses no analytics scripts or advertising pixels.</li>
   </ul>
 
-  <h2>What we collect when you use the audit service</h2>
-  <p>When you engage us for a repository audit, we access only what's needed to run the analysis:</p>
-  <ul>
-    <li>Git commit history and metadata from the repository you grant access to — commit authors, dates, file paths, and commit messages.</li>
-    <li>Access credentials (a GitHub App installation token, a scoped personal access token, or collaborator access) that you provide for the duration of the scan only.</li>
-    <li>Contact and billing information you provide directly (company name, email, engagement scope).</li>
-  </ul>
-  <p>We do not access, analyze, or retain your application's runtime data, databases, customer data, or any system outside the Git repository you explicitly grant access to.</p>
+  <h2>Booking a call</h2>
+  <p>The "Book a call" buttons link to Calendly (Calendly LLC, USA). If you book, Calendly processes your name, email address, the time you choose and any answers you give, and passes them to us so we can hold the call. Legal basis: steps taken at your request before a contract (Art. 6(1)(b) GDPR). For transfers to the USA, the safeguards are as described in Calendly's own privacy notice, which applies on its pages. We keep booking details for as long as the conversation is active, and delete them within 12 months of our last contact unless an engagement follows.</p>
 
-  <h2>Retention</h2>
-  <p>The cloned working copy of your repository — and any access token supplied for the scan — is deleted immediately after the report is generated and delivered. We do not retain a copy of your source code. The generated PDF and Excel report are retained only as long as needed to deliver them to you, plus a reasonable period for support purposes, unless you request earlier deletion.</p>
+  <h2>Contacting us by email</h2>
+  <p>If you email us, we process what you send, typically your name, email address and message. Our email is hosted by IONOS SE, Germany. Legal basis: Art. 6(1)(b) GDPR where you ask about an engagement, otherwise our legitimate interest in answering you (Art. 6(1)(f)). We delete the correspondence when it is no longer needed, at the latest 12 months after our last contact, unless we must keep it for legal reasons (for example, commercial and tax retention duties).</p>
 
-  <h2>How we use what we collect</h2>
+  <h2>The repository analysis service</h2>
+  <p>When you engage us, we process the following to run the analysis:</p>
   <ul>
-    <li>To perform the repository analysis you've requested and produce your report.</li>
-    <li>To respond to inquiries sent via email.</li>
-    <li>We do not sell, rent, or share your data with third parties for marketing purposes.</li>
+    <li><strong>The full repository</strong> you grant access to, cloned for one scan: its source files and its Git history, including commit authors (names and email addresses), dates, file paths, commit messages and the content of each change. The analysis counts and attributes lines and scans file contents and changes for exposed secrets and licence files. Source code, comments and commit messages can themselves contain personal data, such as names or email addresses; we treat all of it as personal data.</li>
+    <li><strong>Basic repository metadata</strong> from your repository host.</li>
+    <li><strong>A read-only access token</strong> scoped to that repository, used for the duration of the scan. It is sent to your repository host as an authorisation header and is never written into the clone's configuration, a command line, a log or any report.</li>
+    <li><strong>Contact and billing details</strong> you give us (company name, email, engagement scope).</li>
   </ul>
+  <p><strong>Purpose and legal basis.</strong> To produce the report you have asked for (Art. 6(1)(b) GDPR towards you as our client). For the contributors whose names appear in the commit history, we act on your instructions as your processor, and we can sign a data processing agreement under Art. 28 GDPR.</p>
+  <p><strong>Where it runs.</strong> The repository is cloned onto the machine running the analysis, into a temporary directory created for that scan. Before an engagement we tell you, in writing, which machine and which providers (if any) are involved, and list them in the data processing agreement.</p>
+  <p><strong>AI.</strong> The optional AI narrative is off by default. With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. We enable it only if you agree in writing first.</p>
+  <p><strong>Pseudonymisation.</strong> By default, contributor names and email addresses are replaced with pseudonyms such as "Contributor A". Names that appear inside file paths, commit messages or code-owner team handles are not scrubbed. This is pseudonymisation, not anonymisation.</p>
+
+  <h2>Retention and deletion</h2>
+  <ul>
+    <li>The cloned repository and the temporary report files are deleted when the scan ends, whether it succeeds or fails, and each deletion is recorded in a log that contains no file names, paths or contributor identities. A forcibly terminated scan can leave a temporary copy behind without recording it; we check by hand after any forcibly terminated scan, and delete what we find.</li>
+    <li>The delivered PDF and Excel report are kept for the period agreed with you for that engagement and then deleted. You can ask for earlier deletion at any time.</li>
+    <li>The deletion record is kept as evidence that deletion happened, for 12 months after the engagement ends, then deleted. It contains a scan identifier, the class of data removed, the result and the time; no file names, paths or contributor identities.</li>
+    <li>Contact and billing details for an engagement are kept for the statutory retention periods under German commercial and tax law (HGB and AO), then deleted. Legal basis: our legal obligation to keep them (Art. 6(1)(c) GDPR).</li>
+    <li>We keep no copy of your source code beyond the scan, apart from a copy a forcibly terminated scan may leave, which we delete when we find it.</li>
+  </ul>
+
+  <h2>Who receives your data</h2>
+  <p>The providers named above: GitHub (website hosting), Calendly (call bookings) and IONOS SE, Germany (email). For an engagement, any provider that hosts the analysis is named to you in writing before it starts and listed in the data processing agreement. Billing details go to our tax adviser and our bank, as needed for accounting and payment. We do not sell, rent or share your data for marketing.</p>
+
+  <h2>Do you have to provide your data?</h2>
+  <p>No law requires you to give us personal data. Without your name and email address we cannot book a call or answer you, and without read access to the repository we cannot run the analysis.</p>
+
+  <h2>Automated decision-making</h2>
+  <p>We make no decisions about you based solely on automated processing, including profiling (Art. 22 GDPR). The report measures commit history; any conclusion about a person is for you and the company's management to confirm.</p>
 
   <h2>Your rights</h2>
-  <p>Depending on your jurisdiction (including under GDPR, if you're in the EU/EEA), you may have the right to access, correct, or request deletion of personal data we hold about you, and to object to or restrict certain processing. To exercise any of these rights, email <a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a>.</p>
+  <p>You have the right to access (Art. 15 GDPR), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18) and data portability (Art. 20). To exercise them, email <span class="nw"><a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a>.</span></p>
+  <p><strong>Right to object (Art. 21 GDPR).</strong> Where we process your data on the basis of our legitimate interests (Art. 6(1)(f) GDPR), you can object at any time on grounds relating to your particular situation. We then stop, unless we can show compelling legitimate grounds that override your interests, or need the data to establish, exercise or defend legal claims. Email <span class="nw"><a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a>.</span></p>
+  <p>You also have the right to complain to a data protection supervisory authority. The authority responsible for us is: Die Landesbeauftragte für Datenschutz und Informationsfreiheit der Freien Hansestadt Bremen.</p>
 
-  <h2>Security</h2>
-  <p>Repository scans run in a dedicated, temporary workspace unique to that scan. Access tokens are held in memory only for the duration of the scan and are never written to disk or logged. We are a small, early-stage service — we describe our actual current practices here rather than making broader security claims we haven't yet built out.</p>
+  <h2>What we do not claim</h2>
+  <p>We hold no certification (no SOC 2, no ISO 27001, no GDPR certification) and do not encrypt repository data at rest. Our Security &amp; Trust Pack states our controls and open gaps; ask us for it.</p>
 
-  <h2>Changes to this policy</h2>
-  <p>If this policy changes, we'll update the date at the top of this page. Continued use of the site or service after changes constitutes acceptance of the revised policy.</p>
-
-  <h2>Contact</h2>
-  <p>Questions about this policy or how your data is handled: <a href="mailto:hello@codebasetimemachine.com">hello@codebasetimemachine.com</a></p>
+  <h2>Changes to this notice</h2>
+  <p>If this notice changes, we update the date at the top of this page.</p>
 </div>
-<footer><div class="wrap">© 2026 Codebase Time Machine</div></footer>
+<footer><div class="wrap">© 2026 Codebase Time Machine · <a href="index.html">Home</a></div></footer>
 </body>
 </html>
