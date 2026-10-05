@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence</title>
-<meta name="description" content="Evidence-first key-person risk analysis for M&amp;A technology diligence: which engineers hold critical code knowledge, how concentrated it is, and what to ask management.">
-<meta property="og:title" content="Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence">
-<meta property="og:description" content="Evidence-first key-person risk analysis for M&amp;A technology diligence: which engineers hold critical code knowledge, how concentrated it is, and what to ask management.">
+<title>Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence</title>
+<meta name="description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
+<meta property="og:title" content="Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence">
+<meta property="og:description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
 <meta property="og:image" content="https://codebasetimemachine.com/og-image.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence">
+<meta name="twitter:description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="assets/fonts.css" rel="stylesheet">
 <style>
@@ -200,7 +202,7 @@
     text-transform:uppercase;letter-spacing:0.04em;color:var(--muted-on-paper);
     border-bottom:1.5px solid var(--paper-line);padding:6px 6px 6px 0;
   }
-  table.doc-table td{padding:8px 6px 8px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:anywhere;}
+  table.doc-table td{padding:8px 6px 8px 0;border-bottom:1px solid var(--paper-line);font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:normal;hyphens:auto;-webkit-hyphens:auto;}
   .tier-critical{color:var(--red);font-weight:600;}
   .tier-watch{color:#9A6B00;font-weight:600;}
   .doc-foot{margin-top:14px;font-size:9.5px;color:var(--muted-on-paper);font-family:'IBM Plex Mono',monospace;}
@@ -460,6 +462,8 @@
     .toc-tag{grid-column:2;justify-self:start;}
     .d-grid{grid-template-columns:1fr 1fr;}
   }
+  .nw{white-space:nowrap;}
+  @media (max-width:400px){ .wrap{padding:0 20px;} .band .wrap{padding:22px 20px;} .contact-box{padding:24px 20px;} .contact-box p a{overflow-wrap:anywhere;} .tm-head{flex-wrap:wrap;} .founder{padding:26px 20px;} }
 </style>
 </head>
 <body>
@@ -733,7 +737,7 @@
   <div class="wrap reveal">
     <div class="section-label">Where it fits</div>
     <h2>A workstream inside diligence, not a tool to adopt.</h2>
-    <p class="lead-text">Codebase Time Machine drops into the process you already run. It reads during confirmatory diligence, informs the terms you negotiate, and gives the integration team a starting list on day one.</p>
+    <p class="lead-text">Codebase Time Machine drops into the process you already run. It runs during confirmatory diligence, informs the terms you negotiate, and gives the integration team a starting list on day one.</p>
 
     <div class="fit-flow" role="img" aria-label="Deal timeline: CTM runs during confirmatory diligence, informs retention and earn-out terms, and gives integration a starting list.">
       <div class="fit-stage"><span class="fs-dot"></span><div class="fs-name">Sourcing</div></div>
@@ -779,15 +783,15 @@
 <section id="security">
   <div class="wrap reveal">
     <div class="section-label">Security &amp; data handling</div>
-    <h2>Your source code is copied for one scan, and the copy is deleted when the scan ends.</h2>
-    <p class="lead-text">The deletion is recorded. The one exception: a forcibly terminated scan can leave a temporary copy behind without recording it, so we check by hand after any forcibly terminated scan. CTM is a tool we run for you, not a cloud service you sign up to: there is no customer account and no database holding your repository.</p>
+    <h2>Your source code is copied for one scan. The copy is deleted when the scan ends, or by hand if the scan is forcibly terminated.</h2>
+    <p class="lead-text">The automatic deletion is recorded. A forcibly terminated scan can leave a temporary copy behind without recording it, so after one we check by hand and delete what we find. CTM is a tool we run for you, not a cloud service you sign up to: there is no customer account and no database holding your repository.</p>
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log (unless the scan was forcibly terminated; see below).</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> The authenticated request to your repository host to fetch the code; a metadata request to that host's API; the finished report, which we deliver to you; and, if you ask for it, the deletion record. Nothing else, unless you have agreed in writing to the optional AI narrative, which is off by default.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history and repository metadata on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised by default.</strong> Unless you ask in writing for named reports, reports identify contributors as "Contributor A", "Contributor B", with no names and no email addresses on any page. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised by default.</strong> Unless you ask in writing for named reports, contributor names and email addresses are replaced with pseudonyms such as "Contributor A". Names that appear inside file paths, commit messages or code-owner team handles are not scrubbed. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report records what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether that version had local modifications, the analysis settings, the timestamp, and whether AI was used.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Every removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Each automatic removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest. A forcibly terminated scan leaves no automatic record; see below.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Credentials.</strong> You give us a read-only token scoped to the repository you want analysed, which you can revoke at any time. It is sent to your repository host as an HTTP authorisation header and is never written into the clone's configuration, a command line, a log, or any report.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Supported hosts.</strong> github.com, gitlab.com and bitbucket.org. GitHub Enterprise Server and self-managed GitLab are not supported today.</p></div>
     </div>
@@ -810,7 +814,7 @@
     <div class="founder">
       <div class="founder-body">
         <p>I built Codebase Time Machine because who holds the knowledge of a codebase matters to a deal, and much of that knowledge is written into the company's Git history, where it can be measured.</p>
-        <p>I run every engagement myself, and I'll walk you through exactly what we read, and what we never touch, before you grant any access. No support rotation, no black box.</p>
+        <p>I run every engagement myself, and I'll walk you through exactly what I read, and what I never touch, before you grant any access. No support rotation, no black box.</p>
         <div class="sig">— Josiah Shirt</div>
         <div class="role">Founder, Codebase Time Machine · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
       </div>
@@ -880,7 +884,7 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a class="mail-link" href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
+    <p><a class="mail-link" href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <span class="nw"><a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></span></p>
   </div>
 </footer>
 
