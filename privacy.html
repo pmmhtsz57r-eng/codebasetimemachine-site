@@ -23,7 +23,7 @@
   p, li{color:var(--muted);font-size:14.5px;margin-bottom:12px;}
   li{margin-left:20px;}
   a{color:var(--amber);}
-  @media (max-width:700px){ p a[href^="mailto:"], footer a{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} .brand a{min-height:44px;} }
+  @media (max-width:700px){ p a[href^="mailto:"], footer a{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} footer a{min-width:44px;text-align:center;} .brand a{min-height:44px;} }
   footer{border-top:1px solid var(--line);margin-top:60px;padding:24px 0;font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
 </style>
 </head>
@@ -40,7 +40,7 @@
 
   <h2>Visiting this website</h2>
   <ul>
-    <li><strong>Hosting.</strong> This website is hosted on GitHub Pages (GitHub, Inc., USA). When you load a page, GitHub processes your IP address, the time of the request, the page requested and your browser's user-agent, to deliver the page and keep the service secure. Legal basis: our legitimate interest in operating a secure website (Art. 6(1)(f) GDPR). GitHub retains these logs according to its own policy. For transfers to the USA, the safeguards are as described in GitHub's own privacy statement.</li>
+    <li><strong>Hosting.</strong> This website is hosted on GitHub Pages (GitHub, Inc., USA). When you load a page, GitHub processes your IP address, the time of the request, the page requested and your browser's user-agent, to deliver the page and keep the service secure. Legal basis: our legitimate interest in operating a secure website (Art. 6(1)(f) GDPR). GitHub decides how long it keeps these logs; we have no access to them. For transfers to the USA, the safeguards are as described in GitHub's own privacy statement.</li>
     <li><strong>Fonts and scripts</strong> are served from this website itself. No request is made to Google Fonts or any other third-party content network when you load a page.</li>
     <li><strong>No cookies, analytics or tracking.</strong> This website sets no cookies and uses no analytics scripts or advertising pixels.</li>
   </ul>
@@ -65,11 +65,11 @@
 
   <h2>Retention and deletion</h2>
   <ul>
-    <li>The cloned repository and the temporary report files are deleted when the scan ends, whether it succeeds or fails, and each deletion is recorded in a log that contains no file names, paths or contributor identities. A forcibly terminated process can leave a temporary copy behind without recording it; we check by hand after any abnormal termination.</li>
+    <li>The cloned repository and the temporary report files are deleted when the scan ends, whether it succeeds or fails, and each deletion is recorded in a log that contains no file names, paths or contributor identities. A forcibly terminated scan can leave a temporary copy behind without recording it; we check by hand after any forcibly terminated scan, and delete what we find.</li>
     <li>The delivered PDF and Excel report are kept for the period agreed with you for that engagement and then deleted. You can ask for earlier deletion at any time.</li>
     <li>The deletion record is kept as evidence that deletion happened, for as long as we keep the engagement's records. It contains a scan identifier, the class of data removed, the result and the time; no file names, paths or contributor identities.</li>
     <li>Contact and billing details for an engagement are kept for the statutory retention periods under German commercial and tax law (HGB and AO), then deleted. Legal basis: our legal obligation to keep them (Art. 6(1)(c) GDPR).</li>
-    <li>We do not keep a copy of your source code.</li>
+    <li>We keep no copy of your source code beyond the scan, apart from a copy a forcibly terminated scan may leave, which we delete when we find it.</li>
   </ul>
 
   <h2>Who receives your data</h2>
