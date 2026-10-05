@@ -390,6 +390,7 @@
   .sec-check{color:var(--ok);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
   .sec-item p{font-size:14px;color:var(--muted);}
   .sec-no{color:var(--muted-2);}
+  @media (max-width:700px){ .mail-link{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} }
   .sec-sub{margin:34px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;color:var(--text-strong);}
   .sec-item strong{color:var(--text);}
   .sec-note{margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:64ch;border-left:2px solid var(--line);padding-left:16px;}
@@ -487,7 +488,7 @@
         <a class="btn-secondary" href="#how">How it works</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="n">Full&nbsp;history</div><div class="l">Up to every commit; share analysed stated</div></div>
+        <div class="hero-stat"><div class="n">Up&nbsp;to&nbsp;full&nbsp;history</div><div class="l">You choose the depth; share analysed stated</div></div>
         <div class="hero-stat"><div class="n">AI&nbsp;off</div><div class="l">By default</div></div>
         <div class="hero-stat"><div class="n">Pseudonymised</div><div class="l">Contributor identities, by default</div></div>
       </div>
@@ -495,7 +496,7 @@
     <div class="doc-stage">
       <div class="doc-card" id="tilt-card">
         <div class="doc-stamp">CONFIDENTIAL</div>
-        <h3>What the report contains</h3>
+        <h3>Report highlights</h3>
         <div class="doc-sub">PDF for the IC · Excel workbook for the deal team</div>
         <table class="doc-table">
           <tr><th>Section</th><th>What it gives you</th></tr>
@@ -504,7 +505,7 @@
           <tr><td>Buyer questions</td><td>What to ask management before close</td></tr>
           <tr><td>Coverage &amp; method</td><td>History analysed, and what Git cannot establish</td></tr>
         </table>
-        <div class="doc-foot">Structure only. No client or sample data is shown on this site.</div>
+        <div class="doc-foot">4 of the 7 report sections. Structure only; no client or sample data is shown on this site.</div>
       </div>
     </div>
   </div>
@@ -679,7 +680,7 @@
   <div class="wrap reveal">
     <div class="section-label">Compare</div>
     <h2>Not a scanner. Not just interviews.</h2>
-    <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: an evidence-backed picture of where code knowledge is concentrated.</p>
+    <p class="lead-text">What CTM adds to a deal file: an evidence-backed picture of where code knowledge is concentrated, with its confidence and its limits stated.</p>
     <div class="compare-table-scroll">
       <table class="compare-table">
         <tr>
@@ -692,19 +693,19 @@
           <td class="compare-row-label">Measures where code history is concentrated</td>
           <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, per file and subsystem, with stated confidence</td>
           <td data-label="Manual interviews only">No; it depends on who is asked</td>
-          <td data-label="Generic code-quality scanners">No; they measure code quality, not ownership</td>
+          <td data-label="Generic code-quality scanners">Varies by tool; most focus on code quality</td>
         </tr>
         <tr>
           <td class="compare-row-label">Shows how concentration changed over time</td>
           <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, risk evolution per top file</td>
           <td data-label="Manual interviews only">Only as people remember it</td>
-          <td data-label="Generic code-quality scanners">No</td>
+          <td data-label="Generic code-quality scanners">Varies by tool</td>
         </tr>
         <tr>
           <td class="compare-row-label">What it cannot see</td>
           <td class="us-col" data-label="Codebase Time Machine">People who never committed code, and who maintains the code today</td>
           <td data-label="Manual interviews only">What nobody mentions</td>
-          <td data-label="Generic code-quality scanners">Who holds the knowledge</td>
+          <td data-label="Generic code-quality scanners">Varies by tool</td>
         </tr>
       </table>
     </div>
@@ -794,7 +795,7 @@
         <p>I built Codebase Time Machine because technical diligence checks how good the code is, but rarely who holds the knowledge of it. That knowledge is written into a company's Git history, and it can be measured.</p>
         <p>I run every engagement myself, and I'll walk you through exactly what we read, and what we never touch, before you grant any access. No support rotation, no black box.</p>
         <div class="sig">— Josiah Shirt</div>
-        <div class="role">Founder, Codebase Time Machine · <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
+        <div class="role">Founder, Codebase Time Machine · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
       </div>
     </div>
   </div>
@@ -842,7 +843,7 @@
     <div class="section-label">Contact</div>
     <h2>Talk to a person, not a ticket queue.</h2>
     <div class="contact-box">
-      <p>Questions before you hand over repo access? Email directly at <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;"><strong>hello@codebasetimemachine.com</strong></a> and you'll hear back from the person who built this, not a support rotation.</p>
+      <p>Questions before you hand over repo access? Email directly at <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;"><strong>hello@codebasetimemachine.com</strong></a> and you'll hear back from the person who built this, not a support rotation.</p>
       <div class="contact-actions">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
@@ -862,7 +863,7 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
+    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
   </div>
 </footer>
 
