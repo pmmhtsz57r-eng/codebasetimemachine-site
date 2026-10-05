@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Notice — Codebase Time Machine</title>
+<meta name="description" content="How Codebase Time Machine handles personal data: website hosting, call bookings, email, and the repository analysis service, with legal bases, retention and your rights under the GDPR.">
+<meta property="og:url" content="https://codebasetimemachine.com/privacy.html">
+<link rel="canonical" href="https://codebasetimemachine.com/privacy.html">
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="assets/fonts.css" rel="stylesheet">
 <style>
@@ -53,22 +56,23 @@
   <p>If you email us, we process what you send, typically your name, email address and message. Our email is hosted by IONOS SE, Germany. Legal basis: Art. 6(1)(b) GDPR where you ask about an engagement, otherwise our legitimate interest in answering you (Art. 6(1)(f)). We delete the correspondence when it is no longer needed, at the latest 12 months after our last contact, unless we must keep it for legal reasons (for example, commercial and tax retention duties).</p>
 
   <h2>The repository analysis service</h2>
-  <p>When you engage us, we process only what is needed to run the analysis:</p>
+  <p>When you engage us, we process the following to run the analysis:</p>
   <ul>
-    <li><strong>Git commit history and metadata</strong> from the repository you grant access to: commit authors (names and email addresses), dates, file paths and commit messages.</li>
+    <li><strong>The full repository</strong> you grant access to, cloned for one scan: its source files and its Git history, including commit authors (names and email addresses), dates, file paths, commit messages and the content of each change. The analysis counts and attributes lines and scans file contents and changes for exposed secrets and licence files. Source code, comments and commit messages can themselves contain personal data, such as names or email addresses; we treat all of it as personal data.</li>
+    <li><strong>Basic repository metadata</strong> from your repository host.</li>
     <li><strong>A read-only access token</strong> scoped to that repository, used for the duration of the scan. It is sent to your repository host as an authorisation header and is never written into the clone's configuration, a command line, a log or any report.</li>
     <li><strong>Contact and billing details</strong> you give us (company name, email, engagement scope).</li>
   </ul>
   <p><strong>Purpose and legal basis.</strong> To produce the report you have asked for (Art. 6(1)(b) GDPR towards you as our client). For the contributors whose names appear in the commit history, we act on your instructions as your processor, and we can sign a data processing agreement under Art. 28 GDPR.</p>
   <p><strong>Where it runs.</strong> The repository is cloned onto the machine running the analysis, into a temporary directory created for that scan. Before an engagement we tell you, in writing, which machine and which providers (if any) are involved, and list them in the data processing agreement.</p>
   <p><strong>AI.</strong> The optional AI narrative is off by default. With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. We enable it only if you agree in writing first.</p>
-  <p><strong>Pseudonymisation.</strong> By default, reports identify contributors as "Contributor A", "Contributor B", with no names or email addresses. This is pseudonymisation, not anonymisation.</p>
+  <p><strong>Pseudonymisation.</strong> By default, contributor names and email addresses are replaced with pseudonyms such as "Contributor A". Names that appear inside file paths, commit messages or code-owner team handles are not scrubbed. This is pseudonymisation, not anonymisation.</p>
 
   <h2>Retention and deletion</h2>
   <ul>
     <li>The cloned repository and the temporary report files are deleted when the scan ends, whether it succeeds or fails, and each deletion is recorded in a log that contains no file names, paths or contributor identities. A forcibly terminated scan can leave a temporary copy behind without recording it; we check by hand after any forcibly terminated scan, and delete what we find.</li>
     <li>The delivered PDF and Excel report are kept for the period agreed with you for that engagement and then deleted. You can ask for earlier deletion at any time.</li>
-    <li>The deletion record is kept as evidence that deletion happened, for as long as we keep the engagement's records. It contains a scan identifier, the class of data removed, the result and the time; no file names, paths or contributor identities.</li>
+    <li>The deletion record is kept as evidence that deletion happened, for 12 months after the engagement ends, then deleted. It contains a scan identifier, the class of data removed, the result and the time; no file names, paths or contributor identities.</li>
     <li>Contact and billing details for an engagement are kept for the statutory retention periods under German commercial and tax law (HGB and AO), then deleted. Legal basis: our legal obligation to keep them (Art. 6(1)(c) GDPR).</li>
     <li>We keep no copy of your source code beyond the scan, apart from a copy a forcibly terminated scan may leave, which we delete when we find it.</li>
   </ul>

@@ -4,14 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence</title>
-<meta name="description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
+<meta name="description" content="Key-person risk evidence for M&amp;A diligence: where critical code knowledge is concentrated and who holds it, measured from Git history.">
 <meta property="og:title" content="Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence">
-<meta property="og:description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
+<meta property="og:description" content="Key-person risk evidence for M&amp;A diligence: where critical code knowledge is concentrated and who holds it, measured from Git history.">
 <meta property="og:image" content="https://codebasetimemachine.com/og-image.png">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://codebasetimemachine.com/">
+<link rel="canonical" href="https://codebasetimemachine.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Codebase Time Machine — Key-Person Risk Evidence for M&amp;A Diligence">
-<meta name="twitter:description" content="Key-person risk evidence for M&amp;A technology diligence: where critical code knowledge is concentrated, and in whose hands, measured from Git history, with the confidence stated and the questions to ask management.">
+<meta name="twitter:description" content="Key-person risk evidence for M&amp;A diligence: where critical code knowledge is concentrated and who holds it, measured from Git history.">
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="assets/fonts.css" rel="stylesheet">
 <style>
@@ -78,7 +80,7 @@
   }
   .hero:hover .hero-glow{opacity:1;}
 
-  /* Live "scan" HUD ticker over the 3D */
+  /* Live "scan" HUD ticker over the history replay */
   .scan-hud{
     position:absolute;z-index:4;right:26px;bottom:34px;width:330px;pointer-events:none;
     background:rgba(10,15,26,0.5);border:1px solid var(--line-soft);border-radius:4px;
@@ -135,9 +137,9 @@
   .hero{position:relative;padding:96px 0 84px;overflow:hidden;}
   #scene{
     position:absolute;inset:0;width:100%;height:100%;z-index:0;
-    /* keep text readable: fade the 3D toward the left where copy sits */
-    -webkit-mask-image:radial-gradient(120% 130% at 78% 42%, #000 30%, transparent 82%);
-            mask-image:radial-gradient(120% 130% at 78% 42%, #000 30%, transparent 82%);
+    /* keep text readable: the replay lives in the right half, away from the copy */
+    -webkit-mask-image:linear-gradient(90deg, transparent 46%, #000 60%, #000 96%, transparent 100%);
+            mask-image:linear-gradient(90deg, transparent 46%, #000 60%, #000 96%, transparent 100%);
     opacity:0;transition:opacity 1.2s ease;
   }
   #scene.ready{opacity:1;}
@@ -173,7 +175,7 @@
   .hero-stat .n{font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;color:var(--text-strong);line-height:1;}
   .hero-stat .l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted-2);margin-top:7px;}
 
-  /* ---------- SIGNATURE: report card mockup (foreground, floats over 3D) ---------- */
+  /* ---------- SIGNATURE: report card mockup (foreground, floats over the replay) ---------- */
   .doc-stage{position:relative;display:flex;justify-content:center;padding:12px 0;perspective:1400px;}
   .doc-card{
     background:var(--paper);color:var(--ink-on-paper);border-radius:3px;
@@ -447,8 +449,8 @@
   @media (max-width: 900px){
     .hero-grid{grid-template-columns:minmax(0,1fr);gap:44px;}
     h1{font-size:37px;}
-    #scene{-webkit-mask-image:radial-gradient(140% 120% at 50% 30%, #000 20%, transparent 78%);mask-image:radial-gradient(140% 120% at 50% 30%, #000 20%, transparent 78%);opacity:0.55;}
-    #scene.ready{opacity:0.55;}
+    #scene{-webkit-mask-image:none;mask-image:none;opacity:0.8;}
+    #scene.ready{opacity:0.8;}
     .steps{grid-template-columns:1fr 1fr;row-gap:32px;}
     .steps::before{display:none;}
     .sec-list{grid-template-columns:1fr;}
@@ -463,6 +465,7 @@
     .d-grid{grid-template-columns:1fr 1fr;}
   }
   .nw{white-space:nowrap;}
+  @media (max-width:520px){ footer .fsep{display:none;} footer p a.mail-link{display:block;} }
   @media (max-width:400px){ .wrap{padding:0 20px;} .band .wrap{padding:22px 20px;} .contact-box{padding:24px 20px;} .contact-box p a{overflow-wrap:anywhere;} .tm-head{flex-wrap:wrap;} .founder{padding:26px 20px;} }
 </style>
 </head>
@@ -505,7 +508,7 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
-      <h1>Before you close, know where critical code knowledge is concentrated, and in whose hands, <em>on evidence</em>.</h1>
+      <h1>Before you close, know where critical code knowledge is concentrated and who holds it, <em>on evidence</em>.</h1>
       <p class="lede">Codebase Time Machine replays a target's Git history, as deep as you choose, to show which files rest on one or two key engineers' commits, how strong that evidence is, and what to ask management before you sign. It sees code contributors only: who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
@@ -578,7 +581,7 @@
       <div class="step">
         <div class="step-num">1</div>
         <h4>Read-only access</h4>
-        <p>A read-only token scoped to the repository you want analysed. Never write or admin. You can revoke it at any time.</p>
+        <p>A read-only token scoped to the repository you want analysed. We never ask for write or admin rights, and you can revoke the token at any time.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -788,7 +791,7 @@
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log (unless the scan was forcibly terminated; see below).</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> The authenticated request to your repository host to fetch the code; a metadata request to that host's API; the finished report, which we deliver to you; and, if you ask for it, the deletion record. Nothing else, unless you have agreed in writing to the optional AI narrative, which is off by default.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history and repository metadata on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your repository's files, its Git history and repository metadata on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised by default.</strong> Unless you ask in writing for named reports, contributor names and email addresses are replaced with pseudonyms such as "Contributor A". Names that appear inside file paths, commit messages or code-owner team handles are not scrubbed. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report records what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether that version had local modifications, the analysis settings, the timestamp, and whether AI was used.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Each automatic removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest. A forcibly terminated scan leaves no automatic record; see below.</p></div>
@@ -829,7 +832,7 @@
     <div class="faq">
       <details class="faq-item">
         <summary>What does Codebase Time Machine actually analyze?</summary>
-        <p>Only Git commit history (authors, dates, file paths and commit messages) and basic repository metadata from your repository host. Not runtime data, and not anyone who never committed code. Git shows who wrote and changed the code; who maintains it today is a question for management, and the report says so.</p>
+        <p>The full repository is cloned for one scan: its source files and its Git history (authors, dates, file paths, commit messages and the content of each change), plus basic metadata from your repository host. CTM counts and attributes lines, and scans file contents and changes for exposed secrets and licence files. Source code can contain personal data, and we treat it that way. Not runtime data, and not anyone who never committed code. Git shows who wrote and changed the code; who maintains it today is a question for management, and the report says so.</p>
       </details>
       <details class="faq-item">
         <summary>Do you need write access to our repo?</summary>
@@ -884,11 +887,10 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a class="mail-link" href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <span class="nw"><a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></span></p>
+    <p><a class="mail-link" href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a><span class="fsep"> · </span><span class="nw"><a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></span></p>
   </div>
 </footer>
 
-<script src="assets/js/three.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -958,6 +960,7 @@
 
     function resize(){
       W=canvas.clientWidth; H=Math.max(240,Math.round(W*0.52));
+      pad=W<480?4:8; // narrower gaps on phones so every tile keeps its label
       canvas.style.height=H+'px'; canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
       ctx.setTransform(DPR,0,0,DPR,0,0);
     }
@@ -991,13 +994,15 @@
         // Labels: name, then single-contributor share. Each line is drawn only
         // if it fits the tile, so narrow (phone) tiles never show cut-off text.
         ctx.textAlign='left'; ctx.textBaseline='top';
-        ctx.font='600 '+fs+'px "IBM Plex Mono", monospace';
-        if(h>fs+lp*2 && ctx.measureText(c.n).width<=room){
+        // Narrow tiles: step the font down (to 8px at most) before giving up on the label.
+        var nfs=fs; ctx.font='600 '+nfs+'px "IBM Plex Mono", monospace';
+        while(nfs>8 && ctx.measureText(c.n).width>room){ nfs--; ctx.font='600 '+nfs+'px "IBM Plex Mono", monospace'; }
+        if(h>nfs+lp*2 && ctx.measureText(c.n).width<=room){
           ctx.fillStyle=mix(TXT,col,conc*0.35); ctx.fillText(c.n,x+lp,y+lp);
           var shareTxt=Math.round(s*100)+'%';
-          ctx.font=(fs-1)+'px "IBM Plex Mono", monospace';
-          if(h>fs*2+lp*2+4 && ctx.measureText(shareTxt).width<=room){
-            ctx.fillStyle=MUT; ctx.fillText(shareTxt,x+lp,y+lp+fs+3);
+          ctx.font=Math.max(8,nfs-1)+'px "IBM Plex Mono", monospace';
+          if(h>nfs*2+lp*2+4 && ctx.measureText(shareTxt).width<=room){
+            ctx.fillStyle=MUT; ctx.fillText(shareTxt,x+lp,y+lp+nfs+3);
           }
         }
       }
@@ -1104,192 +1109,142 @@
     } else { hud.classList.add('on'); start(); }
   })();
 
-  /* ---------- 3D commit "time machine" hero ---------- */
+  /* ---------- Hero: Git history replay ----------
+     Each line is a file. Commits arrive along it in time order, one colour per
+     contributor (pseudonymised, so muted and unnamed). A scan line replays the
+     history left to right; where one contributor's share of a file's commits
+     crosses the Watch (>55%, 5+ commits) or High-confidence (>70%, 10+ commits)
+     threshold, that file turns gold or red. Illustrative data only. */
   (function(){
     var canvas = document.getElementById('scene');
-    if(!canvas || typeof THREE === 'undefined') return;
-    var gl;
-    try { gl = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'}); }
-    catch(e){ return; } // no WebGL -> CSS fallback stays
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(52, 1, 0.1, 100);
-    camera.position.set(0, 1.2, 16);
-
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
-    gl.setPixelRatio(DPR);
-    gl.setClearColor(0x000000, 0);
-
-    // Build a field of commit nodes: authors as lanes along X, time along Z.
-    var isMobile = window.innerWidth < 900;
-    var AUTHORS = isMobile ? 7 : 9;
-    var PER = isMobile ? 26 : 52;         // commits per author strand
-    var LANE = 2.15;
-    var laneX = [];
-    for(var a=0;a<AUTHORS;a++){ laneX.push((a-(AUTHORS-1)/2)*LANE); }
-
-    // "Critical" authors glow red (concentrated ownership); rest are gold/neutral.
-    var critical = {1:true, 4:true, 7:true};
-    var group = new THREE.Group();
-    scene.add(group);
-
-    var positions = [];
-    var colors = [];
-    var cGold = new THREE.Color(0xD8A24A);
-    var cRed  = new THREE.Color(0xC6413A);
-    var cDim  = new THREE.Color(0x5f6f8a);
-
-    // round sprite texture for soft points
-    var tex = (function(){
-      var c=document.createElement('canvas'); c.width=c.height=64;
-      var x=c.getContext('2d');
-      var grd=x.createRadialGradient(32,32,0,32,32,32);
-      grd.addColorStop(0,'rgba(255,255,255,1)');
-      grd.addColorStop(0.35,'rgba(255,255,255,0.9)');
-      grd.addColorStop(1,'rgba(255,255,255,0)');
-      x.fillStyle=grd; x.beginPath(); x.arc(32,32,32,0,Math.PI*2); x.fill();
-      var t=new THREE.Texture(c); t.needsUpdate=true; return t;
-    })();
-
-    var strands = [];      // per-author array of Vector3 (for merge links + crit nodes)
-    var critNodes = [];    // "current owner" nodes that pulse red
-    for(var a2=0;a2<AUTHORS;a2++){
-      var isCrit = critical[a2];
-      var base = isCrit ? cRed : (a2%2===0 ? cGold : cDim);
-      var linePts = [];
-      for(var i=0;i<PER;i++){
-        var z = -18 + (i/(PER-1))*34;                 // time axis
-        var jitterX = (Math.sin(i*1.7 + a2)*0.35) + (Math.random()-0.5)*0.25;
-        var jitterY = Math.cos(i*0.9 + a2*2)*0.6 + (Math.random()-0.5)*0.5;
-        var x = laneX[a2] + jitterX;
-        var y = jitterY;
-        positions.push(x,y,z);
-        var depthT = i/(PER-1);
-        var col = base.clone().lerp(new THREE.Color(0x0A0F1A), (1-depthT)*0.55);
-        colors.push(col.r, col.g, col.b);
-        linePts.push(new THREE.Vector3(x,y,z));
-      }
-      strands.push(linePts);
-      var lgeo = new THREE.BufferGeometry().setFromPoints(linePts);
-      var lmat = new THREE.LineBasicMaterial({color: base.getHex(), transparent:true, opacity: isCrit?0.44:0.14});
-      group.add(new THREE.Line(lgeo, lmat));
-      if(isCrit){ critNodes.push(linePts[PER-1].clone()); }   // newest commit = current owner
-    }
-
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions,3));
-    geo.setAttribute('color', new THREE.Float32BufferAttribute(colors,3));
-    var pmat = new THREE.PointsMaterial({
-      size: isMobile?0.28:0.34, map:tex, vertexColors:true,
-      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true
-    });
-    group.add(new THREE.Points(geo, pmat));
-
-    // Pulsing red "current owner" nodes — the concentrated key-person risk
-    var critGeo = new THREE.BufferGeometry();
-    var cp=[]; critNodes.forEach(function(v){ cp.push(v.x,v.y,v.z); });
-    critGeo.setAttribute('position', new THREE.Float32BufferAttribute(cp,3));
-    var critMat = new THREE.PointsMaterial({ size:1.1, map:tex, color:0xC6413A, transparent:true, opacity:0.9, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true });
-    var critPts = new THREE.Points(critGeo, critMat);
-    group.add(critPts);
-
-    // Cross-author "handoff" links — faint diagonal connectors between strands
-    var mergePts = [];
-    var nMerge = AUTHORS * 2;
-    for(var m=0;m<nMerge;m++){
-      var aA=(Math.random()*AUTHORS)|0, aB=(Math.random()*AUTHORS)|0;
-      if(aA===aB) aB=(aB+1)%AUTHORS;
-      var idx=(Math.random()*PER)|0;
-      var p1=strands[aA][idx], p2=strands[aB][Math.min(PER-1, idx+((Math.random()*4)|0))];
-      mergePts.push(p1.x,p1.y,p1.z, p2.x,p2.y,p2.z);
-    }
-    var mgeo=new THREE.BufferGeometry();
-    mgeo.setAttribute('position', new THREE.Float32BufferAttribute(mergePts,3));
-    group.add(new THREE.LineSegments(mgeo, new THREE.LineBasicMaterial({color:0xD8A24A, transparent:true, opacity:0.10})));
-
-    // Far parallax "dust" for depth
-    var dustGroup = new THREE.Group(); scene.add(dustGroup);
-    var dpos=[]; var DN = isMobile?160:340;
-    for(var d=0;d<DN;d++){ dpos.push((Math.random()-0.5)*46,(Math.random()-0.5)*26,-30-Math.random()*40); }
-    var dgeo=new THREE.BufferGeometry(); dgeo.setAttribute('position', new THREE.Float32BufferAttribute(dpos,3));
-    dustGroup.add(new THREE.Points(dgeo, new THREE.PointsMaterial({size:0.12, map:tex, color:0x5f6f8a, transparent:true, opacity:0.5, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true})));
-
-    // A translucent "scan plane" sweeping through the timeline
-    var planeGeo = new THREE.PlaneGeometry(AUTHORS*LANE+3, 7);
-    var planeMat = new THREE.MeshBasicMaterial({color:0xD8A24A, transparent:true, opacity:0.06, side:THREE.DoubleSide, depthWrite:false});
-    var plane = new THREE.Mesh(planeGeo, planeMat);
-    plane.rotation.x = Math.PI/2 * 0.02;
-    group.add(plane);
-
-    group.rotation.y = -0.35;
-
-    var mx=0, my=0, tmx=0, tmy=0;
-    window.addEventListener('mousemove', function(e){
-      tmx = (e.clientX/window.innerWidth - 0.5);
-      tmy = (e.clientY/window.innerHeight - 0.5);
-    }, {passive:true});
-
-    // Drag-to-orbit anywhere on the hero (skip actual controls)
-    var dragRY=0, dragRX=0, dragging=false, lastX=0, lastY=0;
+    if(!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
     var heroEl = document.querySelector('.hero');
-    heroEl.addEventListener('pointerdown', function(e){
-      if(e.target.closest('a,button,summary,input,textarea')) return;
-      dragging=true; lastX=e.clientX; lastY=e.clientY; heroEl.style.cursor='grabbing';
-    });
-    window.addEventListener('pointermove', function(e){
-      if(!dragging) return;
-      dragRY += (e.clientX-lastX)*0.005; dragRX += (e.clientY-lastY)*0.003;
-      dragRX = Math.max(-0.6, Math.min(0.6, dragRX));
-      lastX=e.clientX; lastY=e.clientY;
-    });
-    window.addEventListener('pointerup', function(){ dragging=false; heroEl.style.cursor=''; });
+    var RED='#C6413A', GOLD='#D8A24A', LINE='rgba(38,49,74,0.55)';
+    var PEOPLE=['#5f6f8a','#7c8aa5','#4f6a8f','#8a93a6','#6b7a99','#9aa3b5'];
+    var DPR=Math.min(window.devicePixelRatio||1,2), W=0, H=0, lanes=[];
+    var REPLAY=9000, HOLD=2200, FADE=900;
 
-    var scrollN = 0;
-    window.addEventListener('scroll', function(){
-      var h = heroEl.offsetHeight || 600;
-      scrollN = Math.min(1, (window.scrollY||0)/h);
-    }, {passive:true});
+    function rnd(a,b){ return a+Math.random()*(b-a); }
+    function pick(n){ return (Math.random()*n)|0; }
+
+    // Wide screens: lanes fill the right half (the mask hides the left).
+    // Narrow screens: a thin band in the empty space above the headline.
+    var X0=0.5, band=null;
+    function build(){
+      var mobile = W < 900, n = mobile ? 5 : 15;
+      X0 = mobile ? 0 : 0.5;
+      var top = parseFloat(getComputedStyle(heroEl).paddingTop)||96;
+      band = mobile ? [12/H, (top-16)/H] : [0.1, 0.94];
+      // Most files are spread across contributors; a few are not. Fixed counts,
+      // shuffled positions, so every replay tells the same story.
+      // Flagged files go on lines the report card does not cover, so they stay visible.
+      var flags = mobile ? ['high','watch'] : ['high','high','watch','watch'];
+      var card = document.getElementById('tilt-card'), hr = heroEl.getBoundingClientRect();
+      var cr = (!mobile && card) ? card.getBoundingClientRect() : null;
+      var open = [], kinds = [];
+      for(var v=0;v<n;v++){
+        kinds.push('spread');
+        var ly = (band[0] + (band[1]-band[0])*(v+0.5)/n)*H + hr.top;
+        if(!cr || ly < cr.top-8 || ly > cr.bottom+8) open.push(v);
+      }
+      for(var k=open.length-1;k>0;k--){ var q=pick(k+1), tmp=open[k]; open[k]=open[q]; open[q]=tmp; }
+      for(var f=0; f<flags.length && f<open.length; f++) kinds[open[f]] = flags[f];
+      lanes = [];
+      for(var i=0;i<n;i++){
+        var kind = kinds[i];
+        var commits = (kind==='spread') ? 8+pick(30) : 14+pick(30);
+        var lead = pick(PEOPLE.length);
+        var leadShare = kind==='high' ? rnd(0.76,0.92) : (kind==='watch' ? rnd(0.6,0.66) : rnd(0.05,0.25));
+        var start = rnd(0,0.35), xs=[];
+        for(var c=0;c<commits;c++) xs.push(start + Math.random()*(1-start));
+        xs.sort(function(a,b){return a-b;});
+        // Exactly round(leadShare*commits) commits by the lead, the rest by others.
+        var nLead = Math.round(leadShare*commits), who = [];
+        for(var c2=0;c2<commits;c2++){
+          var other = (lead + 1 + pick(PEOPLE.length-1)) % PEOPLE.length;
+          who.push(c2<nLead ? lead : other);
+        }
+        for(var k2=who.length-1;k2>0;k2--){ var q2=pick(k2+1), t2=who[k2]; who[k2]=who[q2]; who[q2]=t2; }
+        var pts = xs.map(function(x,ix){ return {x:x, who:who[ix], dy:rnd(-2.5,2.5)}; });
+        lanes.push({y:(band[0] + (band[1]-band[0])*(i+0.5)/n), pts:pts, lead:lead});
+      }
+    }
+
+    function tierAt(l, p){
+      var counts={}, total=0, top=0, topWho=-1;
+      for(var i=0;i<l.pts.length && l.pts[i].x<=p;i++){
+        var w=l.pts[i].who; counts[w]=(counts[w]||0)+1; total++;
+        if(counts[w]>top){ top=counts[w]; topWho=w; }
+      }
+      var s = total ? top/total : 0;
+      var t = (total>=10 && s>0.70) ? 'high' : ((total>=5 && s>0.55) ? 'watch' : 'none');
+      return {tier:t, who:topWho};
+    }
+
+    function draw(p, alpha){
+      ctx.clearRect(0,0,W,H);
+      ctx.globalAlpha = alpha;
+      var x0 = X0*W, span = W-x0, sx = x0+p*span;
+      for(var i=0;i<lanes.length;i++){
+        var l=lanes[i], y=l.y*H, st=tierAt(l,p);
+        var col = st.tier==='high' ? RED : (st.tier==='watch' ? GOLD : null);
+        // the file's line: faint ahead of the scan, tinted behind it when concentrated
+        ctx.lineWidth=1; ctx.strokeStyle=LINE;
+        ctx.beginPath(); ctx.moveTo(x0,y); ctx.lineTo(W,y); ctx.stroke();
+        if(col){
+          ctx.strokeStyle=col; ctx.globalAlpha=alpha*0.35; ctx.lineWidth=1.5;
+          ctx.beginPath(); ctx.moveTo(x0,y); ctx.lineTo(sx,y); ctx.stroke();
+          ctx.globalAlpha=alpha;
+        }
+        for(var j=0;j<l.pts.length;j++){
+          var c=l.pts[j]; if(c.x>p) break;
+          var hot = col && c.who===st.who;
+          ctx.fillStyle = hot ? col : PEOPLE[c.who];
+          ctx.globalAlpha = alpha*(hot?0.95:0.55);
+          ctx.beginPath(); ctx.arc(x0+c.x*span, y+c.dy, hot?2.6:2, 0, Math.PI*2); ctx.fill();
+        }
+        ctx.globalAlpha=alpha;
+      }
+      // the replay scan line
+      if(p<1){
+        var g=ctx.createLinearGradient(sx-40,0,sx,0);
+        g.addColorStop(0,'rgba(216,162,74,0)'); g.addColorStop(1,'rgba(216,162,74,0.10)');
+        var by=band[0]*H-10, bh=(band[1]-band[0])*H+20;
+        ctx.fillStyle=g; ctx.fillRect(sx-40,by,40,bh);
+        ctx.fillStyle='rgba(216,162,74,0.55)'; ctx.fillRect(sx,by,1,bh);
+      }
+      ctx.globalAlpha=1;
+    }
 
     function resize(){
-      var w = heroEl.clientWidth, h = heroEl.clientHeight;
-      gl.setSize(w, h, false);
-      camera.aspect = w/h; camera.updateProjectionMatrix();
+      W=heroEl.clientWidth; H=heroEl.clientHeight;
+      canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      build();
     }
     resize();
-    window.addEventListener('resize', resize);
-
-    var running = true;
-    if('IntersectionObserver' in window){
-      var io = new IntersectionObserver(function(es){ running = es[0].isIntersecting; if(running && !reduce) loop(); }, {threshold:0.01});
-      io.observe(heroEl);
-    }
-
-    var t0 = performance.now();
-    function frame(now){
-      var t = (now - t0)/1000;
-      mx += (tmx - mx)*0.05; my += (tmy - my)*0.05;
-      group.rotation.y = -0.35 + Math.sin(t*0.08)*0.25 + mx*0.5 + dragRY;
-      group.rotation.x = -0.03 + my*0.18 + dragRX;
-      dustGroup.rotation.y = t*0.012 + mx*0.2;
-      // camera fly-through: scroll pushes deeper into the commit history
-      camera.position.z = 17 - scrollN*9 + Math.sin(t*0.2)*0.3;
-      camera.position.y = 1.2 + my*0.6;
-      camera.fov = 52 + scrollN*6; camera.updateProjectionMatrix();
-      camera.lookAt(0,0,0);
-      // sweep scan plane through the timeline
-      plane.position.z = ((t*2.2)%36) - 18;
-      planeMat.opacity = 0.05 + Math.abs(Math.sin(t*1.1))*0.05;
-      // pulse the red "current owner" nodes
-      var pp = 0.5 + Math.abs(Math.sin(t*2.0))*0.5;
-      critMat.size = 0.85 + pp*0.9; critMat.opacity = 0.55 + pp*0.4;
-      gl.render(scene, camera);
-    }
-    var raf;
-    function loop(){ if(!running) return; frame(performance.now()); raf = requestAnimationFrame(loop); }
+    var rw; window.addEventListener('resize', function(){ clearTimeout(rw); rw=setTimeout(resize,150); });
 
     canvas.classList.add('ready');
-    if(reduce){ frame(performance.now()); }   // one static frame
-    else { loop(); }
+    if(reduce){ draw(1,1); return; }   // one static, finished frame
+
+    var running=true, t0=performance.now(), raf=null;
+    function loop(now){
+      if(!running){ raf=null; return; }
+      var e=now-t0, cycle=REPLAY+HOLD+FADE;
+      if(e>cycle){ t0=now; e=0; build(); }
+      var p=Math.min(1,e/REPLAY), a=e>REPLAY+HOLD ? 1-(e-REPLAY-HOLD)/FADE : 1;
+      draw(p, Math.max(0,a));
+      raf=requestAnimationFrame(loop);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        running=es[0].isIntersecting;
+        if(running && !raf) raf=requestAnimationFrame(loop);
+      },{threshold:0.01}).observe(heroEl);
+    }
+    raf=requestAnimationFrame(loop);
   })();
 })();
 </script>
