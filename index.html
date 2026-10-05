@@ -4,16 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence</title>
-<meta name="description" content="Turn a target company's Git history into a ranked, confidence-scored key-person and ownership risk dossier — before you close.">
+<meta name="description" content="Evidence-first key-person risk analysis for M&amp;A technology diligence: which engineers hold critical code knowledge, how concentrated it is, and what to ask management.">
 <meta property="og:title" content="Codebase Time Machine — Key-Person Risk Intelligence for M&A Diligence">
-<meta property="og:description" content="Turn a target company's Git history into a ranked, confidence-scored key-person and ownership risk dossier — before you close.">
+<meta property="og:description" content="Evidence-first key-person risk analysis for M&amp;A technology diligence: which engineers hold critical code knowledge, how concentrated it is, and what to ask management.">
 <meta property="og:image" content="https://codebasetimemachine.com/og-image.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,ital,wght@8..60,0,500;8..60,0,600;8..60,0,700;8..60,1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="assets/fonts.css" rel="stylesheet">
 <style>
   :root{
     /* Private-intelligence dossier palette — ink, burnished gold, confidential red, cream paper */
@@ -381,6 +379,8 @@
   .sec-item{display:flex;gap:14px;}
   .sec-check{color:var(--ok);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
   .sec-item p{font-size:14px;color:var(--muted);}
+  .sec-no{color:var(--muted-2);}
+  .sec-sub{margin:34px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;color:var(--text-strong);}
   .sec-item strong{color:var(--text);}
   .sec-note{margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:64ch;border-left:2px solid var(--line);padding-left:16px;}
 
@@ -448,11 +448,11 @@
       <span>Codebase<span class="dot">·</span>Time Machine</span>
     </div>
     <div class="nav-links">
-      <a class="nav-link" href="#sample">Sample dossier</a>
+      <a class="nav-link" href="#how">How it works</a>
       <a class="nav-link" href="#compare">Compare</a>
       <a class="nav-link" href="#fit">For buyers</a>
       <a class="nav-link" href="#faq">FAQ</a>
-      <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Commission a scan</a>
+      <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call</a>
     </div>
   </div>
 </nav>
@@ -470,30 +470,31 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
-      <h1>Before you close, know who the deal <em>can't afford</em> to lose.</h1>
-      <p class="lede">Codebase Time Machine replays a target's entire Git history to find where critical system knowledge is concentrated in one or two people — the key-person risk that resets earn-outs and stalls integration if it walks out the door after close. Evidence-based, confidence-scored, and delivered as an IC-ready dossier.</p>
+      <h1>Before you close, know which engineers hold the critical code knowledge, <em>on evidence</em>.</h1>
+      <p class="lede">Codebase Time Machine replays a target's full Git history to show where critical code knowledge is concentrated in one or two key engineers, how strong the evidence is, and what to ask management before you sign. It sees code contributors only: it measures who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
-        <button class="btn-primary" id="open-sample-hero">See a sample dossier →</button>
-        <a class="btn-secondary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Commission a scan</a>
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
+        <a class="btn-secondary" href="#how">How it works</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="n">Full&nbsp;history</div><div class="l">Replayed to any depth, not sampled</div></div>
-        <div class="hero-stat"><div class="n" data-count="7">7</div><div class="l">Sections, IC-ready</div></div>
-        <div class="hero-stat"><div class="n">Hours</div><div class="l">Not weeks, to delivery</div></div>
+        <div class="hero-stat"><div class="n">Full&nbsp;history</div><div class="l">Replayed, not sampled</div></div>
+        <div class="hero-stat"><div class="n">AI&nbsp;off</div><div class="l">By default</div></div>
+        <div class="hero-stat"><div class="n">Pseudonymised</div><div class="l">Contributor identities, by default</div></div>
       </div>
     </div>
     <div class="doc-stage">
       <div class="doc-card" id="tilt-card">
         <div class="doc-stamp">CONFIDENTIAL</div>
-        <h3>Ranked Material Assets</h3>
-        <div class="doc-sub">react · depth 5000 · prepared for sample review</div>
+        <h3>What the report contains</h3>
+        <div class="doc-sub">PDF for the IC · Excel workbook for the deal team</div>
         <table class="doc-table">
-          <tr><th>Asset</th><th>Tier</th><th>Confid.</th><th>Share</th></tr>
-          <tr><td>ReactFiberCommitWork.js</td><td class="tier-critical">Critical</td><td>Medium</td><td>56.9%</td></tr>
-          <tr><td>ReactFlightServerConfigDebugNode.js</td><td class="tier-critical">Critical</td><td>High</td><td>88.9%</td></tr>
-          <tr><td>ReactFiberConfigWithNoMutation.js</td><td class="tier-critical">Critical</td><td>High</td><td>90.9%</td></tr>
+          <tr><th>Section</th><th>What it gives you</th></tr>
+          <tr><td>Key-person concentration</td><td>Who holds which files, with the commits behind it</td></tr>
+          <tr><td>Ranked material assets</td><td>Share, commits and tier per file</td></tr>
+          <tr><td>Buyer questions</td><td>What to ask management before close</td></tr>
+          <tr><td>Coverage &amp; method</td><td>History analysed, and what Git cannot establish</td></tr>
         </table>
-        <div class="doc-foot">Full material list (40–65 rows) delivered in Excel workbook.</div>
+        <div class="doc-foot">Structure only. No client or sample data is shown on this site.</div>
       </div>
     </div>
   </div>
@@ -501,11 +502,12 @@
 
 <div class="band">
   <div class="wrap">
-    <span class="band-label">Validated against production repositories</span>
+    <span class="band-label">Every engagement</span>
     <div class="band-items">
-      <div class="band-item"><span class="repo">React</span><span class="meta">consolidating knowledge</span></div>
-      <div class="band-item"><span class="repo">VS Code</span><span class="meta">clean handoffs surfaced</span></div>
-      <div class="band-item"><span class="meta">— public history, production commit depth</span></div>
+      <div class="band-item"><span class="repo">AI off</span><span class="meta">by default</span></div>
+      <div class="band-item"><span class="repo">Pseudonymised</span><span class="meta">identities, by default</span></div>
+      <div class="band-item"><span class="repo">Read-only</span><span class="meta">access, revocable by you</span></div>
+      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">after every scan</span></div>
     </div>
   </div>
 </div>
@@ -514,8 +516,8 @@
   <div class="wrap reveal">
     <div class="section-label">The gap</div>
     <h2>Code-quality scanners answer the wrong question.</h2>
-    <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks where the critical knowledge actually sits — or whether entire subsystems depend on one or two people who have no contractual reason to stay past close.</p>
-    <p class="problem-quote">If the one person who understands a core subsystem leaves the day after you sign — what breaks, how long until anyone else can safely touch it, and what does that do to your model?</p>
+    <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks where the critical knowledge actually sits, or whether entire subsystems depend on one or two people who have no contractual reason to stay past close.</p>
+    <p class="problem-quote">If the one person who understands a core subsystem leaves the day after you sign, what breaks, how long until anyone else can safely touch it, and what does that do to your model?</p>
     <div class="consequence">
       <div class="consq">
         <div class="consq-tag">Value at risk</div>
@@ -523,40 +525,40 @@
       </div>
       <div class="consq">
         <div class="consq-tag">Integration drag</div>
-        <p>A single bottleneck engineer can push a migration, carve-out, or roadmap back by quarters — after the price is already set.</p>
+        <p>A single bottleneck engineer can push a migration, carve-out, or roadmap back by quarters, after the price is already set.</p>
       </div>
       <div class="consq">
         <div class="consq-tag">Deal leverage</div>
-        <p>Surfaced before signing, concentration becomes a retention package, an earn-out clause, or a price adjustment — not a post-close surprise.</p>
+        <p>Raised and confirmed before signing, a concentration can shape a retention package or an earn-out condition instead of becoming a post-close surprise.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="how">
   <div class="wrap reveal">
     <div class="section-label">How it works</div>
-    <h2>Grant access. We scan. You get the dossier. We delete the clone.</h2>
+    <h2>Grant read-only access. We run the scan. You get the report. The clone is deleted.</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <h4>Read-only access</h4>
-        <p>GitHub App install, a scoped token, or a read collaborator — never write or admin.</p>
+        <p>A read-only token scoped to the repository you want analysed. Never write or admin. You can revoke it at any time.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h4>Scoped, temporary scan</h4>
-        <p>Commit history replayed in a dedicated temporary workspace, wiped after use. You choose the depth — up to the repository's complete history — and the dossier states what share of it was actually analyzed.</p>
+        <h4>One machine, one scan</h4>
+        <p>The repository is cloned to one machine, into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h4>Branded package</h4>
-        <p>A PDF for the IC and a full Excel workbook for the working team, delivered by email.</p>
+        <h4>Your report package</h4>
+        <p>A PDF for the investment committee and an Excel workbook for the deal team.</p>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <h4>Clone deleted</h4>
-        <p>The working copy — and any access token — is removed immediately after delivery.</p>
+        <p>The working copy is deleted when the scan ends, and the deletion is logged. A forcibly terminated process is the exception; we check by hand after one.</p>
       </div>
     </div>
   </div>
@@ -565,15 +567,15 @@
 <section>
   <div class="wrap reveal">
     <div class="section-label">What we actually measure</div>
-    <h2>Where technical knowledge is concentrated — across every subsystem.</h2>
-    <p class="lead-text">Watch ownership concentrate over time. We measure how much of each subsystem's history one person owns — the evidence — then derive a bus-factor tier from that measured concentration, against fixed thresholds, not a subjective judgment. Where one person's share crosses the line, the map turns red.</p>
+    <h2>Where code knowledge is concentrated, file by file and subsystem by subsystem.</h2>
+    <p class="lead-text">We measure how much of each file's history one contributor holds (the evidence), then derive a tier from that share against fixed thresholds, not a subjective judgment. Where one contributor's share crosses the line, the map turns red.</p>
     <div class="map-wrap">
       <div class="map-stage">
         <div class="tm-head">
-          <span class="tm-title">Ownership concentration over time</span>
+          <span class="tm-title">Ownership concentration over time · illustrative data</span>
           <span class="tm-count" id="tm-count">0 high-confidence</span>
         </div>
-        <canvas id="tm-canvas" role="img" aria-label="Interactive subsystem map. Drag the timeline to replay the codebase's history: subsystems where one person's share crosses the threshold turn red. Fully concentrated view shows the high-confidence key-person risks."></canvas>
+        <canvas id="tm-canvas" role="img" aria-label="Illustrative subsystem map. Drag the timeline to replay a codebase's history: subsystems where one contributor's share crosses the threshold turn red."></canvas>
         <div class="tm-controls">
           <button id="tm-play" class="tm-play" aria-label="Replay the timeline">▶ Replay</button>
           <input id="tm-range" class="tm-range" type="range" min="0" max="100" value="100" aria-label="Timeline position through repository history">
@@ -584,13 +586,13 @@
           <span><i class="lg-dot" style="background:var(--gold)"></i> Watch (&gt;55% share)</span>
           <span><i class="lg-dot" style="background:var(--ok)"></i> Distributed</span>
         </div>
-        <p class="tm-note">Single-owner share is measured from commit history. The bus-factor tier is derived from it against fixed thresholds. Illustrative data.</p>
+        <p class="tm-note">Illustrative data, not a real repository. In a report, single-contributor share is measured from commit history and the tier is derived from it against fixed thresholds.</p>
       </div>
       <div class="map-copy">
-        <h3>Three tiers, calibrated — not guessed.</h3>
-        <p><span class="tick mono">High-confidence</span> — 10+ commits in a subsystem with one person holding over 70% of its history. Treat as a real key-person risk.</p>
-        <p><span class="tick mono">Watch</span> — 5+ commits and over 55% share. Concentration is real but history is still short; interview the person who carries it.</p>
-        <p><span class="tick mono">Distributed</span> — the knowledge is spread. No single point of failure at close.</p>
+        <h3>Three tiers, from fixed thresholds, not guessed.</h3>
+        <p><span class="tick mono">High-confidence</span>: 10+ commits on a file, with one contributor holding over 70% of its history (held at Watch when a single commit accounts for most of that share). Strong evidence of concentration; confirm with management who maintains it today.</p>
+        <p><span class="tick mono">Watch</span>: 5+ commits and over 55% share. Concentration is visible but the history is shorter; ask who maintains it today.</p>
+        <p><span class="tick mono">Distributed</span>: no single contributor holds most of this history.</p>
       </div>
     </div>
   </div>
@@ -598,42 +600,42 @@
 
 <section>
   <div class="wrap reveal">
-    <div class="section-label">What's in the dossier</div>
-    <h2>Seven sections. Built for a one-sitting IC read.</h2>
+    <div class="section-label">What's in the report</div>
+    <h2>Built for a one-sitting IC read.</h2>
     <div class="toc">
       <div class="toc-row">
         <div class="toc-num">01</div>
-        <div><h4>Summary &amp; highest-risk finding</h4><p>Files analyzed, material risk count, and the single highest-priority finding up front.</p></div>
+        <div><h4>Page-one summary</h4><p>What was found, how strong the evidence is, and the highest-priority finding up front.</p></div>
         <div class="toc-tag">PDF</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">02</div>
-        <div><h4>Bus-factor tiers</h4><p>High-confidence, Watch, or None — calibrated against commit-history thresholds, not a subjective score.</p></div>
+        <div><h4>Key-person concentration</h4><p>Which contributors hold the history of which files, and how concentrated it is: evidence, then interpretation, then a recommendation that applies only if management confirms the dependency.</p></div>
         <div class="toc-tag">PDF + XLSX</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">03</div>
-        <div><h4>Author &amp; subsystem concentration</h4><p>Exactly who carries the knowledge for which subsystems, and how tightly it's held.</p></div>
+        <div><h4>Ranked material assets</h4><p>Files ranked by concentration, with share, commit count and tier. The full list stays in the workbook.</p></div>
         <div class="toc-tag">PDF + XLSX</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">04</div>
-        <div><h4>Risk evolution</h4><p>Whether ownership is stable, consolidating, diversifying, or already handed off — not just a snapshot.</p></div>
-        <div class="toc-tag">PDF</div>
+        <div><h4>Subsystem concentration</h4><p>The same measurement at subsystem level, so you see which parts of the system depend on whom.</p></div>
+        <div class="toc-tag">PDF + XLSX</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">05</div>
-        <div><h4>Detailed risk briefs</h4><p>For the top findings: context, departure scenario, remediation effort, and a 90-day mitigation plan.</p></div>
+        <div><h4>Risk evolution</h4><p>How each top file's commit-count share has changed over time, not just a snapshot.</p></div>
         <div class="toc-tag">PDF</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">06</div>
-        <div><h4>Full material asset list</h4><p>Every flagged file — commonly 40–65 rows — kept in the workbook, not dumped into the IC deck.</p></div>
-        <div class="toc-tag">XLSX</div>
+        <div><h4>Buyer questions before close</h4><p>Which questions the scan answers itself, and which only management can answer.</p></div>
+        <div class="toc-tag">PDF</div>
       </div>
       <div class="toc-row">
         <div class="toc-num">07</div>
-        <div><h4>History coverage &amp; provenance</h4><p>Exactly how much of the repository's history was analyzed, stated as a share of the total — and which figures come from the scan versus repository-wide metadata.</p></div>
+        <div><h4>Coverage &amp; methodology</h4><p>How much of the repository's history was analysed, what Git history cannot establish, and the exact tool version and settings that produced the report.</p></div>
         <div class="toc-tag">PDF</div>
       </div>
     </div>
@@ -643,78 +645,21 @@
 <section>
   <div class="wrap reveal">
     <div class="section-label">What the buyer learns</div>
-    <h2>One finding, in the language of the deal.</h2>
-    <p class="lead-text">Here is a real result from our scan of React's public history — the same analysis you'd get on a private target, translated into what it means for the transaction.</p>
+    <h2>Every finding follows one chain.</h2>
+    <p class="lead-text">Evidence first, then why it could matter, then what to ask, then what to do. Git history shows who wrote the code. Only management can say who maintains it today, so the report never presents one as the other.</p>
     <div class="learn">
       <div class="learn-finding">
-        <div class="learn-badge">High-confidence · 90.9% share</div>
-        <p class="learn-headline">One engineer held <strong>90.9%</strong> of the no-mutation reconciler's history across 22 commits — with no secondary contributor of any real depth in that subsystem.</p>
-        <div class="learn-meta">react · public history · replayed at production depth</div>
+        <div class="learn-badge">Evidence → Risk → Question → Mitigation</div>
+        <p class="learn-headline">Which files and subsystems one contributor holds, the commits behind that share, and how strong the evidence is.</p>
+        <div class="learn-meta">Measured from Git history · confidence stated for every tier</div>
       </div>
       <div class="learn-so">
         <div class="learn-so-label">What that means for the buyer</div>
         <ul>
-          <li><strong>Named risk, not a vibe.</strong> A specific person and subsystem the deal quietly depends on — evidence-backed, before you sign.</li>
-          <li><strong>A lever at the table.</strong> It becomes a retention package, an earn-out condition, or a price adjustment — decided with leverage, not discovered after close.</li>
-          <li><strong>A 90-day plan.</strong> Deliberate co-ownership on the next work cycle to pull single-person share below the threshold — so the knowledge stops being a single point of failure.</li>
+          <li><strong>A question, not a verdict.</strong> Each concentration comes with the questions to put to management, so you confirm the dependency before you price it.</li>
+          <li><strong>A lever at the table.</strong> Once confirmed, it can inform a retention package or an earn-out condition before terms are locked.</li>
+          <li><strong>Mitigation, if confirmed.</strong> A secondary owner, documented knowledge and pair review on the next changes, so the knowledge stops sitting with one person.</li>
         </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="sample">
-  <div class="wrap reveal">
-    <div class="section-label">Proof</div>
-    <h2>See the real output before you hand over a single repo.</h2>
-    <p class="lead-text">A representative excerpt in our exact delivery format, modeled on React's public commit history at production depth — so you can read the real structure and tier logic before a single sales call.</p>
-    <div class="sample-teaser">
-      <p><strong>Self-serve.</strong> Expand a sample dossier right here — summary tiles, bus-factor tiers, and a full risk brief, in the exact format we deliver. Your own target's PDF + Excel workbook is one email away.</p>
-      <button class="btn-primary" id="open-sample">Open sample dossier ↓</button>
-    </div>
-
-    <div class="sample-dossier" id="sample-dossier">
-      <div class="dossier">
-        <div class="dossier-head">
-          <div>
-            <h3>Key-Person Risk Dossier</h3>
-            <div class="sub">TARGET: react · DEPTH: 2,000 commits · COVERAGE: 41.8% of total history · SCHEMA v1</div>
-          </div>
-          <div class="dossier-conf">CONFIDENTIAL — SAMPLE</div>
-        </div>
-        <div class="dossier-body">
-          <div class="d-grid">
-            <div class="d-stat"><div class="n">1,911</div><div class="l">Files analyzed</div></div>
-            <div class="d-stat"><div class="n">47</div><div class="l">Material risks</div></div>
-            <div class="d-stat"><div class="n">9</div><div class="l">High-confidence</div></div>
-            <div class="d-stat"><div class="n">Consolidating</div><div class="l">Risk trajectory</div></div>
-          </div>
-
-          <div class="d-section-label">§02 — Bus-factor tiers (top rows)</div>
-          <table class="d-table">
-            <tr><th>Asset</th><th>Tier</th><th>Dominant author</th><th>Share</th><th>Commits</th><th>Confidence</th></tr>
-            <tr><td>ReactFiberConfigWithNoMutation.js</td><td class="tier-critical">High-confidence</td><td class="d-redact">████████</td><td>90.9%</td><td>22</td><td>High</td></tr>
-            <tr><td>ReactFlightServerConfigDebugNode.js</td><td class="tier-critical">High-confidence</td><td class="d-redact">██████</td><td>88.9%</td><td>18</td><td>High</td></tr>
-            <tr><td>ReactFiberCommitWork.js</td><td class="tier-watch">Watch</td><td class="d-redact">████████</td><td>56.9%</td><td>31</td><td>Medium</td></tr>
-            <tr><td>ReactDOMComponent.js</td><td class="tier-watch">Watch</td><td class="d-redact">█████</td><td>55.4%</td><td>14</td><td>Medium</td></tr>
-          </table>
-
-          <div class="d-section-label">§05 — Detailed risk brief · highest priority</div>
-          <div class="d-brief">
-            <h4>ReactFiberConfigWithNoMutation.js — single-author concentration</h4>
-            <p><span class="lbl">Context.</span> One author holds 90.9% of this file's history across 22 commits. It sits on the reconciler's no-mutation config path — a subsystem few contributors touch.</p>
-            <p><span class="lbl">Departure scenario.</span> If this author exits at close, no remaining contributor has meaningful history in this path. Expect a multi-week ramp before another engineer can safely modify it.</p>
-            <p><span class="lbl">Remediation.</span> Pair a second engineer on the next two changes to this subsystem; require review from outside the dominant author before merge.</p>
-            <p><span class="lbl">90-day plan.</span> Target &lt;70% single-author share via deliberate co-ownership on the next reconciler work cycle.</p>
-          </div>
-        </div>
-        <div class="dossier-foot">
-          <span>Representative figures · author names redacted for this public sample</span>
-          <span>Full dossier: PDF + Excel workbook</span>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:26px;">
-        <a class="btn-primary" href="mailto:hello@codebasetimemachine.com?subject=Full%20sample%20dossier%20request">Get the full PDF + Excel →</a>
       </div>
     </div>
   </div>
@@ -724,7 +669,7 @@
   <div class="wrap reveal">
     <div class="section-label">Compare</div>
     <h2>Not a scanner. Not just interviews.</h2>
-    <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: a calibrated, evidence-backed picture of who actually holds the risk.</p>
+    <p class="lead-text">Generic code-quality tools and manual partner interviews both miss the same thing: an evidence-backed picture of where code knowledge is concentrated.</p>
     <div class="compare-table-scroll">
       <table class="compare-table">
         <tr>
@@ -734,34 +679,40 @@
           <th class="us-col">Codebase Time Machine</th>
         </tr>
         <tr>
-          <td class="compare-row-label">Finds key-person risk</td>
-          <td>Sometimes — depends who's in the room</td>
-          <td>No — measures code quality, not ownership</td>
-          <td class="us-col"><strong>Yes</strong> — bus-factor tiers from commit history</td>
+          <td class="compare-row-label">Measures where code history is concentrated</td>
+          <td>No, depends who's in the room</td>
+          <td>No, measures code quality, not ownership</td>
+          <td class="us-col"><strong>Yes</strong>, per file and subsystem, with stated confidence</td>
         </tr>
         <tr>
-          <td class="compare-row-label">Shows how risk changed over time</td>
+          <td class="compare-row-label">Shows how concentration changed over time</td>
           <td>No</td>
           <td>No</td>
-          <td class="us-col"><strong>Yes</strong> — Risk Evolution timeline</td>
+          <td class="us-col"><strong>Yes</strong>, risk evolution per top file</td>
         </tr>
         <tr>
           <td class="compare-row-label">Deliverable</td>
           <td>Varies by consultant</td>
           <td>Raw scanner output</td>
-          <td class="us-col">Branded PDF + Excel, IC-ready</td>
+          <td class="us-col">PDF + Excel workbook, IC-ready</td>
         </tr>
         <tr>
-          <td class="compare-row-label">Turnaround</td>
+          <td class="compare-row-label">Analysis time</td>
           <td>Days to weeks</td>
           <td>Minutes</td>
-          <td class="us-col">Minutes to a few hours</td>
+          <td class="us-col">Minutes to a few hours, by repository size</td>
         </tr>
         <tr>
           <td class="compare-row-label">Repo access required</td>
           <td>None</td>
           <td>Often broad or persistent</td>
-          <td class="us-col">Read-only, revoked after delivery</td>
+          <td class="us-col">Read-only token, revocable by you</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">What it cannot see</td>
+          <td>What nobody mentions</td>
+          <td>Who holds the knowledge</td>
+          <td class="us-col">People who never committed code, and who maintains it today</td>
         </tr>
       </table>
     </div>
@@ -771,16 +722,16 @@
 <section id="fit">
   <div class="wrap reveal">
     <div class="section-label">Where it fits</div>
-    <h2>A workstream inside diligence — not a tool to adopt.</h2>
-    <p class="lead-text">Codebase Time Machine drops into the process you already run. It reads during confirmatory diligence, informs the terms you negotiate, and hands the integration team a plan on day one.</p>
+    <h2>A workstream inside diligence, not a tool to adopt.</h2>
+    <p class="lead-text">Codebase Time Machine drops into the process you already run. It reads during confirmatory diligence, informs the terms you negotiate, and gives the integration team a starting list on day one.</p>
 
-    <div class="fit-flow" role="img" aria-label="Deal timeline: CTM slots into confirmatory diligence, informs SPA terms, and feeds the integration plan.">
+    <div class="fit-flow" role="img" aria-label="Deal timeline: CTM runs during confirmatory diligence, informs retention and earn-out terms, and gives integration a starting list.">
       <div class="fit-stage"><span class="fs-dot"></span><div class="fs-name">Sourcing</div></div>
       <div class="fit-stage"><span class="fs-dot"></span><div class="fs-name">LOI / IOI</div></div>
       <div class="fit-stage on"><span class="fs-dot"></span><div class="fs-name">Confirmatory DD</div><div class="fs-tag">CTM scans here</div></div>
       <div class="fit-stage on"><span class="fs-dot"></span><div class="fs-name">SPA &amp; terms</div><div class="fs-tag">Informs retention / earn-out</div></div>
       <div class="fit-stage"><span class="fs-dot"></span><div class="fs-name">Close</div></div>
-      <div class="fit-stage on"><span class="fs-dot"></span><div class="fs-name">Integration</div><div class="fs-tag">Feeds the 90-day plan</div></div>
+      <div class="fit-stage on"><span class="fs-dot"></span><div class="fs-name">Integration</div><div class="fs-tag">Gives integration a starting list</div></div>
     </div>
 
     <div class="fit-cards">
@@ -788,18 +739,18 @@
         <div class="fit-role">PE &amp; financial buyers</div>
         <p class="fit-lead">Turn "the team seems strong" into a line in the IC memo.</p>
         <ul>
-          <li>A named, evidence-backed key-person risk for the tech DD section</li>
+          <li>An evidence-backed key-person finding for the tech DD section</li>
           <li>Retention and earn-out inputs before terms are locked</li>
-          <li>A defensible number to price integration and ramp risk</li>
+          <li>Evidence to set those terms on, with its confidence stated</li>
         </ul>
       </div>
       <div class="fit-card">
         <div class="fit-role">Strategic / corporate buyers</div>
-        <p class="fit-lead">Know who you actually need to keep — and for how long.</p>
+        <p class="fit-lead">Know whose knowledge to confirm before you sign.</p>
         <ul>
-          <li>The specific people a carve-out or migration depends on</li>
-          <li>Where post-close roadmap risk is concentrated by subsystem</li>
-          <li>A retention shortlist the integration team can act on day one</li>
+          <li>The contributors whose code a carve-out or migration touches most</li>
+          <li>Where post-close roadmap risk is concentrated, by subsystem</li>
+          <li>A list of people to confirm with management before retention talks</li>
         </ul>
       </div>
       <div class="fit-card">
@@ -807,25 +758,39 @@
         <p class="fit-lead">Add a section interviews and scanners can't produce.</p>
         <ul>
           <li>Evidence-based key-person analysis under your own engagement</li>
-          <li>Consistent methodology and branding across every target</li>
-          <li>Delivered fast enough to fit a live diligence timeline</li>
+          <li>The same methodology across every target</li>
+          <li>Each claim traceable to the commit history behind it</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="security">
   <div class="wrap reveal">
-    <div class="section-label">Security</div>
-    <h2>Honest about where we are.</h2>
+    <div class="section-label">Security &amp; data handling</div>
+    <h2>Your source code is analysed on one machine for the duration of one scan, and then deleted.</h2>
+    <p class="lead-text">CTM is run as a tool by a single analyst, not consumed as a cloud service. There is no CTM platform holding your repository, no account, no database, and no server of ours that your code ever reaches.</p>
     <div class="sec-list">
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Read-only, revocable access.</strong> We never ask for write or admin permissions.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Dedicated, temporary workspace per scan.</strong> Each engagement clones into its own temp directory, wiped immediately after the dossier is sent.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deleted after delivery.</strong> The cloned repo and any token are removed once the dossier is sent.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>No secrets in logs.</strong> Tokens exist in memory only, never written to disk or logged.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the single machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> Three things, and only three: the authenticated request to your repository host to fetch the code; a metadata request to that host's API; and nothing else, unless we tell you in advance that we are enabling the optional AI narrative, which is off by default.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised in everything we deliver.</strong> By default, reports identify contributors as "Contributor A", "Contributor B", with no names and no email addresses on any page. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report says what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether its code was unmodified, the analysis settings, the timestamp, and whether AI was used. You can verify our data-handling claims from the document itself rather than taking our word for them.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Every removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Credentials.</strong> You give us a read-only token scoped to the repository you want analysed, which you can revoke at any time. It is sent to your repository host as an HTTP authorisation header and is never written into the clone's configuration, a command line, a log, or any report.</p></div>
     </div>
-    <p class="sec-note">Codebase Time Machine is an independent practice, not a platform vendor — which is the point: the analysis has no stake in the outcome of your deal. The above is what we do today, not a roadmap.</p>
+    <h3 class="sec-sub">What we do not claim</h3>
+    <p class="sec-note">We would rather tell you this than have you find it out:</p>
+    <div class="sec-list">
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>No encryption at rest.</strong> Your code is protected while it exists by the short lifetime of the copy and by the machine's own access controls, not by application-level encryption.</p></div>
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>No certification.</strong> No SOC 2, no ISO 27001, no GDPR certification, and no independent penetration test.</p></div>
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>Access to the tool is a shared operator passphrase</strong>, not individual accounts or single sign-on.</p></div>
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>A forcibly terminated process can leave a temporary copy behind</strong> without recording that it did. We check by hand after any abnormal termination.</p></div>
+      <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>We support github.com, gitlab.com and bitbucket.org.</strong> GitHub Enterprise Server and self-managed GitLab are not supported today.</p></div>
+    </div>
+    <p class="sec-note"><strong>Working with European customers.</strong> We can sign a data processing agreement under Art. 28 GDPR. In the default configuration CTM engages no subprocessors: the only party receiving your repository data is your own repository host, which you already contract with. Ask us for the Security &amp; Trust Pack: nine documents covering the data flow, retention and deletion, access control, incident response, AI egress, subprocessors, and a GDPR readiness checklist that states the open gaps as plainly as the controls.</p>
+    <p class="sec-note">Codebase Time Machine is an independent practice, not a platform vendor, which is the point: the analysis has no stake in the outcome of your deal.</p>
   </div>
 </section>
 
@@ -835,8 +800,8 @@
     <h2>Talk to the person who built the analysis.</h2>
     <div class="founder">
       <div class="founder-body">
-        <p>I built Codebase Time Machine because I kept watching good deals carry a risk no scanner reports: a codebase that quietly depends on one or two people. Interviews miss it, quality tools ignore it, and it only surfaces after close — when it's expensive.</p>
-        <p>Every engagement runs through the same calibrated methodology, and I'll get on a call before you grant access to walk you through exactly what we read and what we never touch. No support rotation, no black box.</p>
+        <p>I built Codebase Time Machine because technical diligence checks how good the code is, but rarely who holds the knowledge of it. That knowledge is written into a company's Git history, and it can be measured.</p>
+        <p>I run every engagement myself, and I'll walk you through exactly what we read, and what we never touch, before you grant any access. No support rotation, no black box.</p>
         <div class="sig">— Josiah Shirt</div>
         <div class="role">Founder, Codebase Time Machine · hello@codebasetimemachine.com</div>
       </div>
@@ -851,31 +816,31 @@
     <div class="faq">
       <details class="faq-item">
         <summary>What does Codebase Time Machine actually analyze?</summary>
-        <p>Only Git commit history and metadata — authors, dates, file paths, and commit messages. Not runtime data, not business logic beyond what's visible in the repo itself.</p>
+        <p>Only Git commit history and metadata: authors, dates, file paths, and commit messages. Not runtime data, and not anyone who never committed code. Git shows who wrote and changed the code; who maintains it today is a question for management, and the report says so.</p>
       </details>
       <details class="faq-item">
         <summary>Do you need write access to our repo?</summary>
-        <p>No. Access is always read-only — via a GitHub App install, a scoped token, or a read collaborator invite — and it's revocable by you at any time.</p>
+        <p>No. Access is read-only, through a token scoped to the repository, and you can revoke it at any time.</p>
       </details>
       <details class="faq-item">
         <summary>What happens to our code after the scan?</summary>
-        <p>The repo is cloned into a dedicated temporary workspace for the scan, then deleted immediately once the dossier is generated. Nothing is retained.</p>
+        <p>Your repository is cloned to one machine for the duration of a single scan and then deleted, with the deletion recorded. There is no CTM server holding your code. The optional AI narrative is off by default, so nothing goes to any AI service. Delivered reports pseudonymise contributor identities by default, and each report states the exact tooling and settings that produced it. We hold no certification and do not encrypt at rest. Our full Security &amp; Trust Pack says so, along with everything else we do and do not do.</p>
       </details>
       <details class="faq-item">
         <summary>How is "risk" actually calculated?</summary>
-        <p>Bus-factor tiers are calibrated against commit-history thresholds — for example, 10+ commits on a file with one author holding over 70% share is High-confidence. It's not a subjective score.</p>
+        <p>Tiers come from fixed commit-history thresholds. For example, 10+ commits on a file with one contributor holding over 70% share is High-confidence, unless a single commit accounts for most of that share. It's not a subjective score, and it measures concentration of history, not who maintains the code today.</p>
       </details>
       <details class="faq-item">
         <summary>What does it cost?</summary>
-        <p>Every engagement is quoted individually, before you grant any access — so you know exactly where you stand up front. Book a call or email us and we'll turn a quote around quickly.</p>
+        <p>Every engagement is quoted individually, before you grant any access, so you know exactly where you stand up front. Book a call or email us and we'll turn a quote around quickly.</p>
       </details>
       <details class="faq-item">
         <summary>How long does a scan take?</summary>
-        <p>Typically minutes to a few hours, depending on repo size and depth. Depth is your call — from a recent slice up to the repository's complete history — and the dossier states the exact share analyzed. We replay history; we don't sample it.</p>
+        <p>The analysis runs in minutes to a few hours, depending on repository size and depth. Depth is your call, from a recent slice up to the repository's complete history, and the report states the exact share analysed. We replay history; we don't sample it.</p>
       </details>
       <details class="faq-item">
-        <summary>Can we see a sample before committing our own repo?</summary>
-        <p>Yes — expand the sample dossier above, generated against React's public history. Email us for the full PDF + Excel workbook.</p>
+        <summary>What does AI do in the report?</summary>
+        <p>Nothing, by default. Every number and finding is computed deterministically from Git history. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
       </details>
     </div>
   </div>
@@ -886,9 +851,9 @@
     <div class="section-label">Contact</div>
     <h2>Talk to a person, not a ticket queue.</h2>
     <div class="contact-box">
-      <p>Questions before you hand over repo access? Email directly — <strong>hello@codebasetimemachine.com</strong> — and you'll hear back from someone who actually built this, not a support rotation.</p>
+      <p>Questions before you hand over repo access? Email directly at <strong>hello@codebasetimemachine.com</strong> and you'll hear back from the person who built this, not a support rotation.</p>
       <div class="contact-actions">
-        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a diligence call →</a>
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
         <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
       </div>
     </div>
@@ -898,38 +863,23 @@
 <section class="cta-final">
   <div class="wrap reveal">
     <h2>Bring us your next target before you sign.</h2>
-    <p class="lead-text">One repo, one dossier, one sitting for your IC.</p>
-    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Commission a scan →</a>
+    <p class="lead-text">AI off by default, contributor identities pseudonymised, read-only access. You receive the PDF and workbook. You never install anything, and the tool never leaves our hands.</p>
+    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a 20-minute call →</a>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a> · hello@codebasetimemachine.com</p>
+    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · hello@codebasetimemachine.com</p>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/js/three.min.js"></script>
 <script>
 (function(){
   "use strict";
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- Sample dossier toggle ---------- */
-  function openSample(){
-    var d = document.getElementById('sample-dossier');
-    if(!d) return;
-    d.classList.add('open');
-    d.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
-  }
-  var os = document.getElementById('open-sample');
-  var osh = document.getElementById('open-sample-hero');
-  if(os) os.addEventListener('click', openSample);
-  if(osh) osh.addEventListener('click', function(){
-    document.getElementById('sample').scrollIntoView({behavior: reduce ? 'auto':'smooth'});
-    setTimeout(openSample, reduce ? 0 : 450);
-  });
 
   /* ---------- Scroll reveal ---------- */
   var reveals = [].slice.call(document.querySelectorAll('.reveal'));
@@ -969,15 +919,15 @@
 
     // subsystems: fractional treemap rects + start/final dominant share
     var cells = [
-      {n:'reconciler',    x:0.00,y:0.00,w:0.42,h:0.50, s0:0.34,s1:0.91},
-      {n:'flight-server', x:0.42,y:0.00,w:0.30,h:0.50, s0:0.30,s1:0.89},
-      {n:'scheduler',     x:0.72,y:0.00,w:0.28,h:0.27, s0:0.28,s1:0.57},
-      {n:'dom',           x:0.72,y:0.27,w:0.28,h:0.23, s0:0.26,s1:0.55},
-      {n:'hooks',         x:0.00,y:0.50,w:0.27,h:0.50, s0:0.30,s1:0.76},
-      {n:'events',        x:0.27,y:0.50,w:0.25,h:0.28, s0:0.24,s1:0.38},
-      {n:'compiler',      x:0.52,y:0.50,w:0.26,h:0.28, s0:0.22,s1:0.44},
-      {n:'devtools',      x:0.27,y:0.78,w:0.25,h:0.22, s0:0.20,s1:0.30},
-      {n:'test-utils',    x:0.52,y:0.78,w:0.26,h:0.22, s0:0.18,s1:0.27},
+      {n:'billing',       x:0.00,y:0.00,w:0.42,h:0.50, s0:0.34,s1:0.84},
+      {n:'pricing',       x:0.42,y:0.00,w:0.30,h:0.50, s0:0.30,s1:0.78},
+      {n:'auth',          x:0.72,y:0.00,w:0.28,h:0.27, s0:0.28,s1:0.62},
+      {n:'sync',          x:0.72,y:0.27,w:0.28,h:0.23, s0:0.26,s1:0.58},
+      {n:'payments',      x:0.00,y:0.50,w:0.27,h:0.50, s0:0.30,s1:0.73},
+      {n:'api',           x:0.27,y:0.50,w:0.25,h:0.28, s0:0.24,s1:0.38},
+      {n:'search',        x:0.52,y:0.50,w:0.26,h:0.28, s0:0.22,s1:0.44},
+      {n:'reports',       x:0.27,y:0.78,w:0.25,h:0.22, s0:0.20,s1:0.30},
+      {n:'migrations',    x:0.52,y:0.78,w:0.26,h:0.22, s0:0.18,s1:0.27},
       {n:'docs',          x:0.78,y:0.50,w:0.22,h:0.50, s0:0.16,s1:0.22}
     ];
     cells.forEach(function(c){ c.seed=[]; for(var i=0;i<6;i++){ c.seed.push([Math.random(),Math.random()]); } });
@@ -1094,9 +1044,10 @@
   (function(){
     var hud = document.getElementById('scan-hud'), feed = document.getElementById('hud-feed');
     if(!hud || !feed) return;
-    var files = ['ReactFiberCommitWork.js','SchedulerMinHeap.js','ReactDOMComponent.js','ReactFiberConfigWithNoMutation.js',
-      'ReactFlightServerConfigDebugNode.js','ReactFiberHooks.js','ReactFiberLane.js','ReactChildFiber.js','ReactFiberWorkLoop.js',
-      'ReactEventListener.js','ReactFiberBeginWork.js','ReactDOMRoot.js'];
+    /* Illustrative file names only: not from any real repository. */
+    var files = ['billing/invoice_engine.py','auth/session_store.ts','core/pricing_rules.go','api/orders_handler.ts',
+      'sync/ledger_reconcile.py','search/index_builder.rs','payments/gateway_client.ts','core/scheduler.go','reports/export_job.py',
+      'auth/token_service.ts','data/migrations_runner.py','api/webhooks.ts'];
     var tiers=[['ok',''],['ok',''],['watch','Watch'],['ok',''],['crit','High-conf'],['watch','Watch'],['ok','']];
     function hex(n){var s='';for(var i=0;i<n;i++)s+='0123456789abcdef'[(Math.random()*16)|0];return s;}
     function line(){
