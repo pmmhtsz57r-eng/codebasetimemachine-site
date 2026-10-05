@@ -472,7 +472,7 @@
   .chips span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;}
   .doc-list{margin:14px 0 4px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink);line-height:2;}
   .how-short{padding:64px 0 24px;}
-  .steps3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:22px;}
+  .steps3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:22px;}
   .s3 h4{margin:14px 0 6px;color:var(--text-strong);font-size:16px;}
   .s3 p{color:var(--muted);font-size:14.5px;max-width:34ch;}
   .explore{padding:56px 0 72px;}
@@ -493,6 +493,10 @@
   .xc-body{padding:4px 0 44px 44px;}
   .xc-h{font-family:'Source Serif 4',serif;font-size:24px;font-weight:600;color:var(--text-strong);margin:0 0 14px;max-width:30ch;line-height:1.25;}
   .xc-body .lead-text{margin-top:0;}
+  .xc-sub{margin-top:56px;}
+  .xc-body .compare-table-scroll{margin-top:24px;}
+  .xc, section[id]{scroll-margin-top:84px;}
+  @media (max-width:1040px) and (min-width:701px){ .steps3{grid-template-columns:repeat(2,minmax(0,1fr));} }
   .cta-final .lead-text a{color:inherit;}
   @media (max-width:700px){
     .steps3{grid-template-columns:1fr;gap:18px;}
@@ -545,7 +549,7 @@
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
       <h1>Before you close, know where critical code knowledge is concentrated and who holds it, <em>on evidence</em>.</h1>
-      <p class="lede">We replay a target's Git history and show which files rest on one or two engineers, and what to ask management before you sign.</p>
+      <p class="lede">Codebase Time Machine replays a target's Git history, as deep as you choose, to show which files rest on one or two key engineers, how strong that evidence is, and what to ask management before you sign. It sees code contributors only: who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="#explore">Learn more</a>
@@ -570,10 +574,12 @@
 <section id="how" class="how-short">
   <div class="wrap">
     <div class="section-label">How it works</div>
+    <h2>Grant read-only access. We run the scan. You get the report.</h2>
     <div class="steps3">
-      <div class="s3"><div class="step-num">1</div><h4>Read-only access</h4><p>You give us a read-only token for the repository. You can revoke it at any time.</p></div>
-      <div class="s3"><div class="step-num">2</div><h4>One scan</h4><p>We replay its Git history on a temporary copy, deleted when the scan ends.</p></div>
-      <div class="s3"><div class="step-num">3</div><h4>Your report</h4><p>A PDF for the investment committee and an Excel workbook for the deal team.</p></div>
+      <div class="s3"><div class="step-num">1</div><h4>Read-only access</h4><p>A read-only token scoped to the repository you want analysed. We never ask for write or admin rights, and you can revoke the token at any time.</p></div>
+      <div class="s3"><div class="step-num">2</div><h4>A temporary copy, one scan</h4><p>The repository is cloned into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p></div>
+      <div class="s3"><div class="step-num">3</div><h4>Your report package</h4><p>A PDF for the investment committee and an Excel workbook for the deal team.</p></div>
+      <div class="s3"><div class="step-num">4</div><h4>Clone deleted</h4><p>The working copy is deleted when the scan ends, and the deletion is logged. A forcibly terminated scan is the exception; we check by hand after one.</p></div>
     </div>
   </div>
 </section>
@@ -581,11 +587,11 @@
 <section id="explore" class="explore">
   <div class="wrap">
     <div class="section-label">Explore</div>
-    <h2>Open what matters to you.</h2>
+    <h2>Open what matters to&nbsp;you.</h2>
     <div class="xc-list">
       <details class="xc" id="why">
         <summary><span class="xc-num">01</span><span class="xc-t"><span class="xc-title">Why it matters</span><span class="xc-teaser">Key-person risk is a deal question.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
-        <div class="xc-body">
+        <div class="xc-body"><h3 class="xc-h">Who holds the code knowledge is a deal question.</h3>
     <p class="lead-text">CTM adds one question to technical diligence: where the critical code knowledge sits, and whether whole subsystems depend on one or two people who may have no contractual reason to stay past close.</p>
     <p class="problem-quote">If the one person who understands a core subsystem leaves the day after you sign, what breaks, how long until anyone else can safely touch it, and what does that do to your model?</p>
     <div class="consequence">
@@ -607,7 +613,7 @@
       </details>
       <details class="xc" id="measure">
         <summary><span class="xc-num">02</span><span class="xc-t"><span class="xc-title">What we measure</span><span class="xc-teaser">How a file is flagged, with a live example.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
-        <div class="xc-body"><h3 class="xc-h">Where code knowledge is concentrated, file by file.</h3>
+        <div class="xc-body"><h3 class="xc-h">Where code knowledge is concentrated, file by file and subsystem by subsystem.</h3>
     <p class="lead-text">We measure what share of each file's changed lines (added and removed, across its whole history) one contributor wrote. That line share is the evidence. A tier is then derived from the line share and the file's commit count against fixed thresholds, not a subjective judgment.</p>
     <div class="map-wrap">
       <div class="map-stage">
@@ -641,7 +647,7 @@
       </details>
       <details class="xc" id="report">
         <summary><span class="xc-num">03</span><span class="xc-t"><span class="xc-title">What's in the report</span><span class="xc-teaser">Seven sections, built for one IC sitting.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
-        <div class="xc-body">
+        <div class="xc-body"><h3 class="xc-h">Built for a one-sitting IC read.</h3>
     <div class="toc">
       <div class="toc-row">
         <div class="toc-num">01</div>
@@ -680,6 +686,8 @@
       </div>
     </div>
   
+    <div class="section-label xc-sub">What the buyer learns</div>
+    <h3 class="xc-h">Every finding follows one chain.</h3>
     <p class="lead-text">Evidence first, then why it could matter, then what to ask, then what to do. Git history shows who wrote the code. Only management can say who maintains it today, so the report keeps the two apart.</p>
     <div class="learn">
       <div class="learn-finding">
@@ -701,7 +709,7 @@
       </details>
       <details class="xc" id="fit">
         <summary><span class="xc-num">04</span><span class="xc-t"><span class="xc-title">Who it's for</span><span class="xc-teaser">PE, strategic buyers and diligence advisors.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
-        <div class="xc-body">
+        <div class="xc-body"><h3 class="xc-h">A workstream inside diligence, not a tool to adopt.</h3>
     <p class="lead-text">Codebase Time Machine drops into the process you already run. It runs during confirmatory diligence, informs the terms you negotiate, and gives the integration team a starting list on day one.</p>
 
     <div class="fit-flow" role="img" aria-label="Deal timeline: CTM runs during confirmatory diligence, informs retention and earn-out terms, and gives integration a starting list.">
@@ -743,6 +751,8 @@
       </div>
     </div>
   
+    <div class="section-label xc-sub">What CTM adds</div>
+    <h3 class="xc-h">Alongside interviews and code reviews, not instead of them.</h3>
     <p class="lead-text">What CTM adds to a deal file: an evidence-backed picture of where code knowledge is concentrated, with its confidence and its limits stated.</p>
     <div class="compare-table-scroll">
       <table class="compare-table">
@@ -813,7 +823,7 @@
       </details>
       <details class="xc" id="faq">
         <summary><span class="xc-num">07</span><span class="xc-t"><span class="xc-title">FAQ</span><span class="xc-teaser">Cost, timing, access and AI.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
-        <div class="xc-body">
+        <div class="xc-body"><h3 class="xc-h">What people ask before their first scan.</h3>
     <div class="faq">
       <details class="faq-item">
         <summary>What does Codebase Time Machine actually analyze?</summary>
@@ -851,13 +861,25 @@
   </div>
 </section>
 
-<section class="cta-final" id="contact">
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="section-label">Contact</div>
+    <h2>Talk to a person, not a ticket queue.</h2>
+    <div class="contact-box">
+      <p>Questions before you hand over repo access? Email directly at <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;"><strong>hello@codebasetimemachine.com</strong></a> and you'll hear back from the person who built this, not a support rotation.</p>
+      <div class="contact-actions">
+        <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
+        <a class="btn-secondary" href="mailto:hello@codebasetimemachine.com">Send an email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
   <div class="wrap reveal">
     <h2>Bring us your next target before you sign.</h2>
-    <p class="lead-text">A 30-minute call, or email <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;text-decoration:underline;">hello@codebasetimemachine.com</a>. You'll talk to the person who built it.</p>
-    <div class="hero-ctas" style="justify-content:center;">
-      <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
-    </div>
+    <p class="lead-text">AI off by default, contributor identities pseudonymised, read-only access. You receive the PDF and workbook. You never install anything, and the tool never leaves our hands.</p>
+    <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
   </div>
 </section>
 
