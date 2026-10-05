@@ -390,7 +390,7 @@
   .sec-check{color:var(--ok);font-family:'IBM Plex Mono',monospace;font-size:14px;padding-top:1px;}
   .sec-item p{font-size:14px;color:var(--muted);}
   .sec-no{color:var(--muted-2);}
-  @media (max-width:700px){ .mail-link{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} }
+  @media (max-width:700px){ .mail-link{display:inline-block;padding:12px 0;min-height:44px;line-height:20px;} .tm-range{height:44px;background:transparent;} .tm-range::-webkit-slider-runnable-track{height:3px;background:var(--line);border-radius:2px;} .tm-range::-webkit-slider-thumb{margin-top:-6px;} .tm-play{min-height:44px;} .nav-cta{min-height:44px;display:inline-flex;align-items:center;} }
   .sec-sub{margin:34px 0 10px;font-family:'Source Serif 4',serif;font-size:22px;color:var(--text-strong);}
   .sec-item strong{color:var(--text);}
   .sec-note{margin-top:28px;font-size:13px;color:var(--muted);font-style:italic;max-width:64ch;border-left:2px solid var(--line);padding-left:16px;}
@@ -460,7 +460,7 @@
     </div>
     <div class="nav-links">
       <a class="nav-link" href="#how">How it works</a>
-      <a class="nav-link" href="#compare">Compare</a>
+      <a class="nav-link" href="#compare">What it adds</a>
       <a class="nav-link" href="#fit">For buyers</a>
       <a class="nav-link" href="#faq">FAQ</a>
       <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call</a>
@@ -473,7 +473,7 @@
   <div class="hero-glow" id="hero-glow"></div>
   <div class="scan-hud" id="scan-hud" aria-hidden="true">
     <div class="hud-top">
-      <span class="hud-title">Replaying history</span>
+      <span class="hud-title">Illustrative replay</span>
       <span class="hud-live">SCAN</span>
     </div>
     <div id="hud-feed"></div>
@@ -482,13 +482,13 @@
     <div>
       <div class="eyebrow">M&amp;A Technical Due Diligence</div>
       <h1>Before you close, know which engineers hold the critical code knowledge, <em>on evidence</em>.</h1>
-      <p class="lede">Codebase Time Machine replays a target's Git history, up to the complete history, to show where critical code knowledge is concentrated in one or two key engineers, how strong the evidence is, and what to ask management before you sign. It sees code contributors only: it measures who wrote and changed the code, not who understands it today.</p>
+      <p class="lede">Codebase Time Machine replays as much of a target's Git history as you choose, up to all of it, to show where critical code knowledge is concentrated, which key engineers hold it, how strong the evidence is, and what to ask management before you sign. It sees code contributors only: it measures who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
         <a class="btn-secondary" href="#how">How it works</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="n">Up&nbsp;to&nbsp;full&nbsp;history</div><div class="l">You choose the depth; share analysed stated</div></div>
+        <div class="hero-stat"><div class="n">Up&nbsp;to&nbsp;full&nbsp;history</div><div class="l">You choose the depth; the report states the share analysed</div></div>
         <div class="hero-stat"><div class="n">AI&nbsp;off</div><div class="l">By default</div></div>
         <div class="hero-stat"><div class="n">Pseudonymised</div><div class="l">Contributor identities, by default</div></div>
       </div>
@@ -518,7 +518,7 @@
       <div class="band-item"><span class="repo">AI off</span><span class="meta">by default</span></div>
       <div class="band-item"><span class="repo">Pseudonymised</span><span class="meta">identities, by default</span></div>
       <div class="band-item"><span class="repo">Read-only</span><span class="meta">access, revocable by you</span></div>
-      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">when each scan ends</span></div>
+      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">when each scan ends (except after a forced kill, which we check by hand)</span></div>
     </div>
   </div>
 </div>
@@ -526,17 +526,17 @@
 <section>
   <div class="wrap reveal">
     <div class="section-label">The gap</div>
-    <h2>Code-quality scanners answer the wrong question.</h2>
-    <p class="lead-text">Most technical diligence checks whether the code is well-written. It rarely checks where the critical knowledge actually sits, or whether entire subsystems depend on one or two people who have no contractual reason to stay past close.</p>
+    <h2>Who holds the code knowledge is a deal question.</h2>
+    <p class="lead-text">CTM adds one question to technical diligence: where the critical code knowledge sits, and whether whole subsystems depend on one or two people who may have no contractual reason to stay past close.</p>
     <p class="problem-quote">If the one person who understands a core subsystem leaves the day after you sign, what breaks, how long until anyone else can safely touch it, and what does that do to your model?</p>
     <div class="consequence">
       <div class="consq">
         <div class="consq-tag">Value at risk</div>
-        <p>A subsystem only one person can safely change is value you're paying for that can resign the week after close.</p>
+        <p>If only one engineer can safely change a subsystem, the value you are paying for depends on someone who can resign the week after close.</p>
       </div>
       <div class="consq">
         <div class="consq-tag">Integration drag</div>
-        <p>A single bottleneck engineer can push a migration, carve-out, or roadmap back by quarters, after the price is already set.</p>
+        <p>A single bottleneck engineer can delay a migration, carve-out or roadmap after the price is already set.</p>
       </div>
       <div class="consq">
         <div class="consq-tag">Deal leverage</div>
@@ -549,7 +549,7 @@
 <section id="how">
   <div class="wrap reveal">
     <div class="section-label">How it works</div>
-    <h2>Grant read-only access. We run the scan. You get the report. The clone is deleted.</h2>
+    <h2>Grant read-only access. We run the scan. You get the report.</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -603,7 +603,7 @@
         <h3>Three tiers, from fixed thresholds, not guessed.</h3>
         <p><span class="tick mono">High-confidence</span>: 10+ commits on a file, with one contributor holding over 70% of its history (held at Watch when a single commit accounts for most of that share). Strong evidence of concentration; confirm with management who maintains it today.</p>
         <p><span class="tick mono">Watch</span>: 5+ commits and over 55% share. Concentration is visible but the history is shorter; ask who maintains it today.</p>
-        <p><span class="tick mono">Distributed</span>: no single contributor holds most of this history.</p>
+        <p><span class="tick mono">Distributed</span>: no single contributor reaches the Watch threshold.</p>
       </div>
     </div>
   </div>
@@ -631,7 +631,7 @@
       </div>
       <div class="toc-row">
         <div class="toc-num">04</div>
-        <div><h4>Subsystem concentration</h4><p>The same measurement at subsystem level, so you see which parts of the system depend on whom.</p></div>
+        <div><h4>Subsystem concentration</h4><p>The same measurement at subsystem level, so you see where in the system history is concentrated, and in whom.</p></div>
         <div class="toc-tag">PDF + XLSX</div>
       </div>
       <div class="toc-row">
@@ -657,7 +657,7 @@
   <div class="wrap reveal">
     <div class="section-label">What the buyer learns</div>
     <h2>Every finding follows one chain.</h2>
-    <p class="lead-text">Evidence first, then why it could matter, then what to ask, then what to do. Git history shows who wrote the code. Only management can say who maintains it today, so the report never presents one as the other.</p>
+    <p class="lead-text">Evidence first, then why it could matter, then what to ask, then what to do. Git history shows who wrote the code. Only management can say who maintains it today, so the report keeps the two apart.</p>
     <div class="learn">
       <div class="learn-finding">
         <div class="learn-badge">Evidence → Risk → Question → Mitigation</div>
@@ -669,7 +669,7 @@
         <ul>
           <li><strong>A question, not a verdict.</strong> Each concentration comes with the questions to put to management, so you confirm the dependency before you price it.</li>
           <li><strong>A lever at the table.</strong> Once confirmed, it can inform a retention package or an earn-out condition before terms are locked.</li>
-          <li><strong>Mitigation, if confirmed.</strong> A secondary owner, documented knowledge and pair review on the next changes, so the knowledge stops sitting with one person.</li>
+          <li><strong>Mitigation, if confirmed.</strong> A secondary owner, documented knowledge and pair review on the next changes, so that knowledge is shared.</li>
         </ul>
       </div>
     </div>
@@ -678,34 +678,30 @@
 
 <section id="compare">
   <div class="wrap reveal">
-    <div class="section-label">Compare</div>
-    <h2>Not a scanner. Not just interviews.</h2>
+    <div class="section-label">What CTM adds</div>
+    <h2>Alongside interviews and code reviews, not instead of them.</h2>
     <p class="lead-text">What CTM adds to a deal file: an evidence-backed picture of where code knowledge is concentrated, with its confidence and its limits stated.</p>
     <div class="compare-table-scroll">
       <table class="compare-table">
         <tr>
-          <th></th>
-          <th class="us-col">Codebase Time Machine</th>
-          <th>Manual interviews only</th>
-          <th>Generic code-quality scanners</th>
+          <th>The question</th>
+          <th class="us-col">What CTM gives you</th>
         </tr>
         <tr>
-          <td class="compare-row-label">Measures where code history is concentrated</td>
-          <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, per file and subsystem, with stated confidence</td>
-          <td data-label="Manual interviews only">No; it depends on who is asked</td>
-          <td data-label="Generic code-quality scanners">Varies by tool; most focus on code quality</td>
+          <td class="compare-row-label">Where is code history concentrated?</td>
+          <td class="us-col" data-label="What CTM gives you">Per file and subsystem: the share one contributor holds, the commits behind it, and a confidence tier</td>
         </tr>
         <tr>
-          <td class="compare-row-label">Shows how concentration changed over time</td>
-          <td class="us-col" data-label="Codebase Time Machine"><strong>Yes</strong>, risk evolution per top file</td>
-          <td data-label="Manual interviews only">Only as people remember it</td>
-          <td data-label="Generic code-quality scanners">Varies by tool</td>
+          <td class="compare-row-label">How has that changed over time?</td>
+          <td class="us-col" data-label="What CTM gives you">Risk evolution for each top file</td>
         </tr>
         <tr>
-          <td class="compare-row-label">What it cannot see</td>
-          <td class="us-col" data-label="Codebase Time Machine">People who never committed code, and who maintains the code today</td>
-          <td data-label="Manual interviews only">What nobody mentions</td>
-          <td data-label="Generic code-quality scanners">Varies by tool</td>
+          <td class="compare-row-label">What should we ask management?</td>
+          <td class="us-col" data-label="What CTM gives you">Buyer questions, split into those the scan answers and those only management can answer</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">What can't it see?</td>
+          <td class="us-col" data-label="What CTM gives you">People who never committed code, and who maintains the code today. The report says so.</td>
         </tr>
       </table>
     </div>
@@ -741,18 +737,18 @@
         <div class="fit-role">Strategic / corporate buyers</div>
         <p class="fit-lead">Know whose knowledge to confirm before you sign.</p>
         <ul>
-          <li>The contributors whose code a carve-out or migration touches most</li>
-          <li>Where post-close roadmap risk is concentrated, by subsystem</li>
+          <li>Which contributors hold the code in the subsystems a carve-out or migration touches</li>
+          <li>Where knowledge concentration sits, subsystem by subsystem</li>
           <li>A list of people to confirm with management before retention talks</li>
         </ul>
       </div>
       <div class="fit-card">
         <div class="fit-role">Diligence providers &amp; advisors</div>
-        <p class="fit-lead">Add a section interviews and scanners can't produce.</p>
+        <p class="fit-lead">Add a key-person section built on commit evidence.</p>
         <ul>
           <li>Evidence-based key-person analysis under your own engagement</li>
           <li>The same methodology across every target</li>
-          <li>Each claim traceable to the commit history behind it</li>
+          <li>Findings traceable to the commit history behind them</li>
         </ul>
       </div>
     </div>
@@ -767,9 +763,9 @@
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>What leaves that machine.</strong> The authenticated request to your repository host to fetch the code; a metadata request to that host's API; the finished report, which we deliver to you; and, if you ask for it, the deletion record. Nothing else, unless you have agreed in writing to the optional AI narrative, which is off by default.</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>The optional AI narrative is off.</strong> With it off, no part of your repository, no commit message and no contributor identity reaches any AI service. Every number and every finding in the report is computed deterministically from your git history and repository metadata on the machine that ran the scan. If we ever propose enabling it, we will ask you first and in writing.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Identities are pseudonymised in everything we deliver.</strong> By default, reports identify contributors as "Contributor A", "Contributor B", with no names and no email addresses on any page. (Pseudonymised, not anonymised: this reduces exposure, it does not take the data outside GDPR.)</p></div>
-      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report says what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether that version had local modifications, the analysis settings, the timestamp, and whether AI was used. You can verify our data-handling claims from the document itself rather than taking our word for them.</p></div>
+      <div class="sec-item"><span class="sec-check">✓</span><p><strong>Every report records what produced it.</strong> Each report carries its own provenance: the exact version of CTM, whether that version had local modifications, the analysis settings, the timestamp, and whether AI was used.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Deletion is evidenced.</strong> Every removal of temporary data is recorded: which scan, which class of data, whether it succeeded, and when. We can send you that record. It deliberately contains no file names, no paths and no contributor identities, so the evidence of deletion never becomes a place your information comes to rest.</p></div>
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>Credentials.</strong> You give us a read-only token scoped to the repository you want analysed, which you can revoke at any time. It is sent to your repository host as an HTTP authorisation header and is never written into the clone's configuration, a command line, a log, or any report.</p></div>
     </div>
@@ -792,7 +788,7 @@
     <h2>Talk to the person who built the analysis.</h2>
     <div class="founder">
       <div class="founder-body">
-        <p>I built Codebase Time Machine because technical diligence checks how good the code is, but rarely who holds the knowledge of it. That knowledge is written into a company's Git history, and it can be measured.</p>
+        <p>I built Codebase Time Machine because who holds the knowledge of a codebase matters to a deal, and much of that knowledge is written into the company's Git history, where it can be measured.</p>
         <p>I run every engagement myself, and I'll walk you through exactly what we read, and what we never touch, before you grant any access. No support rotation, no black box.</p>
         <div class="sig">— Josiah Shirt</div>
         <div class="role">Founder, Codebase Time Machine · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
@@ -808,7 +804,7 @@
     <div class="faq">
       <details class="faq-item">
         <summary>What does Codebase Time Machine actually analyze?</summary>
-        <p>Only Git commit history and metadata: authors, dates, file paths, and commit messages. Not runtime data, and not anyone who never committed code. Git shows who wrote and changed the code; who maintains it today is a question for management, and the report says so.</p>
+        <p>Only Git commit history (authors, dates, file paths and commit messages) and basic repository metadata from your repository host. Not runtime data, and not anyone who never committed code. Git shows who wrote and changed the code; who maintains it today is a question for management, and the report says so.</p>
       </details>
       <details class="faq-item">
         <summary>Do you need write access to our repo?</summary>
@@ -832,7 +828,7 @@
       </details>
       <details class="faq-item">
         <summary>What does AI do in the report?</summary>
-        <p>Nothing, by default. Every number and finding is computed deterministically from Git history. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
+        <p>Nothing, by default. Every number and finding is computed deterministically from Git history and repository metadata. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
       </details>
     </div>
   </div>
@@ -863,7 +859,7 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Codebase Time Machine</p>
-    <p><a href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
+    <p><a class="mail-link" href="privacy.html" style="color:inherit;text-decoration:underline;">Privacy notice</a> · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></p>
   </div>
 </footer>
 
