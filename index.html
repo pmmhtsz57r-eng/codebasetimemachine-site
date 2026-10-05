@@ -457,6 +457,7 @@
     .map-wrap{grid-template-columns:1fr;}
     .doc-card{transform:rotateY(-5deg) rotateZ(1deg);max-width:100%;}
   }
+  @media (max-width: 700px){ .doc-stage{display:none;} }
   @media (max-width: 520px){
     h1{font-size:30px;}
     .steps{grid-template-columns:1fr;}
@@ -465,6 +466,46 @@
     .d-grid{grid-template-columns:1fr 1fr;}
   }
   .nw{white-space:nowrap;}
+
+  /* ---------- Simplified front page: chips, 3 steps, tap-to-open cards ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;}
+  .chips span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;}
+  .doc-list{margin:14px 0 4px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink);line-height:2;}
+  .how-short{padding:64px 0 24px;}
+  .steps3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:22px;}
+  .s3 h4{margin:14px 0 6px;color:var(--text-strong);font-size:16px;}
+  .s3 p{color:var(--muted);font-size:14.5px;max-width:34ch;}
+  .explore{padding:56px 0 72px;}
+  .xc-list{margin-top:28px;border-top:1px solid var(--line-soft);}
+  .xc{border-bottom:1px solid var(--line-soft);}
+  .xc summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:22px;padding:22px 4px;min-height:44px;}
+  .xc summary::-webkit-details-marker{display:none;}
+  .xc summary:hover .xc-title{color:var(--gold);}
+  .xc summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  .xc-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);flex-shrink:0;width:22px;}
+  .xc-t{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
+  .xc-title{font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;color:var(--text-strong);transition:color .15s;}
+  .xc-teaser{color:var(--muted);font-size:14.5px;}
+  .xc-icon{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;flex-shrink:0;position:relative;transition:transform .25s,border-color .15s;}
+  .xc-icon::before,.xc-icon::after{content:'';position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--gold);transform:translate(-50%,-50%);}
+  .xc-icon::after{transform:translate(-50%,-50%) rotate(90deg);}
+  .xc[open] .xc-icon{transform:rotate(45deg);border-color:var(--gold-line);}
+  .xc-body{padding:4px 0 44px 44px;}
+  .xc-h{font-family:'Source Serif 4',serif;font-size:24px;font-weight:600;color:var(--text-strong);margin:0 0 14px;max-width:30ch;line-height:1.25;}
+  .xc-body .lead-text{margin-top:0;}
+  .xc-sub{margin-top:56px;}
+  .xc-body .compare-table-scroll{margin-top:24px;}
+  .xc, section[id]{scroll-margin-top:84px;}
+  @media (max-width:1040px) and (min-width:701px){ .steps3{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .cta-final .lead-text a{color:inherit;}
+  @media (max-width:700px){
+    .steps3{grid-template-columns:1fr;gap:18px;}
+    .xc summary{gap:14px;padding:18px 0;}
+    .xc-title{font-size:19px;}
+    .xc-teaser{font-size:13.5px;}
+    .xc-body{padding:4px 0 32px 14px;border-left:1px solid var(--line);margin-left:2px;}
+    .xc-h{font-size:20px;}
+  }
   @media (max-width:520px){ footer .fsep{display:none;} footer p a.mail-link{display:block;} }
   @media (max-width:400px){ .wrap{padding:0 20px;} .band .wrap{padding:22px 20px;} .contact-box{padding:24px 20px;} .contact-box p a{overflow-wrap:anywhere;} .tm-head{flex-wrap:wrap;} .founder{padding:26px 20px;} }
 </style>
@@ -479,8 +520,8 @@
     </div>
     <div class="nav-links">
       <a class="nav-link" href="#how">How it works</a>
-      <a class="nav-link" href="#compare">What it adds</a>
-      <a class="nav-link" href="#fit">For buyers</a>
+      <a class="nav-link" href="#explore">Explore</a>
+      <a class="nav-link" href="#security">Security</a>
       <a class="nav-link" href="#faq">FAQ</a>
       <a class="nav-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call</a>
     </div>
@@ -488,8 +529,8 @@
   </div>
   <div class="nav-panel" id="nav-panel">
     <a href="#how">How it works</a>
-    <a href="#compare">What it adds</a>
-    <a href="#fit">For buyers</a>
+    <a href="#explore">Explore</a>
+    <a href="#security">Security</a>
     <a href="#faq">FAQ</a>
     <a class="nav-panel-cta" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
   </div>
@@ -512,48 +553,46 @@
       <p class="lede">Codebase Time Machine replays a target's Git history, as deep as you choose, to show which files rest on one or two key engineers, how strong that evidence is, and what to ask management before you sign. It sees code contributors only: who wrote and changed the code, not who understands it today.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://calendly.com/kindandlovinghearts/30min" target="_blank" rel="noopener">Book a call →</a>
-        <a class="btn-secondary" href="#how">How it works</a>
+        <a class="btn-secondary" href="#explore">Learn more</a>
       </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="n">Up&nbsp;to&nbsp;full&nbsp;history</div><div class="l">You choose the depth; the report states the share analysed</div></div>
-        <div class="hero-stat"><div class="n">AI&nbsp;off</div><div class="l">By default</div></div>
-        <div class="hero-stat"><div class="n">Pseudonymised</div><div class="l">Contributor identities, by default</div></div>
+      <div class="chips"><span>Read-only access</span><span>AI off by default</span><span>Pseudonymised by default</span></div>
       </div>
     </div>
     <div class="doc-stage">
       <div class="doc-card" id="tilt-card">
         <div class="doc-stamp">CONFIDENTIAL</div>
-        <h3>Report highlights</h3>
+        <h3>What the report contains</h3>
         <div class="doc-sub">PDF for the IC · Excel workbook for the deal team</div>
-        <table class="doc-table">
-          <tr><th>Section</th><th>What it gives you</th></tr>
-          <tr><td>Key-person concentration</td><td>Who holds which files, with the commits behind it</td></tr>
-          <tr><td>Ranked material assets</td><td>Share, commits and tier per file</td></tr>
-          <tr><td>Buyer questions</td><td>What to ask management before close</td></tr>
-          <tr><td>Coverage &amp; method</td><td>History analysed, and what Git cannot establish</td></tr>
-        </table>
-        <div class="doc-foot">4 of the 7 report sections. Structure only; no client or sample data is shown on this site.</div>
+        <ol class="doc-list">
+          <li>Page-one summary</li><li>Key-person concentration</li><li>Ranked material assets</li><li>Subsystem concentration</li><li>Risk evolution</li><li>Buyer questions before close</li><li>Coverage &amp; methodology</li>
+        </ol>
+        <div class="doc-foot">Structure only; no client or sample data is shown on this site.</div>
       </div>
     </div>
   </div>
 </header>
 
-<div class="band">
+<section id="how" class="how-short">
   <div class="wrap">
-    <span class="band-label">Every engagement</span>
-    <div class="band-items">
-      <div class="band-item"><span class="repo">AI off</span><span class="meta">by default</span></div>
-      <div class="band-item"><span class="repo">Pseudonymised</span><span class="meta">identities, by default</span></div>
-      <div class="band-item"><span class="repo">Read-only</span><span class="meta">access, revocable by you</span></div>
-      <div class="band-item"><span class="repo">Deletion logged</span><span class="meta">when each scan ends (except after a forcibly terminated scan, which we check by hand)</span></div>
+    <div class="section-label">How it works</div>
+    <h2>Grant read-only access. We run the scan. You get the report.</h2>
+    <div class="steps3">
+      <div class="s3"><div class="step-num">1</div><h4>Read-only access</h4><p>A read-only token scoped to the repository you want analysed. We never ask for write or admin rights, and you can revoke the token at any time.</p></div>
+      <div class="s3"><div class="step-num">2</div><h4>A temporary copy, one scan</h4><p>The repository is cloned into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p></div>
+      <div class="s3"><div class="step-num">3</div><h4>Your report package</h4><p>A PDF for the investment committee and an Excel workbook for the deal team.</p></div>
+      <div class="s3"><div class="step-num">4</div><h4>Clone deleted</h4><p>The working copy is deleted when the scan ends, and the deletion is logged. A forcibly terminated scan is the exception; we check by hand after one.</p></div>
     </div>
   </div>
-</div>
+</section>
 
-<section>
-  <div class="wrap reveal">
-    <div class="section-label">The gap</div>
-    <h2>Who holds the code knowledge is a deal question.</h2>
+<section id="explore" class="explore">
+  <div class="wrap">
+    <div class="section-label">Explore</div>
+    <h2>Open what matters to&nbsp;you.</h2>
+    <div class="xc-list">
+      <details class="xc" id="why">
+        <summary><span class="xc-num">01</span><span class="xc-t"><span class="xc-title">Why it matters</span><span class="xc-teaser">Key-person risk is a deal question.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">Who holds the code knowledge is a deal question.</h3>
     <p class="lead-text">CTM adds one question to technical diligence: where the critical code knowledge sits, and whether whole subsystems depend on one or two people who may have no contractual reason to stay past close.</p>
     <p class="problem-quote">If the one person who understands a core subsystem leaves the day after you sign, what breaks, how long until anyone else can safely touch it, and what does that do to your model?</p>
     <div class="consequence">
@@ -570,42 +609,12 @@
         <p>Raised and confirmed before signing, a concentration can shape a retention package or an earn-out condition instead of becoming a post-close surprise.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="wrap reveal">
-    <div class="section-label">How it works</div>
-    <h2>Grant read-only access. We run the scan. You get the report.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h4>Read-only access</h4>
-        <p>A read-only token scoped to the repository you want analysed. We never ask for write or admin rights, and you can revoke the token at any time.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h4>A temporary copy, one scan</h4>
-        <p>The repository is cloned into a temporary directory created for that scan. You choose the depth, up to the complete history, and the report states what share of it was analysed.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h4>Your report package</h4>
-        <p>A PDF for the investment committee and an Excel workbook for the deal team.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h4>Clone deleted</h4>
-        <p>The working copy is deleted when the scan ends, and the deletion is logged. A forcibly terminated scan is the exception; we check by hand after one.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap reveal">
-    <div class="section-label">What we actually measure</div>
-    <h2>Where code knowledge is concentrated, file by file and subsystem by subsystem.</h2>
+  
+        </div>
+      </details>
+      <details class="xc" id="measure">
+        <summary><span class="xc-num">02</span><span class="xc-t"><span class="xc-title">What we measure</span><span class="xc-teaser">How a file is flagged, with a live example.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">Where code knowledge is concentrated, file by file and subsystem by subsystem.</h3>
     <p class="lead-text">We measure what share of each file's changed lines (added and removed, across its whole history) one contributor wrote. That line share is the evidence. A tier is then derived from the line share and the file's commit count against fixed thresholds, not a subjective judgment.</p>
     <div class="map-wrap">
       <div class="map-stage">
@@ -634,13 +643,12 @@
         <p>A file with fewer than 5 commits gets no tier, however concentrated it is: so few commits describe a few changes, not a pattern of who holds the knowledge.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap reveal">
-    <div class="section-label">What's in the report</div>
-    <h2>Built for a one-sitting IC read.</h2>
+  
+        </div>
+      </details>
+      <details class="xc" id="report">
+        <summary><span class="xc-num">03</span><span class="xc-t"><span class="xc-title">What's in the report</span><span class="xc-teaser">Seven sections, built for one IC sitting.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">Built for a one-sitting IC read.</h3>
     <div class="toc">
       <div class="toc-row">
         <div class="toc-num">01</div>
@@ -678,13 +686,9 @@
         <div class="toc-tag">PDF</div>
       </div>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap reveal">
-    <div class="section-label">What the buyer learns</div>
-    <h2>Every finding follows one chain.</h2>
+  
+    <div class="section-label xc-sub">What the buyer learns</div>
+    <h3 class="xc-h">Every finding follows one chain.</h3>
     <p class="lead-text">Evidence first, then why it could matter, then what to ask, then what to do. Git history shows who wrote the code. Only management can say who maintains it today, so the report keeps the two apart.</p>
     <div class="learn">
       <div class="learn-finding">
@@ -701,45 +705,12 @@
         </ul>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="compare">
-  <div class="wrap reveal">
-    <div class="section-label">What CTM adds</div>
-    <h2>Alongside interviews and code reviews, not instead of them.</h2>
-    <p class="lead-text">What CTM adds to a deal file: an evidence-backed picture of where code knowledge is concentrated, with its confidence and its limits stated.</p>
-    <div class="compare-table-scroll">
-      <table class="compare-table">
-        <tr>
-          <th>The question</th>
-          <th class="us-col">What CTM gives you</th>
-        </tr>
-        <tr>
-          <td class="compare-row-label">Where is code history concentrated?</td>
-          <td class="us-col" data-label="What CTM gives you">Per file: the line share one contributor holds, the commits behind it, and a confidence tier. Per subsystem: how concentrated it is</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">How has that changed over time?</td>
-          <td class="us-col" data-label="What CTM gives you">Risk evolution for each top file</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">What should we ask management?</td>
-          <td class="us-col" data-label="What CTM gives you">Buyer questions, split into those the scan answers and those only management can answer</td>
-        </tr>
-        <tr>
-          <td class="compare-row-label">What can't it see?</td>
-          <td class="us-col" data-label="What CTM gives you">People who never committed code, and who maintains the code today. The report says so.</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="fit">
-  <div class="wrap reveal">
-    <div class="section-label">Where it fits</div>
-    <h2>A workstream inside diligence, not a tool to adopt.</h2>
+  
+        </div>
+      </details>
+      <details class="xc" id="fit">
+        <summary><span class="xc-num">04</span><span class="xc-t"><span class="xc-title">Who it's for</span><span class="xc-teaser">PE, strategic buyers and diligence advisors.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">A workstream inside diligence, not a tool to adopt.</h3>
     <p class="lead-text">Codebase Time Machine drops into the process you already run. It runs during confirmatory diligence, informs the terms you negotiate, and gives the integration team a starting list on day one.</p>
 
     <div class="fit-flow" role="img" aria-label="Deal timeline: CTM runs during confirmatory diligence, informs retention and earn-out terms, and gives integration a starting list.">
@@ -780,13 +751,40 @@
         </ul>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="security">
-  <div class="wrap reveal">
-    <div class="section-label">Security &amp; data handling</div>
-    <h2>Your source code is copied for one scan. The copy is deleted when the scan ends, or by hand if the scan is forcibly terminated.</h2>
+  
+    <div class="section-label xc-sub">What CTM adds</div>
+    <h3 class="xc-h">Alongside interviews and code reviews, not instead of them.</h3>
+    <p class="lead-text">What CTM adds to a deal file: an evidence-backed picture of where code knowledge is concentrated, with its confidence and its limits stated.</p>
+    <div class="compare-table-scroll">
+      <table class="compare-table">
+        <tr>
+          <th>The question</th>
+          <th class="us-col">What CTM gives you</th>
+        </tr>
+        <tr>
+          <td class="compare-row-label">Where is code history concentrated?</td>
+          <td class="us-col" data-label="What CTM gives you">Per file: the line share one contributor holds, the commits behind it, and a confidence tier. Per subsystem: how concentrated it is</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">How has that changed over time?</td>
+          <td class="us-col" data-label="What CTM gives you">Risk evolution for each top file</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">What should we ask management?</td>
+          <td class="us-col" data-label="What CTM gives you">Buyer questions, split into those the scan answers and those only management can answer</td>
+        </tr>
+        <tr>
+          <td class="compare-row-label">What can't it see?</td>
+          <td class="us-col" data-label="What CTM gives you">People who never committed code, and who maintains the code today. The report says so.</td>
+        </tr>
+      </table>
+    </div>
+  
+        </div>
+      </details>
+      <details class="xc" id="security">
+        <summary><span class="xc-num">05</span><span class="xc-t"><span class="xc-title">Security &amp; your data</span><span class="xc-teaser">Read-only, AI off, pseudonymised by default.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">Your source code is copied for one scan. The copy is deleted when the scan ends, or by hand if the scan is forcibly terminated.</h3>
     <p class="lead-text">The automatic deletion is recorded. A forcibly terminated scan can leave a temporary copy behind without recording it, so after one we check by hand and delete what we find. CTM is a tool we run for you, not a cloud service you sign up to: there is no customer account and no database holding your repository.</p>
     <div class="sec-list">
       <div class="sec-item"><span class="sec-check">✓</span><p><strong>How a scan works.</strong> Your repository is cloned over HTTPS onto the machine running the analysis, into a temporary directory created for that one scan. It is read there and nowhere else. When the scan ends, whether it succeeds or fails, that directory is deleted, along with the temporary directory used to assemble the report. What survives is the report we hand you, and a deletion log (unless the scan was forcibly terminated; see below).</p></div>
@@ -807,13 +805,12 @@
       <div class="sec-item"><span class="sec-check sec-no">–</span><p><strong>A forcibly terminated scan can leave a temporary copy behind</strong> without recording that it did. We check by hand after any forcibly terminated scan.</p></div>
     </div>
     <p class="sec-note"><strong>Working with European customers.</strong> We can sign a data processing agreement under Art. 28 GDPR. Ask us for the Security &amp; Trust Pack: it covers the data flow, retention and deletion, access control, incident response, AI egress, subprocessors, and a GDPR readiness checklist that states the open gaps as plainly as the controls.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap reveal">
-    <div class="section-label">Who's behind it</div>
-    <h2>Talk to the person who built the analysis.</h2>
+  
+        </div>
+      </details>
+      <details class="xc" id="founder">
+        <summary><span class="xc-num">06</span><span class="xc-t"><span class="xc-title">Who's behind it</span><span class="xc-teaser">Talk to the person who built the analysis.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body">
     <div class="founder">
       <div class="founder-body">
         <p>I built Codebase Time Machine because who holds the knowledge of a codebase matters to a deal, and much of that knowledge is written into the company's Git history, where it can be measured.</p>
@@ -822,13 +819,12 @@
         <div class="role">Founder, Codebase Time Machine · <a class="mail-link" href="mailto:hello@codebasetimemachine.com" style="color:inherit;">hello@codebasetimemachine.com</a></div>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="wrap reveal">
-    <div class="section-label">FAQ</div>
-    <h2>What people ask before their first scan.</h2>
+  
+        </div>
+      </details>
+      <details class="xc" id="faq">
+        <summary><span class="xc-num">07</span><span class="xc-t"><span class="xc-title">FAQ</span><span class="xc-teaser">Cost, timing, access and AI.</span></span><span class="xc-icon" aria-hidden="true"></span></summary>
+        <div class="xc-body"><h3 class="xc-h">What people ask before their first scan.</h3>
     <div class="faq">
       <details class="faq-item">
         <summary>What does Codebase Time Machine actually analyze?</summary>
@@ -857,6 +853,10 @@
       <details class="faq-item">
         <summary>What does AI do in the report?</summary>
         <p>Nothing, by default. Every number and finding is computed deterministically from your repository's files, its Git history and repository metadata. An optional AI narrative exists; we enable it only if you agree in writing first.</p>
+      </details>
+    </div>
+  
+        </div>
       </details>
     </div>
   </div>
@@ -904,6 +904,27 @@
     }, {threshold:0.12});
     reveals.forEach(function(el){ ro.observe(el); });
   } else { reveals.forEach(function(el){ el.classList.add('in'); }); }
+
+
+  /* ---------- Tap-to-open cards: open from links, size canvases on open ---------- */
+  function openFor(hash){
+    if(!hash || hash.length<2) return;
+    var el=document.getElementById(hash.slice(1)); if(!el) return;
+    var d = el.tagName==='DETAILS' ? el : el.closest('details.xc');
+    if(d && !d.open){ d.open=true; }
+  }
+  document.querySelectorAll('details.xc').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if(!d.open) return;
+      d.querySelectorAll('.reveal').forEach(function(r){ r.classList.add('in'); });
+      window.dispatchEvent(new Event('resize'));
+    });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(){ openFor(a.getAttribute('href')); });
+  });
+  openFor(location.hash);
+  window.addEventListener('hashchange', function(){ openFor(location.hash); });
 
   /* ---------- Foreground card tilt ---------- */
   var card = document.getElementById('tilt-card');
